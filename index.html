@@ -40,7 +40,7 @@
     border-bottom: 1px solid rgba(255,255,255,0.08);
   }
 
-  /* ===== ABOUT セクション（粒子集約＋光ライン） ===== */
+  /* ===== ABOUT セクション（3D粒子） ===== */
   .about-section {
     position: relative;
     width: 100%;
@@ -51,8 +51,7 @@
     border-bottom: none !important;
   }
 
-  /* 背景粒子 */
-  #particle-canvas {
+  #particle3d {
     position: absolute;
     top: 0;
     left: 0;
@@ -69,7 +68,7 @@
     height: 4px;
     background: linear-gradient(90deg,
       rgba(212,175,55,0) 0%,
-      rgba(212,175,55,0.9) 50%,
+      rgba(212,175,55,1) 50%,
       rgba(212,175,55,0) 100%
     );
     filter: blur(6px);
@@ -78,9 +77,9 @@
 
   @keyframes lineSweep {
     0%   { left: -40%; opacity: 0; }
-    40%  { opacity: 0; }
-    55%  { opacity: 1; }
-    80%  { left: 100%; opacity: 1; }
+    55%  { opacity: 0; }
+    65%  { opacity: 1; }
+    85%  { left: 100%; opacity: 1; }
     100% { opacity: 0; }
   }
 
@@ -91,8 +90,8 @@
 
   @keyframes glow {
     0%   { filter: brightness(1); }
-    40%  { filter: brightness(1); }
-    60%  { filter: brightness(1.8); }
+    55%  { filter: brightness(1); }
+    75%  { filter: brightness(2); }
     100% { filter: brightness(1); }
   }
 
@@ -129,9 +128,9 @@
 
 <main>
 
-<!-- ===== ABOUT（粒子集約＋光ライン） ===== -->
+<!-- ===== ABOUT（3D粒子 → 集約 → 発光 → 離散） ===== -->
 <section class="about-section fade-up">
-  <canvas id="particle-canvas"></canvas>
+  <canvas id="particle3d"></canvas>
   <div class="light-line"></div>
 
   <div class="about-content glow-text">
@@ -146,7 +145,7 @@
   </div>
 </section>
 
-<!-- ===== 以下はそのまま ===== -->
+<!-- ===== 以下そのまま ===== -->
 <section class="fade-up">
   <h2>ABOUT</h2>
   <p class="sub">
@@ -201,8 +200,8 @@ const observer = new IntersectionObserver(entries => {
 }, { threshold: 0.2 });
 targets.forEach(target => observer.observe(target));
 
-/* ===== 粒子アニメーション（集約 → 光の玉化） ===== */
-const canvas = document.getElementById("particle-canvas");
+/* ===== 3D粒子（奥→手前→集約→離散） ===== */
+const canvas = document.getElementById("particle3d");
 const ctx = canvas.getContext("2d");
 
 function resize() {
@@ -212,49 +211,65 @@ function resize() {
 window.addEventListener("resize", resize);
 resize();
 
+const COUNT = 300;
 let particles = [];
-const COUNT = 200;
 
-function initParticles() {
+function init() {
   particles = [];
   for (let i = 0; i < COUNT; i++) {
     particles.push({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height,
+      x: (Math.random() - 0.5) * 800,
+      y: (Math.random() - 0.5) * 800,
+      z: Math.random() * 2000 + 500, // 奥行き
       size: 1 + Math.random() * 2,
-      angle: Math.random() * Math.PI * 2,
-      speed: 0.5 + Math.random() * 1,
-      delay: Math.random() * 2
+      speed: 4 + Math.random() * 4
     });
   }
 }
 
-function animate(time) {
+function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  const t = (time % 5000) / 5000; // 5秒ループ
-  const centerX = canvas.width / 2;
-  const centerY = canvas.height / 2;
+  const cx = canvas.width / 2;
+  const cy = canvas.height / 2;
 
   particles.forEach(p => {
-    let progress = Math.max(0, t - p.delay * 0.2);
-    if (progress > 1) progress = 1;
+    p.z -= p.speed;
 
-    // 粒子が中心に吸い寄せられる
-    p.x += (centerX - p.x) * 0.02 * progress;
-    p.y += (centerY - p.y) * 0.02 * progress;
+    // 手前に来たら中央に吸い込まれる
+    if (p.z < 50) {
+      p.x *= 0.9;
+      p.y *= 0.9;
+    }
 
-    ctx.fillStyle = "rgba(212,175,55," + (0.3 + progress * 0.7) + ")";
+    // さらに近づいたら離散
+    if (p.z < 10) {
+      p.x += (Math.random() - 0.5) * 40;
+      p.y += (Math.random() - 0.5) * 40;
+    }
+
+    // 消えたらリセット
+    if (p.z < 1) {
+      p.x = (Math.random() - 0.5) * 800;
+      p.y = (Math.random() - 0.5) * 800;
+      p.z = Math.random() * 2000 + 500;
+    }
+
+    const scale = 200 / p.z;
+    const x2d = cx + p.x * scale;
+    const y2d = cy + p.y * scale;
+
+    ctx.fillStyle = "rgba(212,175,55," + (1 - p.z / 2000) + ")";
     ctx.beginPath();
-    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+    ctx.arc(x2d, y2d, p.size * scale, 0, Math.PI * 2);
     ctx.fill();
   });
 
   requestAnimationFrame(animate);
 }
 
-initParticles();
-requestAnimationFrame(animate);
+init();
+animate();
 </script>
 
 </body>
