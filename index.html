@@ -56,10 +56,6 @@
     margin-bottom: 20px;
   }
 
-  .accent {
-    color: #d9a441;
-  }
-
   .sub {
     color: #aaa;
     max-width: 600px;
@@ -67,61 +63,7 @@
     margin-bottom: 40px;
   }
 
-  .services-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 40px;
-  }
-
-  .card {
-    padding: 40px 30px;
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 8px;
-    transition: 0.3s ease;
-  }
-
-  .card:hover {
-    border-color: #d9a441;
-    transform: translateY(-4px);
-  }
-
-  .card img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-    border-radius: 6px;
-    margin-bottom: 20px;
-    opacity: 0.9;
-    transition: 0.3s ease;
-  }
-
-  .card:hover img {
-    opacity: 1;
-  }
-
-  footer {
-    padding: 40px;
-    text-align: center;
-    color: #777;
-    font-size: 14px;
-  }
-
-  .fade-up {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: all 0.9s ease;
-  }
-
-  .fade-up.show {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .delay-1 { transition-delay: 0.1s; }
-  .delay-2 { transition-delay: 0.2s; }
-  .delay-3 { transition-delay: 0.3s; }
-
-  /* ▼▼▼ 光ライン & 発光アニメーション ▼▼▼ */
+  /* ▼▼▼ ABOUT セクション（光アニメーション） ▼▼▼ */
   .about-section {
     position: relative;
     width: 100%;
@@ -132,41 +74,83 @@
     border-bottom: none !important;
   }
 
-  /* 光がしゅいーんと流れるライン */
-  .light-line {
+  /* 奥から飛んでくる光の玉 */
+  .light-orb {
     position: absolute;
-    top: 0;
-    left: -30%;
-    width: 30%;
-    height: 100%;
-    background: linear-gradient(90deg,
-      rgba(212,175,55,0) 0%,
-      rgba(212,175,55,0.4) 50%,
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    background: radial-gradient(circle,
+      rgba(212,175,55,1) 0%,
+      rgba(212,175,55,0.3) 60%,
       rgba(212,175,55,0) 100%
     );
-    filter: blur(20px);
-    animation: sweep 4s ease-in-out infinite;
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0.1);
+    filter: blur(4px);
+    animation: orbFly 4s ease-out infinite;
   }
 
-  @keyframes sweep {
-    0%   { left: -30%; opacity: 0; }
-    10%  { opacity: 1; }
-    50%  { left: 100%; opacity: 1; }
-    70%  { opacity: 0.6; }
-    100% { left: 100%; opacity: 0; }
+  @keyframes orbFly {
+    0%   { transform: translate(-50%, -50%) scale(0.1); opacity: 0; }
+    20%  { opacity: 1; }
+    60%  { transform: translate(200%, -50%) scale(1.6); opacity: 1; }
+    100% { transform: translate(300%, -50%) scale(2.2); opacity: 0; }
   }
 
-  /* 文字が光る */
-  .glow-target {
+  /* 光のライン（文字をなぞる） */
+  .light-line {
+    position: absolute;
+    top: 50%;
+    left: -40%;
+    width: 40%;
+    height: 4px;
+    background: linear-gradient(90deg,
+      rgba(212,175,55,0) 0%,
+      rgba(212,175,55,0.8) 50%,
+      rgba(212,175,55,0) 100%
+    );
+    filter: blur(6px);
+    animation: lineSweep 4s ease-in-out infinite;
+  }
+
+  @keyframes lineSweep {
+    0%   { left: -40%; opacity: 0; }
+    20%  { opacity: 1; }
+    60%  { left: 100%; opacity: 1; }
+    100% { opacity: 0; }
+  }
+
+  /* 文字の発光 */
+  .glow-text {
     animation: glow 4s ease-in-out infinite;
   }
 
   @keyframes glow {
     0%   { filter: brightness(1); }
-    20%  { filter: brightness(1); }
-    40%  { filter: brightness(1.8); }
-    60%  { filter: brightness(1); }
+    30%  { filter: brightness(1); }
+    60%  { filter: brightness(1.8); }
     100% { filter: brightness(1); }
+  }
+
+  /* 粒子（光の玉の後ろに散る） */
+  .particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(212,175,55,0.8);
+    border-radius: 50%;
+    filter: blur(2px);
+    opacity: 0;
+    animation: particleFly 4s ease-out infinite;
+  }
+
+  @keyframes particleFly {
+    0%   { transform: translate(0,0) scale(0.2); opacity: 0; }
+    20%  { opacity: 1; }
+    60%  { transform: translate(200px, -40px) scale(1); opacity: 1; }
+    100% { transform: translate(260px, -60px) scale(1.2); opacity: 0; }
   }
 
   .about-content {
@@ -175,7 +159,6 @@
     text-align: center;
     top: 50%;
     transform: translateY(-50%);
-    padding: 0 10vw;
   }
 
   .title {
@@ -184,20 +167,8 @@
     margin-bottom: 12px;
   }
 
-  .frevia {
-    color: #ffffff;
-  }
-
-  .studio {
-    color: #d4af37;
-  }
-
-  .desc {
-    font-size: 16px;
-    line-height: 1.8;
-    opacity: 0.9;
-  }
-  /* ▲▲▲ 光アニメーション ▲▲▲ */
+  .frevia { color: #fff; }
+  .studio { color: #d4af37; }
 
 </style>
 </head>
@@ -210,11 +181,22 @@
 
 <main>
 
-<!-- ▼▼▼ 光アニメーション ABOUT ▼▼▼ -->
+<!-- ▼▼▼ ABOUT（光アニメーション） ▼▼▼ -->
 <section class="about-section fade-up">
+
+  <!-- 奥から飛んでくる光 -->
+  <div class="light-orb"></div>
+
+  <!-- 粒子を複数生成 -->
+  <div class="particle" style="top:50%; left:50%; animation-delay:0s;"></div>
+  <div class="particle" style="top:52%; left:48%; animation-delay:0.1s;"></div>
+  <div class="particle" style="top:49%; left:51%; animation-delay:0.2s;"></div>
+  <div class="particle" style="top:51%; left:49%; animation-delay:0.3s;"></div>
+
+  <!-- 文字をなぞる光ライン -->
   <div class="light-line"></div>
 
-  <div class="about-content glow-target">
+  <div class="about-content glow-text">
     <h1 class="title">
       <span class="frevia">FREVIA</span>
       <span class="studio">STUDIO</span>
@@ -225,7 +207,7 @@
     </p>
   </div>
 </section>
-<!-- ▲▲▲ 光アニメーション ABOUT ▲▲▲ -->
+<!-- ▲▲▲ ABOUT END ▲▲▲ -->
 
 
 <section class="fade-up">
@@ -273,19 +255,14 @@
 </footer>
 
 <script>
-  /* ▼▼▼ fade-up アニメーション ▼▼▼ */
+  /* fade-up アニメーション */
   const targets = document.querySelectorAll('.fade-up');
-
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('show');
-      }
+      if (entry.isIntersecting) entry.target.classList.add('show');
     });
   }, { threshold: 0.2 });
-
   targets.forEach(target => observer.observe(target));
-  /* ▲▲▲ fade-up ▲▲▲ */
 </script>
 
 </body>
