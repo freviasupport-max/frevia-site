@@ -557,12 +557,21 @@
     .nav-overlay.open { opacity: 1; pointer-events: all; }
 
     .nav-overlay a {
-      color: #fff;
       text-decoration: none;
       font-size: 20px;
       font-weight: 600;
       letter-spacing: 0.2em;
       text-transform: uppercase;
+      background: linear-gradient(100deg, #4a90d9 0%, #f5c842 50%, #f0547a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      opacity: 0.75;
+      transition: opacity 0.3s ease;
+    }
+    
+    .nav-overlay a:hover {
+      opacity: 1;
     }
 
     .nav-overlay .close-btn {
