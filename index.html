@@ -1,3 +1,4 @@
+````html
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -23,6 +24,7 @@
     background: rgba(0,0,0,0.7);
     backdrop-filter: blur(8px);
     z-index: 100;
+    box-sizing: border-box;
   }
 
   .logo {
@@ -32,7 +34,7 @@
   }
 
   main {
-    padding-top: 120px;
+    padding-top: 70px;
   }
 
   section {
@@ -55,35 +57,41 @@
     margin-bottom: 40px;
   }
 
-  /* ===== FREVIA STUDIO（背景画像） ===== */
+  /* ===== FREVIA STUDIO（背景画像・切り取りなし） ===== */
   .about-section {
     position: relative;
     width: 100%;
-    height: 420px;
-    overflow: hidden;
-    background: url("/frevia-site/images/about-workspace.jpg") center/cover no-repeat;
     padding: 0 !important;
     border-bottom: none !important;
+    background: #000;
+  }
+
+  .about-section img.hero-img {
+    display: block;
+    width: 100%;
+    height: auto;
   }
 
   .about-content {
-    position: relative;
+    position: absolute;
     z-index: 10;
-    text-align: center;
     top: 50%;
-    transform: translateY(-50%);
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    white-space: nowrap;
   }
 
   .title {
     font-size: 48px;
     letter-spacing: 4px;
-    margin-bottom: 12px;
+    margin: 0;
   }
 
   .frevia { color: #fff; }
   .studio { color: #d4af37; }
 
-  /* ===== ABOUT（背景画像なし＝黒背景） ===== */
+  /* ===== ABOUT（背景なし・黒背景） ===== */
   .about-lower {
     background: #000;
   }
@@ -153,14 +161,14 @@
 
 <main>
 
-<!-- ===== FREVIA STUDIO（背景画像） ===== -->
+<!-- ===== FREVIA STUDIO（画像を切り取らず全体表示） ===== -->
 <section class="about-section fade-up">
+  <img class="hero-img" src="/frevia-site/images/about-workspace.jpg" alt="FREVIA STUDIO workspace">
   <div class="about-content">
     <h1 class="title">
       <span class="frevia">FREVIA</span>
-      <span class="studio">STUDIO</span>
+      <span class="studio"> STUDIO</span>
     </h1>
-    <!-- ↓ 文言削除済み -->
   </div>
 </section>
 
@@ -222,3 +230,4 @@ targets.forEach(target => observer.observe(target));
 
 </body>
 </html>
+````
