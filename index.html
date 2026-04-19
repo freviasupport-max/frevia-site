@@ -109,23 +109,15 @@
   .delay-2 { transition-delay: 0.2s; }
   .delay-3 { transition-delay: 0.3s; }
 
-  /* ===== ABOUT セクション（3D粒子＋光ライン＋強い発光） ===== */
+  /* ===== ABOUT セクション（背景画像＋光ライン＋強発光） ===== */
   .about-section {
     position: relative;
     width: 100%;
     height: 420px;
     overflow: hidden;
-    background: #000;
+    background: url("/frevia-site/images/about-bg-steampunk.jpg") center/cover no-repeat;
     padding: 0 !important;
     border-bottom: none !important;
-  }
-
-  #particle3d {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
   }
 
   /* 光ライン：ずっと滑らかに流れる */
@@ -214,9 +206,8 @@
 
 <main>
 
-<!-- ===== ABOUT（3D粒子＋光ライン＋強発光） ===== -->
+<!-- ===== ABOUT（背景画像＋光ライン＋強発光） ===== -->
 <section class="about-section fade-up">
-  <canvas id="particle3d"></canvas>
   <div class="light-line"></div>
 
   <div class="about-content glow-text">
@@ -284,65 +275,6 @@ const observer = new IntersectionObserver(entries => {
   });
 }, { threshold: 0.2 });
 targets.forEach(target => observer.observe(target));
-
-/* 3D粒子：奥から手前へ“ずっと”流れ続ける */
-const canvas = document.getElementById("particle3d");
-const ctx = canvas.getContext("2d");
-
-function resize() {
-  canvas.width = canvas.offsetWidth;
-  canvas.height = canvas.offsetHeight;
-}
-window.addEventListener("resize", resize);
-resize();
-
-const COUNT = 320;
-let particles = [];
-
-function init() {
-  particles = [];
-  for (let i = 0; i < COUNT; i++) {
-    particles.push({
-      x: (Math.random() - 0.5) * 800,
-      y: (Math.random() - 0.5) * 800,
-      z: Math.random() * 2000 + 200,
-      size: 1 + Math.random() * 2,
-      speed: 6 + Math.random() * 4
-    });
-  }
-}
-
-function animate() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  const cx = canvas.width / 2;
-  const cy = canvas.height / 2;
-
-  particles.forEach(p => {
-    p.z -= p.speed;
-
-    // 手前まで来たら奥に戻す（止まらず流れ続ける）
-    if (p.z < 50) {
-      p.z = 2000;
-      p.x = (Math.random() - 0.5) * 800;
-      p.y = (Math.random() - 0.5) * 800;
-    }
-
-    const scale = 200 / p.z;
-    const x2d = cx + p.x * scale;
-    const y2d = cy + p.y * scale;
-
-    ctx.fillStyle = "rgba(212,175,55," + (0.2 + (1 - p.z / 2000) * 0.8) + ")";
-    ctx.beginPath();
-    ctx.arc(x2d, y2d, p.size * scale, 0, Math.PI * 2);
-    ctx.fill();
-  });
-
-  requestAnimationFrame(animate);
-}
-
-init();
-animate();
 </script>
 
 </body>
