@@ -56,45 +56,32 @@
     margin-bottom: 40px;
   }
 
-  /* ===== HERO + ABOUT を一体化したセクション ===== */
-  .hero-about-section {
+  /* ===== FREVIA STUDIO（背景画像・切り取りなし） ===== */
+  .about-section {
     position: relative;
     width: 100%;
     padding: 0 !important;
-    border-bottom: 1px solid rgba(255,255,255,0.08) !important;
+    border-bottom: none !important;
+    background: #000;
   }
 
-  /* 画像を切り取らず全体表示 */
-  .hero-about-section img.hero-img {
+  .about-section img.hero-img {
     display: block;
     width: 100%;
     height: auto;
   }
 
-  /* 画像の下半分〜ABOUTエリアにかけて黒フェード */
-  .hero-about-section::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 60%;
-    background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.7) 50%, #000 100%);
-    pointer-events: none;
-  }
-
-  /* FREVIA STUDIO タイトル（画像中央） */
-  .hero-title {
+  .about-content {
     position: absolute;
     z-index: 10;
-    top: 40%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
     white-space: nowrap;
   }
 
-  .hero-title h1 {
+  .title {
     font-size: 48px;
     letter-spacing: 4px;
     margin: 0;
@@ -103,32 +90,11 @@
   .frevia { color: #fff; }
   .studio { color: #d4af37; }
 
-  /* ABOUT テキスト（画像の下・フェードエリア内） */
-  .about-overlay {
-    position: absolute;
-    z-index: 10;
-    bottom: 0;
-    left: 0;
-    padding: 0 10vw 60px;
+  /* ===== ABOUT（背景なし・黒背景） ===== */
+  .about-lower {
+    background: #000;
   }
 
-  .about-overlay h2 {
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    font-size: 26px;
-    margin-bottom: 16px;
-  }
-
-  .about-overlay p {
-    color: #ccc;
-    max-width: 600px;
-    line-height: 1.8;
-    margin: 0;
-    font-size: 15px;
-  }
-
-  /* ===== SERVICES ===== */
   .services-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -194,32 +160,26 @@
 
 <main>
 
-<!-- ===== HERO + ABOUT 一体セクション ===== -->
-<section class="hero-about-section fade-up">
-
-  <!-- 本来の画像（切り取りなし・全体表示） -->
+<!-- ===== FREVIA STUDIO（画像を切り取らず全体表示） ===== -->
+<section class="about-section fade-up">
   <img class="hero-img" src="/frevia-site/images/about-workspace.jpg" alt="FREVIA STUDIO workspace">
-
-  <!-- FREVIA STUDIO タイトル（画像中央） -->
-  <div class="hero-title">
-    <h1>
+  <div class="about-content">
+    <h1 class="title">
       <span class="frevia">FREVIA</span>
       <span class="studio"> STUDIO</span>
     </h1>
   </div>
-
-  <!-- ABOUT テキスト（画像下部のフェードエリアに重ねて表示） -->
-  <div class="about-overlay">
-    <h2>ABOUT</h2>
-    <p>
-      自由と創造をかたちにする、リメイク × ハンドメイド × IT の複合スタジオ。<br>
-      繊細で、強く、美しいものづくりを追求します。
-    </p>
-  </div>
-
 </section>
 
-<!-- ===== SERVICES ===== -->
+<!-- ===== ABOUT（背景なし・文言変更） ===== -->
+<section class="about-lower fade-up">
+  <h2>ABOUT</h2>
+  <p class="sub">
+    自由と創造をかたちにする、リメイク × ハンドメイド × IT の複合スタジオ。<br>
+    繊細で、強く、美しいものづくりを追求します。
+  </p>
+</section>
+
 <section class="fade-up">
   <h2>SERVICES</h2>
   <div class="services-grid">
@@ -245,7 +205,6 @@
   </div>
 </section>
 
-<!-- ===== CONTACT ===== -->
 <section class="fade-up">
   <h2>CONTACT</h2>
   <p class="sub">ご相談・制作依頼などお気軽にお問い合わせください。</p>
