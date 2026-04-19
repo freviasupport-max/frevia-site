@@ -15,7 +15,7 @@
   }
 
   header {
-    padding: 10px 30px;
+    padding: 0;
     border-bottom: 1px solid rgba(255,255,255,0.1);
     position: fixed;
     width: 100%;
@@ -26,17 +26,31 @@
     box-sizing: border-box;
     display: flex;
     align-items: center;
+    height: 72px;
+    overflow: hidden;
   }
 
-  /* ロゴ画像 */
+  /* ロゴ画像：余白を消してギリギリまで大きく */
+  .logo {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
   .logo img {
-    height: 48px;
+    height: 72px;
     width: auto;
     display: block;
+    /* 画像自体の余白（黒帯）をネガティブマージンで吸収 */
+    margin-left: -12px;
+    object-fit: cover;
+    object-position: left center;
   }
 
   main {
-    padding-top: 70px;
+    padding-top: 72px;
   }
 
   section {
@@ -112,12 +126,10 @@
   .frevia { color: #fff; }
   .studio { color: #d4af37; }
 
-  /* ===== ABOUT ===== */
   .about-lower {
     background: #000;
   }
 
-  /* ===== SERVICES ===== */
   .services-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -146,9 +158,7 @@
     transition: 0.3s ease;
   }
 
-  .card:hover img {
-    opacity: 1;
-  }
+  .card:hover img { opacity: 1; }
 
   footer {
     padding: 40px;
@@ -172,40 +182,30 @@
   .delay-2 { transition-delay: 0.2s; }
   .delay-3 { transition-delay: 0.3s; }
 
-  /* ===== スマホ対応 ===== */
   @media (max-width: 768px) {
-    header {
-      padding: 8px 16px;
-    }
+    header { height: 56px; }
 
     .logo img {
-      height: 36px;
+      height: 56px;
+      margin-left: -8px;
     }
 
-    section {
-      padding: 80px 6vw;
-    }
+    main { padding-top: 56px; }
 
-    h2 {
-      font-size: 20px;
-    }
+    section { padding: 80px 6vw; }
 
-    .sub {
-      font-size: 14px;
-    }
+    h2 { font-size: 20px; }
 
-    .title-band {
-      padding: 10px 20px;
-    }
+    .sub { font-size: 14px; }
+
+    .title-band { padding: 10px 20px; }
 
     .services-grid {
       grid-template-columns: 1fr;
       gap: 24px;
     }
 
-    .card {
-      padding: 28px 20px;
-    }
+    .card { padding: 28px 20px; }
   }
 </style>
 </head>
@@ -220,7 +220,6 @@
 
 <main>
 
-<!-- ===== HERO ===== -->
 <section class="about-section fade-up">
   <img class="hero-img" src="/frevia-site/images/about-workspace.jpg" alt="FREVIA STUDIO workspace">
   <canvas id="particle-canvas"></canvas>
@@ -234,7 +233,6 @@
   </div>
 </section>
 
-<!-- ===== ABOUT ===== -->
 <section class="about-lower fade-up">
   <h2>ABOUT</h2>
   <p class="sub">
@@ -243,7 +241,6 @@
   </p>
 </section>
 
-<!-- ===== SERVICES ===== -->
 <section class="fade-up">
   <h2>SERVICES</h2>
   <div class="services-grid">
@@ -269,7 +266,6 @@
   </div>
 </section>
 
-<!-- ===== CONTACT ===== -->
 <section class="fade-up">
   <h2>CONTACT</h2>
   <p class="sub">ご相談・制作依頼などお気軽にお問い合わせください。</p>
@@ -282,7 +278,6 @@
 </footer>
 
 <script>
-/* ===== fade-up ===== */
 const targets = document.querySelectorAll('.fade-up');
 const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
@@ -291,7 +286,6 @@ const observer = new IntersectionObserver(entries => {
 }, { threshold: 0.2 });
 targets.forEach(target => observer.observe(target));
 
-/* ===== パーティクル ===== */
 const canvas = document.getElementById('particle-canvas');
 const ctx = canvas.getContext('2d');
 let particles = [];
