@@ -109,7 +109,7 @@
   .delay-2 { transition-delay: 0.2s; }
   .delay-3 { transition-delay: 0.3s; }
 
-  /* ===== ABOUT セクション（背景画像差し替え） ===== */
+  /* ===== ABOUT（上） ===== */
   .about-section {
     position: relative;
     width: 100%;
@@ -142,6 +142,33 @@
     line-height: 1.8;
     opacity: 0.9;
   }
+
+  /* ===== ABOUT（下）背景：about-bg-steampunk.jpg ===== */
+  .about-lower {
+    position: relative;
+    width: 100%;
+    padding: 140px 10vw;
+    background: url("/frevia-site/images/about-bg-steampunk.jpg") center/cover no-repeat;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    color: #fff;
+  }
+
+  /* 黒の半透明レイヤー（文字を読みやすくする） */
+  .about-lower::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    z-index: 1;
+  }
+
+  /* テキストを前面に */
+  .about-lower h2,
+  .about-lower p {
+    position: relative;
+    z-index: 2;
+  }
+
 </style>
 </head>
 
@@ -153,7 +180,7 @@
 
 <main>
 
-<!-- ===== ABOUT（背景：about-workspace.jpg） ===== -->
+<!-- ===== ABOUT（上） ===== -->
 <section class="about-section fade-up">
   <div class="about-content">
     <h1 class="title">
@@ -167,7 +194,8 @@
   </div>
 </section>
 
-<section class="fade-up">
+<!-- ===== ABOUT（下）背景：about-bg-steampunk.jpg ===== -->
+<section class="about-lower fade-up">
   <h2>ABOUT</h2>
   <p class="sub">
     FREVIAは、リメイク・ハンドメイド制作  
