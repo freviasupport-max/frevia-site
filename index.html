@@ -38,15 +38,10 @@
     display: flex;
     align-items: center;
     height: 100%;
-    margin: 0;
-    padding: 0;
     flex-shrink: 0;
   }
 
-  .logo a {
-    display: block;
-    height: 100%;
-  }
+  .logo a { display: block; height: 100%; }
 
   .logo img {
     height: 110px;
@@ -58,7 +53,7 @@
   nav {
     display: flex;
     align-items: center;
-    gap: 40px;
+    gap: 36px;
   }
 
   nav a {
@@ -120,9 +115,7 @@
   }
 
   .about-section img.hero-img {
-    display: block;
-    width: 100%;
-    height: auto;
+    display: block; width: 100%; height: auto;
   }
 
   #particle-canvas {
@@ -198,14 +191,13 @@
 
   .about-lower { background: #000; }
 
-  /* ===== SERVICES グリッド ===== */
+  /* ===== SERVICES ===== */
   .services-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 24px;
   }
 
-  /* カード */
   .card {
     border: 1px solid rgba(255,255,255,0.1);
     border-radius: 8px;
@@ -214,20 +206,10 @@
     transition: border-color 0.3s ease, transform 0.3s ease;
   }
 
-  .card:hover {
-    border-color: #d9a441;
-    transform: translateY(-4px);
-  }
+  .card:hover { border-color: #d9a441; transform: translateY(-4px); }
+  .card.open { border-color: #d4af37; transform: translateY(0); }
 
-  .card.open {
-    border-color: #d4af37;
-    transform: translateY(0);
-  }
-
-  /* カードヘッダー部分（クリック領域） */
-  .card-header {
-    padding: 30px 30px 24px;
-  }
+  .card-header { padding: 30px 30px 24px; }
 
   .card-header img {
     width: 100%;
@@ -256,7 +238,6 @@
     line-height: 1.6;
   }
 
-  /* 矢印アイコン */
   .card-arrow {
     display: flex;
     align-items: center;
@@ -272,8 +253,7 @@
   }
 
   .arrow-icon {
-    width: 20px;
-    height: 20px;
+    width: 20px; height: 20px;
     border: 1px solid rgba(212,175,55,0.4);
     border-radius: 50%;
     display: flex;
@@ -284,32 +264,24 @@
     transition: transform 0.4s ease;
   }
 
-  .card.open .arrow-icon {
-    transform: rotate(180deg);
-  }
+  .card.open .arrow-icon { transform: rotate(180deg); }
 
-  /* ドロワー部分 */
   .card-drawer {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  .card.open .card-drawer {
-    max-height: 500px;
-  }
+  .card.open .card-drawer { max-height: 500px; }
 
   .card-drawer-inner {
-    padding: 0 30px 30px;
+    padding: 20px 30px 30px;
     border-top: 1px solid rgba(255,255,255,0.08);
-    padding-top: 20px;
   }
 
-  /* ドロワー内のゴールドライン */
   .drawer-line {
     display: block;
-    width: 32px;
-    height: 1px;
+    width: 32px; height: 1px;
     background: linear-gradient(to right, #4a90d9, #f5c842, #f0547a);
     margin-bottom: 16px;
   }
@@ -323,8 +295,7 @@
 
   .card-drawer-inner ul {
     list-style: none;
-    padding: 0;
-    margin: 0;
+    padding: 0; margin: 0;
   }
 
   .card-drawer-inner ul li {
@@ -342,6 +313,188 @@
     color: #d4af37;
   }
 
+  /* ===== PRICING ===== */
+  .pricing-block {
+    margin-bottom: 80px;
+  }
+
+  .pricing-block:last-child { margin-bottom: 0; }
+
+  .pricing-block h3 {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #d4af37;
+    margin: 0 0 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .pricing-block h3::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, rgba(212,175,55,0.4), transparent);
+  }
+
+  /* ECボタングループ */
+  .ec-buttons {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .ec-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 28px;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 4px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    transition: all 0.3s ease;
+    background: rgba(255,255,255,0.03);
+  }
+
+  .ec-btn:hover {
+    border-color: #d4af37;
+    background: rgba(212,175,55,0.08);
+    color: #d4af37;
+    transform: translateY(-2px);
+  }
+
+  .ec-btn .ec-icon {
+    font-size: 16px;
+  }
+
+  .ec-note {
+    margin-top: 16px;
+    color: #666;
+    font-size: 12px;
+    line-height: 1.8;
+  }
+
+  /* ITプランカード */
+  .plan-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .plan-card {
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    padding: 32px 24px;
+    position: relative;
+    transition: border-color 0.3s ease, transform 0.3s ease;
+    background: rgba(255,255,255,0.02);
+  }
+
+  .plan-card:hover {
+    border-color: #d4af37;
+    transform: translateY(-4px);
+    background: rgba(212,175,55,0.04);
+  }
+
+  /* おすすめバッジ */
+  .plan-card.recommended {
+    border-color: #d4af37;
+  }
+
+  .plan-badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(100deg, #4a90d9, #f5c842, #f0547a);
+    color: #000;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    padding: 4px 16px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+
+  .plan-name {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #d4af37;
+    margin: 0 0 12px;
+  }
+
+  .plan-price {
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 0 0 4px;
+    line-height: 1;
+  }
+
+  .plan-price span {
+    font-size: 14px;
+    font-weight: 400;
+    color: #888;
+    letter-spacing: 0;
+  }
+
+  .plan-from {
+    font-size: 11px;
+    color: #666;
+    margin: 0 0 20px;
+  }
+
+  .plan-divider {
+    height: 1px;
+    background: rgba(255,255,255,0.08);
+    margin: 0 0 20px;
+  }
+
+  .plan-desc {
+    color: #aaa;
+    font-size: 13px;
+    line-height: 1.7;
+    margin: 0 0 16px;
+  }
+
+  .plan-features {
+    list-style: none;
+    padding: 0; margin: 0;
+  }
+
+  .plan-features li {
+    color: #bbb;
+    font-size: 12px;
+    line-height: 1.8;
+    padding-left: 16px;
+    position: relative;
+  }
+
+  .plan-features li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: #d4af37;
+    font-size: 11px;
+  }
+
+  .plan-note {
+    margin-top: 24px;
+    color: #555;
+    font-size: 11px;
+    line-height: 1.8;
+    letter-spacing: 0.05em;
+  }
+
+  /* ===== CONTACT ===== */
   footer {
     padding: 40px;
     text-align: center;
@@ -355,10 +508,7 @@
     transition: all 0.9s ease;
   }
 
-  .fade-up.show {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  .fade-up.show { opacity: 1; transform: translateY(0); }
 
   .delay-1 { transition-delay: 0.1s; }
   .delay-2 { transition-delay: 0.2s; }
@@ -429,12 +579,13 @@
     h2 { font-size: 20px; }
     .sub { font-size: 14px; }
 
-    .services-grid {
-      grid-template-columns: 1fr;
-      gap: 16px;
-    }
-
+    .services-grid { grid-template-columns: 1fr; gap: 16px; }
     .card { transform: none !important; }
+
+    .plan-grid { grid-template-columns: 1fr; gap: 16px; }
+
+    .ec-buttons { flex-direction: column; }
+    .ec-btn { justify-content: center; }
   }
 </style>
 </head>
@@ -450,6 +601,7 @@
   <nav>
     <a href="#about">About</a>
     <a href="#services">Services</a>
+    <a href="#pricing">Pricing</a>
     <a href="#contact">Contact</a>
   </nav>
   <div class="hamburger" onclick="document.getElementById('navOverlay').classList.add('open')">
@@ -461,6 +613,7 @@
   <button class="close-btn" onclick="document.getElementById('navOverlay').classList.remove('open')">✕</button>
   <a href="#about" onclick="document.getElementById('navOverlay').classList.remove('open')">About</a>
   <a href="#services" onclick="document.getElementById('navOverlay').classList.remove('open')">Services</a>
+  <a href="#pricing" onclick="document.getElementById('navOverlay').classList.remove('open')">Pricing</a>
   <a href="#contact" onclick="document.getElementById('navOverlay').classList.remove('open')">Contact</a>
 </div>
 
@@ -490,7 +643,6 @@
   <h2>SERVICES</h2>
   <div class="services-grid">
 
-    <!-- REMAKE -->
     <div class="card fade-up delay-1" onclick="toggleCard(this)">
       <div class="card-header">
         <img src="/frevia-site/images/remake.jpg" alt="Remake">
@@ -515,7 +667,6 @@
       </div>
     </div>
 
-    <!-- HANDMADE -->
     <div class="card fade-up delay-2" onclick="toggleCard(this)">
       <div class="card-header">
         <img src="/frevia-site/images/handmade.jpg" alt="Handmade">
@@ -540,7 +691,6 @@
       </div>
     </div>
 
-    <!-- IT SOLUTIONS -->
     <div class="card fade-up delay-3" onclick="toggleCard(this)">
       <div class="card-header">
         <img src="/frevia-site/images/it-flow.jpg" alt="IT Solutions">
@@ -555,19 +705,101 @@
         <div class="card-drawer-inner">
           <span class="drawer-line"></span>
           <p>毎日の繰り返し作業を、ITの力でスマートに自動化。<br>生まれた時間で、あなたが本当にやりたいことへ。</p>
-            <ul>
-              <li>Excel / VBAマクロ開発・自動化</li>
-              <li>Google Apps Script（GAS）開発</li>
-              <li>Webスクレイピング・データ自動収集</li>
-              <li>日次・定期レポートの自動生成</li>
-              <li>フォーム〜スプレッドシート〜通知の自動連携</li>
-              <li>繰り返し作業のワンクリック化</li>
-            </ul>
+          <ul>
+            <li>Excel / VBAマクロ開発・自動化</li>
+            <li>Google Apps Script（GAS）開発</li>
+            <li>Webスクレイピング・データ自動収集</li>
+            <li>日次・定期レポートの自動生成</li>
+            <li>フォーム〜スプレッドシート〜通知の自動連携</li>
+            <li>繰り返し作業のワンクリック化</li>
+          </ul>
         </div>
       </div>
     </div>
 
   </div>
+</section>
+
+<!-- ===== PRICING ===== -->
+<section class="fade-up" id="pricing">
+  <h2>PRICING</h2>
+
+  <!-- REMAKE / HANDMADE -->
+  <div class="pricing-block fade-up">
+    <h3>Remake &amp; Handmade</h3>
+    <p class="sub">作品はECサイトにて販売中。ご要望はお気軽にご相談ください。</p>
+    <div class="ec-buttons">
+      <a href="https://minne.com" target="_blank" class="ec-btn">
+        <span class="ec-icon">🧵</span> minne
+      </a>
+      <a href="https://www.creema.jp" target="_blank" class="ec-btn">
+        <span class="ec-icon">✂️</span> Creema
+      </a>
+      <a href="https://thebase.com" target="_blank" class="ec-btn">
+        <span class="ec-icon">🛍️</span> BASE
+      </a>
+    </div>
+    <p class="ec-note">※ オーダーメイド・カスタム依頼はCONTACTよりお問い合わせください。</p>
+  </div>
+
+  <!-- IT SOLUTIONS -->
+  <div class="pricing-block fade-up">
+    <h3>IT Solutions</h3>
+    <div class="plan-grid">
+
+      <!-- ライト -->
+      <div class="plan-card fade-up delay-1">
+        <p class="plan-name">Light</p>
+        <p class="plan-price">¥30,000<span> 〜</span></p>
+        <p class="plan-from">小規模・スポット自動化</p>
+        <div class="plan-divider"></div>
+        <p class="plan-desc">まず試したい方に。単一の繰り返し作業をひとつのツールで自動化します。</p>
+        <ul class="plan-features">
+          <li>自動化ツール 1本</li>
+          <li>VBA または GAS</li>
+          <li>納品後1週間サポート</li>
+          <li>修正1回まで対応</li>
+        </ul>
+      </div>
+
+      <!-- スタンダード -->
+      <div class="plan-card recommended fade-up delay-2">
+        <div class="plan-badge">MOST POPULAR</div>
+        <p class="plan-name">Standard</p>
+        <p class="plan-price">¥50,000<span> 〜</span></p>
+        <p class="plan-from">中規模・複数ツール対応</p>
+        <div class="plan-divider"></div>
+        <p class="plan-desc">複数の業務をまとめて自動化。GAS・VBA・スクレイピングを組み合わせて対応します。</p>
+        <ul class="plan-features">
+          <li>自動化ツール 2〜3本</li>
+          <li>VBA / GAS / スクレイピング</li>
+          <li>納品後2週間サポート</li>
+          <li>修正3回まで対応</li>
+          <li>運用マニュアル付き</li>
+        </ul>
+      </div>
+
+      <!-- プレミアム -->
+      <div class="plan-card fade-up delay-3">
+        <p class="plan-name">Premium</p>
+        <p class="plan-price">¥100,000<span> 〜</span></p>
+        <p class="plan-from">本格システム・複数連携</p>
+        <div class="plan-divider"></div>
+        <p class="plan-desc">複数ツールを連携させた本格的な自動化システムを構築。業務フロー全体を設計します。</p>
+        <ul class="plan-features">
+          <li>自動化ツール 3本以上</li>
+          <li>API連携・外部サービス統合</li>
+          <li>納品後1ヶ月サポート</li>
+          <li>修正無制限（期間内）</li>
+          <li>運用マニュアル付き</li>
+          <li>追加開発の優先対応</li>
+        </ul>
+      </div>
+
+    </div>
+    <p class="plan-note">※ 料金はすべて税抜き表示です。内容により変動する場合があります。まずはお気軽にご相談ください。</p>
+  </div>
+
 </section>
 
 <section class="fade-up" id="contact">
@@ -582,16 +814,12 @@
 </footer>
 
 <script>
-/* ===== アコーディオン ===== */
 function toggleCard(card) {
   const isOpen = card.classList.contains('open');
-  /* 他のカードを閉じる */
   document.querySelectorAll('.card').forEach(c => c.classList.remove('open'));
-  /* クリックしたカードをトグル */
   if (!isOpen) card.classList.add('open');
 }
 
-/* ===== fade-up ===== */
 const targets = document.querySelectorAll('.fade-up');
 const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
@@ -600,7 +828,6 @@ const observer = new IntersectionObserver(entries => {
 }, { threshold: 0.2 });
 targets.forEach(target => observer.observe(target));
 
-/* ===== パーティクル ===== */
 const canvas = document.getElementById('particle-canvas');
 const ctx = canvas.getContext('2d');
 let particles = [], animId;
