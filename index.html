@@ -26,10 +26,10 @@
     pointer-events: none;
     z-index: 10;
     text-shadow:
-      0 0 20px rgba(255,215,100,0.8),
-      0 0 40px rgba(255,215,100,0.6),
-      0 0 80px rgba(255,215,100,0.4);
-  }
+      0 0 20px rgba(255,215,100,0.9),
+      0 0 40px rgba(255,215,100,0.7),
+      0 0 80px rgba(255,215,100,0.5);
+}
 </style>
 </head>
 
@@ -67,16 +67,16 @@ const camera = new THREE.PerspectiveCamera(
 camera.position.z = 1200;
 
 /* ============================
-   パーティクル
+   パーティクル（数＆速度アップ）
 ============================ */
-const COUNT = 2000;
+const COUNT = 4000;
 const geometry = new THREE.BufferGeometry();
 const positions = new Float32Array(COUNT * 3);
 
 for (let i = 0; i < COUNT; i++) {
-  positions[i * 3 + 0] = (Math.random() - 0.5) * 2000;
-  positions[i * 3 + 1] = (Math.random() - 0.5) * 2000;
-  positions[i * 3 + 2] = Math.random() * -4000; // 奥
+  positions[i * 3 + 0] = (Math.random() - 0.5) * 2200;
+  positions[i * 3 + 1] = (Math.random() - 0.5) * 2200;
+  positions[i * 3 + 2] = Math.random() * -4500; // さらに奥から
 }
 
 geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
@@ -85,7 +85,7 @@ const material = new THREE.PointsMaterial({
   color: 0xd4af37,
   size: 4,
   transparent: true,
-  opacity: 0.9
+  opacity: 0.95
 });
 
 const particles = new THREE.Points(geometry, material);
@@ -122,15 +122,15 @@ const ShockwaveShader = {
       vec2 dir = uv - center;
       float dist = length(dir);
 
-      float wave = sin((dist - time * 1.5) * 40.0) * 0.03;
-      wave *= smoothstep(0.4, 0.0, abs(dist - time));
+      float wave = sin((dist - time * 1.7) * 45.0) * 0.04;
+      wave *= smoothstep(0.45, 0.0, abs(dist - time));
 
       uv += normalize(dir) * wave;
 
       vec4 color = texture2D(tDiffuse, uv);
 
       float glow = smoothstep(0.02, 0.0, abs(dist - time));
-      color += vec4(1.0, 0.9, 0.6, 1.0) * glow * 0.8;
+      color += vec4(1.0, 0.95, 0.7, 1.0) * glow * 1.0;
 
       gl_FragColor = color;
     }
@@ -145,7 +145,7 @@ composer.addPass(new THREE.RenderPass(scene, camera));
 
 const bloomPass = new THREE.UnrealBloomPass(
   new THREE.Vector2(window.innerWidth, window.innerHeight),
-  1.5,
+  1.8,   // 強さアップ
   0.4,
   0.85
 );
@@ -155,22 +155,22 @@ const shockwavePass = new THREE.ShaderPass(ShockwaveShader);
 composer.addPass(shockwavePass);
 
 /* ============================
-   アニメーション
+   アニメーション（迫力アップ）
 ============================ */
 let t = 0;
 
 function animate() {
-  t += 0.01;
-  shockwavePass.uniforms.time.value = (t % 1.2);
+  t += 0.012; // 少し速く
+  shockwavePass.uniforms.time.value = (t % 1.1);
 
   const pos = geometry.attributes.position.array;
   for (let i = 0; i < COUNT; i++) {
-    pos[i * 3 + 2] += 30; // 手前へ
+    pos[i * 3 + 2] += 40; // 手前への速度アップ
 
-    if (pos[i * 3 + 2] > 200) {
-      pos[i * 3 + 0] = (Math.random() - 0.5) * 2000;
-      pos[i * 3 + 1] = (Math.random() - 0.5) * 2000;
-      pos[i * 3 + 2] = -4000;
+    if (pos[i * 3 + 2] > 250) {
+      pos[i * 3 + 0] = (Math.random() - 0.5) * 2200;
+      pos[i * 3 + 1] = (Math.random() - 0.5) * 2200;
+      pos[i * 3 + 2] = -4500;
     }
   }
   geometry.attributes.position.needsUpdate = true;
