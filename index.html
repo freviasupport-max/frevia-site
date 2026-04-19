@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FREVIA – Remake / Handmade / IT</title>
+
+<style>
+  body {
+    margin: 0;
+    background: #000;
+    color: #fff;
+    font-family: "Noto Sans JP", sans-serif;
+    letter-spacing: 0.03em;
+  }
+
+  header {
+    padding: 20px 40px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(8px);
+  }
+
+  .logo {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+  }
+
+  main {
+    padding-top: 120px;
+  }
+
+  section {
+    padding: 140px 10vw;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+
+  h1, h2 {
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+  }
+
+  h1 {
+    font-size: 42px;
+    margin-bottom: 20px;
+  }
+
+  h2 {
+    font-size: 26px;
+    margin-bottom: 20px;
+  }
+
+  .accent {
+    color: #d9a441;
+  }
+
+  .sub {
+    color: #aaa;
+    max-width: 600px;
+    line-height: 1.8;
+    margin-bottom: 40px;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+  }
+
+  .card {
+    padding: 40px 30px;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    transition: 0.3s ease;
+  }
+
+  .card:hover {
+    border-color: #d9a441;
+    transform: translateY(-4px);
+  }
+
+  footer {
+    padding: 40px;
+    text-align: center;
+    color: #777;
+    font-size: 14px;
+  }
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">FREVIA</div>
+</header>
+
+<main>
+
+<!-- HERO -->
+<section>
+  <h1>FREVIA <span class="accent">STUDIO</span></h1>
+  <p class="sub">
+    自由と創造をかたちにする、リメイク × ハンドメイド × IT の複合スタジオ。  
+    シンプルで、強く、美しいものづくりを追求します。
+  </p>
+</section>
+
+<!-- ABOUT -->
+<section>
+  <h2>ABOUT</h2>
+  <p class="sub">
+    FREVIAは、リメイク・ハンドメイド制作、アップサイクル、中古再生、  
+    そしてITシステム開発を組み合わせたハイブリッドスタジオです。
+  </p>
+</section>
+
+<!-- SERVICES -->
+<section>
+  <h2>SERVICES</h2>
+  <div class="services-grid">
+    <div class="card">
+      <h3>REMAKE</h3>
+      <p class="sub">服・バッグ・小物の再生、オーダーメイド制作。</p>
+    </div>
+    <div class="card">
+      <h3>HANDMADE</h3>
+      <p class="sub">アクセサリー・一点物の制作。</p>
+    </div>
+    <div class="card">
+      <h3>IT SOLUTIONS</h3>
+      <p class="sub">GAS / API / 自動化ツール開発。</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section>
+  <h2>CONTACT</h2>
+  <p class="sub">ご相談・制作依頼などお気軽にお問い合わせください。</p>
+</section>
+
+</main>
+
+<footer>
+  © FREVIA STUDIO
+</footer>
+
+</body>
+</html>
