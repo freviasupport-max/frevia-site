@@ -109,39 +109,17 @@
   .delay-2 { transition-delay: 0.2s; }
   .delay-3 { transition-delay: 0.3s; }
 
-  /* ===== ABOUT セクション（背景画像＋光ライン＋強発光） ===== */
+  /* ===== ABOUT セクション（背景画像差し替え） ===== */
   .about-section {
     position: relative;
     width: 100%;
     height: 420px;
     overflow: hidden;
-    background: url("/frevia-site/images/about-bg-steampunk.jpg") center/cover no-repeat;
+    background: url("/frevia-site/images/about-workspace.jpg") center/cover no-repeat;
     padding: 0 !important;
     border-bottom: none !important;
   }
 
-  /* 光ライン：ずっと滑らかに流れる */
-  .light-line {
-    position: absolute;
-    top: 50%;
-    left: -40%;
-    width: 40%;
-    height: 4px;
-    background: linear-gradient(90deg,
-      rgba(212,175,55,0) 0%,
-      rgba(212,175,55,1) 50%,
-      rgba(212,175,55,0) 100%
-    );
-    filter: blur(6px);
-    animation: lineSweep 4s linear infinite;
-  }
-
-  @keyframes lineSweep {
-    0%   { left: -40%; opacity: 1; }
-    100% { left: 110%; opacity: 1; }
-  }
-
-  /* 文字の発光をかなり強めに */
   .about-content {
     position: relative;
     z-index: 10;
@@ -154,37 +132,6 @@
     font-size: 48px;
     letter-spacing: 4px;
     margin-bottom: 12px;
-  }
-
-  .glow-text {
-    animation: glow 4s ease-in-out infinite;
-  }
-
-  @keyframes glow {
-    0% {
-      filter: brightness(1);
-      text-shadow:
-        0 0 8px rgba(212,175,55,0.4),
-        0 0 16px rgba(212,175,55,0.2);
-    }
-    40% {
-      filter: brightness(1.4);
-      text-shadow:
-        0 0 12px rgba(212,175,55,0.7),
-        0 0 28px rgba(212,175,55,0.4);
-    }
-    70% {
-      filter: brightness(2);
-      text-shadow:
-        0 0 18px rgba(212,175,55,0.9),
-        0 0 40px rgba(212,175,55,0.7);
-    }
-    100% {
-      filter: brightness(1.2);
-      text-shadow:
-        0 0 10px rgba(212,175,55,0.5),
-        0 0 20px rgba(212,175,55,0.3);
-    }
   }
 
   .frevia { color: #fff; }
@@ -206,11 +153,9 @@
 
 <main>
 
-<!-- ===== ABOUT（背景画像＋光ライン＋強発光） ===== -->
+<!-- ===== ABOUT（背景：about-workspace.jpg） ===== -->
 <section class="about-section fade-up">
-  <div class="light-line"></div>
-
-  <div class="about-content glow-text">
+  <div class="about-content">
     <h1 class="title">
       <span class="frevia">FREVIA</span>
       <span class="studio">STUDIO</span>
