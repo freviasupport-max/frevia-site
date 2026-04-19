@@ -67,29 +67,54 @@ const camera = new THREE.PerspectiveCamera(
 camera.position.z = 1200;
 
 /* ============================
-   パーティクル（数＆速度アップ）
+   メイン粒子（奥から飛んでくる）
 ============================ */
-const COUNT = 4000;
-const geometry = new THREE.BufferGeometry();
-const positions = new Float32Array(COUNT * 3);
+const MAIN_COUNT = 4000;
+const mainGeo = new THREE.BufferGeometry();
+const mainPos = new Float32Array(MAIN_COUNT * 3);
 
-for (let i = 0; i < COUNT; i++) {
-  positions[i * 3 + 0] = (Math.random() - 0.5) * 2200;
-  positions[i * 3 + 1] = (Math.random() - 0.5) * 2200;
-  positions[i * 3 + 2] = Math.random() * -4500; // さらに奥から
+for (let i = 0; i < MAIN_COUNT; i++) {
+  mainPos[i * 3 + 0] = (Math.random() - 0.5) * 2200;
+  mainPos[i * 3 + 1] = (Math.random() - 0.5) * 2200;
+  mainPos[i * 3 + 2] = Math.random() * -4500;
 }
 
-geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+mainGeo.setAttribute("position", new THREE.BufferAttribute(mainPos, 3));
 
-const material = new THREE.PointsMaterial({
+const mainMat = new THREE.PointsMaterial({
   color: 0xd4af37,
   size: 4,
   transparent: true,
   opacity: 0.95
 });
 
-const particles = new THREE.Points(geometry, material);
-scene.add(particles);
+const mainParticles = new THREE.Points(mainGeo, mainMat);
+scene.add(mainParticles);
+
+/* ============================
+   アンビエント粒子（周囲に漂う）
+============================ */
+const AMBIENT_COUNT = 1500;
+const ambGeo = new THREE.BufferGeometry();
+const ambPos = new Float32Array(AMBIENT_COUNT * 3);
+
+for (let i = 0; i < AMBIENT_COUNT; i++) {
+  ambPos[i * 3 + 0] = (Math.random() - 0.5) * 3000;
+  ambPos[i * 3 + 1] = (Math.random() - 0.5) * 3000;
+  ambPos[i * 3 + 2] = (Math.random() - 0.5) * 3000;
+}
+
+ambGeo.setAttribute("position", new THREE.BufferAttribute(ambPos, 3));
+
+const ambMat = new THREE.PointsMaterial({
+  color: 0xffffff,
+  size: 2,
+  transparent: true,
+  opacity: 0.4
+});
+
+const ambientParticles = new THREE.Points(ambGeo, ambMat);
+scene.add(ambientParticles);
 
 /* ============================
    Shockwave Shader（破裂波）
@@ -112,10 +137,6 @@ const ShockwaveShader = {
     uniform float time;
     uniform vec2 center;
     varying vec2 vUv;
-
-    float rand(vec2 co){
-      return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
-    }
 
     void main() {
       vec2 uv = vUv;
@@ -145,7 +166,7 @@ composer.addPass(new THREE.RenderPass(scene, camera));
 
 const bloomPass = new THREE.UnrealBloomPass(
   new THREE.Vector2(window.innerWidth, window.innerHeight),
-  1.8,   // 強さアップ
+  1.8,
   0.4,
   0.85
 );
@@ -155,25 +176,34 @@ const shockwavePass = new THREE.ShaderPass(ShockwaveShader);
 composer.addPass(shockwavePass);
 
 /* ============================
-   アニメーション（迫力アップ）
+   アニメーション
 ============================ */
 let t = 0;
 
 function animate() {
-  t += 0.012; // 少し速く
+  t += 0.012;
   shockwavePass.uniforms.time.value = (t % 1.1);
 
-  const pos = geometry.attributes.position.array;
-  for (let i = 0; i < COUNT; i++) {
-    pos[i * 3 + 2] += 40; // 手前への速度アップ
+  /* メイン粒子（奥→手前） */
+  const mp = mainGeo.attributes.position.array;
+  for (let i = 0; i < MAIN_COUNT; i++) {
+    mp[i * 3 + 2] += 40;
 
-    if (pos[i * 3 + 2] > 250) {
-      pos[i * 3 + 0] = (Math.random() - 0.5) * 2200;
-      pos[i * 3 + 1] = (Math.random() - 0.5) * 2200;
-      pos[i * 3 + 2] = -4500;
+    if (mp[i * 3 + 2] > 250) {
+      mp[i * 3 + 0] = (Math.random() - 0.5) * 2200;
+      mp[i * 3 + 1] = (Math.random() - 0.5) * 2200;
+      mp[i * 3 + 2] = -4500;
     }
   }
-  geometry.attributes.position.needsUpdate = true;
+  mainGeo.attributes.position.needsUpdate = true;
+
+  /* アンビエント粒子（ゆっくり漂う） */
+  const ap = ambGeo.attributes.position.array;
+  for (let i = 0; i < AMBIENT_COUNT; i++) {
+    ap[i * 3 + 0] += Math.sin(t + i) * 0.2;
+    ap[i * 3 + 1] += Math.cos(t + i) * 0.2;
+  }
+  ambGeo.attributes.position.needsUpdate = true;
 
   composer.render();
   requestAnimationFrame(animate);
