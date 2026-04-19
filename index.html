@@ -109,49 +109,90 @@
   .delay-2 { transition-delay: 0.2s; }
   .delay-3 { transition-delay: 0.3s; }
 
-  /* ===== ABOUT セクション（3D Shockwave） ===== */
+  /* ===== ABOUT セクション（3D粒子＋光ライン＋強い発光） ===== */
   .about-section {
     position: relative;
     width: 100%;
-    height: 600px;
+    height: 420px;
     overflow: hidden;
     background: #000;
     padding: 0 !important;
     border-bottom: none !important;
   }
 
-  @media (max-width: 768px) {
-    .about-section {
-      height: 420px;
-    }
-  }
-
-  #three-canvas {
+  #particle3d {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    display: block;
   }
 
-  .about-content {
+  /* 光ライン：ずっと滑らかに流れる */
+  .light-line {
     position: absolute;
     top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    left: -40%;
+    width: 40%;
+    height: 4px;
+    background: linear-gradient(90deg,
+      rgba(212,175,55,0) 0%,
+      rgba(212,175,55,1) 50%,
+      rgba(212,175,55,0) 100%
+    );
+    filter: blur(6px);
+    animation: lineSweep 4s linear infinite;
+  }
+
+  @keyframes lineSweep {
+    0%   { left: -40%; opacity: 1; }
+    100% { left: 110%; opacity: 1; }
+  }
+
+  /* 文字の発光をかなり強めに */
+  .about-content {
+    position: relative;
     z-index: 10;
     text-align: center;
+    top: 50%;
+    transform: translateY(-50%);
   }
 
   .title {
     font-size: 48px;
     letter-spacing: 4px;
     margin-bottom: 12px;
-    text-shadow:
-      0 0 20px rgba(255,215,100,0.9),
-      0 0 40px rgba(255,215,100,0.7),
-      0 0 80px rgba(255,215,100,0.5);
+  }
+
+  .glow-text {
+    animation: glow 4s ease-in-out infinite;
+  }
+
+  @keyframes glow {
+    0% {
+      filter: brightness(1);
+      text-shadow:
+        0 0 8px rgba(212,175,55,0.4),
+        0 0 16px rgba(212,175,55,0.2);
+    }
+    40% {
+      filter: brightness(1.4);
+      text-shadow:
+        0 0 12px rgba(212,175,55,0.7),
+        0 0 28px rgba(212,175,55,0.4);
+    }
+    70% {
+      filter: brightness(2);
+      text-shadow:
+        0 0 18px rgba(212,175,55,0.9),
+        0 0 40px rgba(212,175,55,0.7);
+    }
+    100% {
+      filter: brightness(1.2);
+      text-shadow:
+        0 0 10px rgba(212,175,55,0.5),
+        0 0 20px rgba(212,175,55,0.3);
+    }
   }
 
   .frevia { color: #fff; }
@@ -173,11 +214,12 @@
 
 <main>
 
-<!-- ===== ABOUT（Shockwave × 3D 粒子 × Ambient 粒子） ===== -->
+<!-- ===== ABOUT（3D粒子＋光ライン＋強発光） ===== -->
 <section class="about-section fade-up">
-  <canvas id="three-canvas"></canvas>
+  <canvas id="particle3d"></canvas>
+  <div class="light-line"></div>
 
-  <div class="about-content">
+  <div class="about-content glow-text">
     <h1 class="title">
       <span class="frevia">FREVIA</span>
       <span class="studio">STUDIO</span>
@@ -233,15 +275,6 @@
   © FREVIA STUDIO
 </footer>
 
-<!-- Three.js（unpkg 版：確実に読み込まれる） -->
-<script src="https://unpkg.com/three@0.152.2/build/three.min.js"></script>
-
-<!-- PostProcessing（unpkg 版） -->
-<script src="https://unpkg.com/three@0.152.2/examples/js/postprocessing/EffectComposer.js"></script>
-<script src="https://unpkg.com/three@0.152.2/examples/js/postprocessing/RenderPass.js"></script>
-<script src="https://unpkg.com/three@0.152.2/examples/js/postprocessing/ShaderPass.js"></script>
-<script src="https://unpkg.com/three@0.152.2/examples/js/postprocessing/UnrealBloomPass.js"></script>
-
 <script>
 /* fade-up */
 const targets = document.querySelectorAll('.fade-up');
@@ -252,159 +285,63 @@ const observer = new IntersectionObserver(entries => {
 }, { threshold: 0.2 });
 targets.forEach(target => observer.observe(target));
 
-/* ============================
-   Three.js Shockwave Intro
-============================ */
-const canvas3d = document.getElementById("three-canvas");
-const renderer = new THREE.WebGLRenderer({ canvas: canvas3d, antialias: true });
-renderer.setPixelRatio(window.devicePixelRatio);
+/* 3D粒子：奥から手前へ“ずっと”流れ続ける */
+const canvas = document.getElementById("particle3d");
+const ctx = canvas.getContext("2d");
 
-function resizeRenderer() {
-  const w = canvas3d.offsetWidth;
-  const h = canvas3d.offsetHeight;
-  renderer.setSize(w, h);
-  camera.aspect = w / h;
-  camera.updateProjectionMatrix();
+function resize() {
+  canvas.width = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
 }
-window.addEventListener("resize", resizeRenderer);
+window.addEventListener("resize", resize);
+resize();
 
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(60, canvas3d.offsetWidth / canvas3d.offsetHeight, 1, 5000);
-camera.position.z = 1200;
+const COUNT = 320;
+let particles = [];
 
-/* メイン粒子 */
-const MAIN_COUNT = 4000;
-const mainGeo = new THREE.BufferGeometry();
-const mainPos = new Float32Array(MAIN_COUNT * 3);
-
-for (let i = 0; i < MAIN_COUNT; i++) {
-  mainPos[i * 3 + 0] = (Math.random() - 0.5) * 2200;
-  mainPos[i * 3 + 1] = (Math.random() - 0.5) * 2200;
-  mainPos[i * 3 + 2] = Math.random() * -4500;
+function init() {
+  particles = [];
+  for (let i = 0; i < COUNT; i++) {
+    particles.push({
+      x: (Math.random() - 0.5) * 800,
+      y: (Math.random() - 0.5) * 800,
+      z: Math.random() * 2000 + 200,
+      size: 1 + Math.random() * 2,
+      speed: 6 + Math.random() * 4
+    });
+  }
 }
-
-mainGeo.setAttribute("position", new THREE.BufferAttribute(mainPos, 3));
-
-const mainMat = new THREE.PointsMaterial({
-  color: 0xd4af37,
-  size: 4,
-  transparent: true,
-  opacity: 0.95
-});
-
-const mainParticles = new THREE.Points(mainGeo, mainMat);
-scene.add(mainParticles);
-
-/* Ambient 粒子 */
-const AMBIENT_COUNT = 1500;
-const ambGeo = new THREE.BufferGeometry();
-const ambPos = new Float32Array(AMBIENT_COUNT * 3);
-
-for (let i = 0; i < AMBIENT_COUNT; i++) {
-  ambPos[i * 3 + 0] = (Math.random() - 0.5) * 3000;
-  ambPos[i * 3 + 1] = (Math.random() - 0.5) * 3000;
-  ambPos[i * 3 + 2] = (Math.random() - 0.5) * 3000;
-}
-
-ambGeo.setAttribute("position", new THREE.BufferAttribute(ambPos, 3));
-
-const ambMat = new THREE.PointsMaterial({
-  color: 0xffffff,
-  size: 2,
-  transparent: true,
-  opacity: 0.4
-});
-
-const ambientParticles = new THREE.Points(ambGeo, ambMat);
-scene.add(ambientParticles);
-
-/* Shockwave Shader */
-const ShockwaveShader = {
-  uniforms: {
-    tDiffuse: { value: null },
-    time: { value: 0.0 },
-    center: { value: new THREE.Vector2(0.5, 0.5) }
-  },
-  vertexShader: `
-    varying vec2 vUv;
-    void main() {
-      vUv = uv;
-      gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
-    }
-  `,
-  fragmentShader: `
-    uniform sampler2D tDiffuse;
-    uniform float time;
-    uniform vec2 center;
-    varying vec2 vUv;
-
-    void main() {
-      vec2 uv = vUv;
-      vec2 dir = uv - center;
-      float dist = length(dir);
-
-      float wave = sin((dist - time * 2.0) * 55.0) * 0.06;
-      wave *= smoothstep(0.55, 0.0, abs(dist - time));
-
-      uv += normalize(dir) * wave;
-
-      vec4 color = texture2D(tDiffuse, uv);
-
-      float glow = smoothstep(0.02, 0.0, abs(dist - time));
-      color += vec4(1.0, 0.95, 0.7, 1.0) * glow * 1.4;
-
-      gl_FragColor = color;
-    }
-  `
-};
-
-/* PostProcessing */
-const composer = new THREE.EffectComposer(renderer);
-composer.addPass(new THREE.RenderPass(scene, camera));
-
-const bloomPass = new THREE.UnrealBloomPass(
-  new THREE.Vector2(canvas3d.offsetWidth, canvas3d.offsetHeight),
-  1.8,
-  0.4,
-  0.85
-);
-composer.addPass(bloomPass);
-
-const shockwavePass = new THREE.ShaderPass(ShockwaveShader);
-composer.addPass(shockwavePass);
-
-/* Animation */
-let t = 0;
 
 function animate() {
-  t += 0.02;
-  shockwavePass.uniforms.time.value = (t % 1.0);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  /* メイン粒子 */
-  const mp = mainGeo.attributes.position.array;
-  for (let i = 0; i < MAIN_COUNT; i++) {
-    mp[i * 3 + 2] += 45;
-    if (mp[i * 3 + 2] > 250) {
-      mp[i * 3 + 0] = (Math.random() - 0.5) * 2200;
-      mp[i * 3 + 1] = (Math.random() - 0.5) * 2200;
-      mp[i * 3 + 2] = -4500;
+  const cx = canvas.width / 2;
+  const cy = canvas.height / 2;
+
+  particles.forEach(p => {
+    p.z -= p.speed;
+
+    // 手前まで来たら奥に戻す（止まらず流れ続ける）
+    if (p.z < 50) {
+      p.z = 2000;
+      p.x = (Math.random() - 0.5) * 800;
+      p.y = (Math.random() - 0.5) * 800;
     }
-  }
-  mainGeo.attributes.position.needsUpdate = true;
 
-  /* Ambient 粒子 */
-  const ap = ambGeo.attributes.position.array;
-  for (let i = 0; i < AMBIENT_COUNT; i++) {
-    ap[i * 3 + 0] += Math.sin(t + i) * 0.25;
-    ap[i * 3 + 1] += Math.cos(t + i) * 0.25;
-  }
-  ambGeo.attributes.position.needsUpdate = true;
+    const scale = 200 / p.z;
+    const x2d = cx + p.x * scale;
+    const y2d = cy + p.y * scale;
 
-  composer.render();
+    ctx.fillStyle = "rgba(212,175,55," + (0.2 + (1 - p.z / 2000) * 0.8) + ")";
+    ctx.beginPath();
+    ctx.arc(x2d, y2d, p.size * scale, 0, Math.PI * 2);
+    ctx.fill();
+  });
+
   requestAnimationFrame(animate);
 }
 
-resizeRenderer();
+init();
 animate();
 </script>
 
