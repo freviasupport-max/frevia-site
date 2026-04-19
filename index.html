@@ -26,11 +26,10 @@
     box-sizing: border-box;
     display: flex;
     align-items: center;
-    height: 72px;
+    height: 110px;
     overflow: hidden;
   }
 
-  /* ロゴ画像：余白を消してギリギリまで大きく */
   .logo {
     display: flex;
     align-items: center;
@@ -40,17 +39,14 @@
   }
 
   .logo img {
-    height: 72px;
+    height: 110px;
     width: auto;
     display: block;
-    /* 画像自体の余白（黒帯）をネガティブマージンで吸収 */
     margin-left: -12px;
-    object-fit: cover;
-    object-position: left center;
   }
 
   main {
-    padding-top: 72px;
+    padding-top: 110px;
   }
 
   section {
@@ -73,7 +69,6 @@
     margin-bottom: 40px;
   }
 
-  /* ===== HERO セクション ===== */
   .about-section {
     position: relative;
     width: 100%;
@@ -126,9 +121,7 @@
   .frevia { color: #fff; }
   .studio { color: #d4af37; }
 
-  .about-lower {
-    background: #000;
-  }
+  .about-lower { background: #000; }
 
   .services-grid {
     display: grid;
@@ -183,14 +176,14 @@
   .delay-3 { transition-delay: 0.3s; }
 
   @media (max-width: 768px) {
-    header { height: 56px; }
+    header { height: 80px; }
 
     .logo img {
-      height: 56px;
+      height: 80px;
       margin-left: -8px;
     }
 
-    main { padding-top: 56px; }
+    main { padding-top: 80px; }
 
     section { padding: 80px 6vw; }
 
