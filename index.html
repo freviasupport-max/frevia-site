@@ -128,7 +128,10 @@
     height: 420px;
     overflow: hidden;
     background: #000;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
+
+    /* ← ズレ完全防止 */
+    padding: 0 !important;
+    border-bottom: none !important;
   }
 
   #frevia-bg {
@@ -146,6 +149,7 @@
     top: 50%;
     transform: translateY(-50%);
     color: white;
+    padding: 0 10vw;
   }
 
   .title {
