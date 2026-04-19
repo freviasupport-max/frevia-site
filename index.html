@@ -15,7 +15,7 @@
   }
 
   header {
-    padding: 20px 40px;
+    padding: 10px 30px;
     border-bottom: 1px solid rgba(255,255,255,0.1);
     position: fixed;
     width: 100%;
@@ -24,12 +24,15 @@
     backdrop-filter: blur(8px);
     z-index: 100;
     box-sizing: border-box;
+    display: flex;
+    align-items: center;
   }
 
-  .logo {
-    font-size: 18px;
-    font-weight: 600;
-    letter-spacing: 0.15em;
+  /* ロゴ画像 */
+  .logo img {
+    height: 48px;
+    width: auto;
+    display: block;
   }
 
   main {
@@ -72,7 +75,6 @@
     height: auto;
   }
 
-  /* パーティクル用キャンバス */
   #particle-canvas {
     position: absolute;
     top: 0;
@@ -83,7 +85,6 @@
     pointer-events: none;
   }
 
-  /* タイトル */
   .about-content {
     position: absolute;
     z-index: 10;
@@ -94,7 +95,6 @@
     white-space: nowrap;
   }
 
-  /* 半透明黒帯 */
   .title-band {
     display: inline-block;
     background: rgba(0, 0, 0, 0.52);
@@ -175,7 +175,11 @@
   /* ===== スマホ対応 ===== */
   @media (max-width: 768px) {
     header {
-      padding: 16px 20px;
+      padding: 8px 16px;
+    }
+
+    .logo img {
+      height: 36px;
     }
 
     section {
@@ -209,7 +213,9 @@
 <body>
 
 <header>
-  <div class="logo">FREVIA</div>
+  <div class="logo">
+    <img src="/frevia-site/images/logo.png" alt="FREVIA">
+  </div>
 </header>
 
 <main>
@@ -322,11 +328,9 @@ function animateParticles() {
     ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
     ctx.fillStyle = p.color + p.alpha + ')';
     ctx.fill();
-
     p.x += p.speedX;
     p.y += p.speedY;
     p.alpha -= 0.0015;
-
     if (p.alpha <= 0 || p.y < -10) {
       p.x = Math.random() * canvas.width;
       p.y = canvas.height + 5;
