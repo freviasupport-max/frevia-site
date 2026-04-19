@@ -16,7 +16,7 @@
   }
 
   header {
-    padding: 0;
+    padding: 0 40px 0 0;
     border-bottom: 1px solid rgba(255,255,255,0.1);
     position: fixed;
     width: 100%;
@@ -27,6 +27,7 @@
     box-sizing: border-box;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     height: 110px;
     overflow: hidden;
   }
@@ -37,6 +38,7 @@
     height: 100%;
     margin: 0;
     padding: 0;
+    flex-shrink: 0;
   }
 
   .logo img {
@@ -44,6 +46,45 @@
     width: auto;
     display: block;
     margin-left: -12px;
+  }
+
+  /* ナビゲーション */
+  nav {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+  }
+
+  nav a {
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    position: relative;
+    transition: color 0.3s ease;
+  }
+
+  /* ホバー時にゴールドに */
+  nav a:hover {
+    color: #d4af37;
+  }
+
+  /* アンダーラインアニメーション */
+  nav a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: linear-gradient(to right, #4a90d9, #f5c842, #f0547a);
+    transition: width 0.3s ease;
+  }
+
+  nav a:hover::after {
+    width: 100%;
   }
 
   main {
@@ -112,7 +153,6 @@
     padding: 0 24px 18px;
   }
 
-  /* マルチカラーグラデーション定義 */
   .title-frevia {
     display: block;
     font-family: 'Pinyon Script', cursive;
@@ -120,7 +160,6 @@
     line-height: 1.0;
     letter-spacing: 0.04em;
     margin: 0 0 -4px;
-    /* ロゴカラー：ブルー→イエロー→ピンク */
     background: linear-gradient(
       100deg,
       #4a90d9 0%,
@@ -133,7 +172,6 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    text-shadow: none;
     filter: drop-shadow(0 0 20px rgba(0,0,0,0.95)) drop-shadow(2px 3px 10px rgba(0,0,0,1));
   }
 
@@ -155,11 +193,9 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    text-shadow: none;
     filter: drop-shadow(0 0 12px rgba(0,0,0,0.95)) drop-shadow(1px 2px 6px rgba(0,0,0,1));
   }
 
-  /* ゴールドアンダーライン */
   .title-underline {
     display: block;
     width: 100%;
@@ -185,10 +221,8 @@
     line-height: 1;
   }
 
-  /* ===== ABOUT ===== */
   .about-lower { background: #000; }
 
-  /* ===== SERVICES ===== */
   .services-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -241,8 +275,32 @@
   .delay-2 { transition-delay: 0.2s; }
   .delay-3 { transition-delay: 0.3s; }
 
+  /* ハンバーガーメニュー（スマホ） */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 8px;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 24px;
+    height: 1.5px;
+    background: #fff;
+    transition: 0.3s ease;
+  }
+
+  .nav-overlay {
+    display: none;
+  }
+
   @media (max-width: 768px) {
-    header { height: 80px; }
+    header {
+      height: 80px;
+      padding: 0 20px 0 0;
+    }
 
     .logo img {
       height: 80px;
@@ -250,6 +308,54 @@
     }
 
     main { padding-top: 80px; }
+
+    /* スマホはハンバーガーメニュー */
+    nav { display: none; }
+
+    .hamburger { display: flex; }
+
+    .nav-overlay {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.95);
+      z-index: 200;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .nav-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .nav-overlay a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .nav-overlay .close-btn {
+      position: absolute;
+      top: 30px;
+      right: 24px;
+      font-size: 28px;
+      color: #fff;
+      cursor: pointer;
+      background: none;
+      border: none;
+    }
 
     section { padding: 80px 6vw; }
 
@@ -273,7 +379,29 @@
   <div class="logo">
     <img src="/frevia-site/images/logo.png" alt="FREVIA">
   </div>
+
+  <!-- PC ナビ -->
+  <nav>
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <!-- スマホ ハンバーガー -->
+  <div class="hamburger" onclick="document.getElementById('navOverlay').classList.add('open')">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
 </header>
+
+<!-- スマホ オーバーレイメニュー -->
+<div class="nav-overlay" id="navOverlay">
+  <button class="close-btn" onclick="document.getElementById('navOverlay').classList.remove('open')">✕</button>
+  <a href="#about" onclick="document.getElementById('navOverlay').classList.remove('open')">About</a>
+  <a href="#services" onclick="document.getElementById('navOverlay').classList.remove('open')">Services</a>
+  <a href="#contact" onclick="document.getElementById('navOverlay').classList.remove('open')">Contact</a>
+</div>
 
 <main>
 
@@ -289,15 +417,15 @@
   </div>
 </section>
 
-<section class="about-lower fade-up">
+<section class="about-lower fade-up" id="about">
   <h2>ABOUT</h2>
   <p class="sub">
     自由と創造をかたちにする、リメイク × ハンドメイド × IT の複合スタジオ。<br>
-    繊細で、強く、美しく。ITで時間を解放し、創造する自由へ。
+    繊細で、強く、美しく。ITで時間を奪い返し、創造する自由へ。
   </p>
 </section>
 
-<section class="fade-up">
+<section class="fade-up" id="services">
   <h2>SERVICES</h2>
   <div class="services-grid">
 
@@ -322,7 +450,7 @@
   </div>
 </section>
 
-<section class="fade-up">
+<section class="fade-up" id="contact">
   <h2>CONTACT</h2>
   <p class="sub">ご相談・制作依頼などお気軽にお問い合わせください。</p>
 </section>
