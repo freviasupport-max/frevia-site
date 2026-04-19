@@ -56,13 +56,14 @@
     margin-bottom: 40px;
   }
 
-  /* ===== FREVIA STUDIO（背景画像・切り取りなし） ===== */
+  /* ===== HERO セクション ===== */
   .about-section {
     position: relative;
     width: 100%;
     padding: 0 !important;
     border-bottom: none !important;
     background: #000;
+    overflow: hidden;
   }
 
   .about-section img.hero-img {
@@ -71,6 +72,18 @@
     height: auto;
   }
 
+  /* パーティクル用キャンバス */
+  #particle-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    pointer-events: none;
+  }
+
+  /* タイトル */
   .about-content {
     position: absolute;
     z-index: 10;
@@ -79,6 +92,14 @@
     transform: translate(-50%, -50%);
     text-align: center;
     white-space: nowrap;
+  }
+
+  /* 半透明黒帯 */
+  .title-band {
+    display: inline-block;
+    background: rgba(0, 0, 0, 0.52);
+    padding: 14px 36px;
+    border-radius: 4px;
   }
 
   .title {
@@ -90,11 +111,12 @@
   .frevia { color: #fff; }
   .studio { color: #d4af37; }
 
-  /* ===== ABOUT（背景なし・黒背景） ===== */
+  /* ===== ABOUT ===== */
   .about-lower {
     background: #000;
   }
 
+  /* ===== SERVICES ===== */
   .services-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -148,7 +170,6 @@
   .delay-1 { transition-delay: 0.1s; }
   .delay-2 { transition-delay: 0.2s; }
   .delay-3 { transition-delay: 0.3s; }
-
 </style>
 </head>
 
@@ -160,18 +181,21 @@
 
 <main>
 
-<!-- ===== FREVIA STUDIO（画像を切り取らず全体表示） ===== -->
+<!-- ===== HERO ===== -->
 <section class="about-section fade-up">
   <img class="hero-img" src="/frevia-site/images/about-workspace.jpg" alt="FREVIA STUDIO workspace">
+  <canvas id="particle-canvas"></canvas>
   <div class="about-content">
-    <h1 class="title">
-      <span class="frevia">FREVIA</span>
-      <span class="studio"> STUDIO</span>
-    </h1>
+    <div class="title-band">
+      <h1 class="title">
+        <span class="frevia">FREVIA</span>
+        <span class="studio"> STUDIO</span>
+      </h1>
+    </div>
   </div>
 </section>
 
-<!-- ===== ABOUT（背景なし・文言変更） ===== -->
+<!-- ===== ABOUT ===== -->
 <section class="about-lower fade-up">
   <h2>ABOUT</h2>
   <p class="sub">
@@ -180,6 +204,7 @@
   </p>
 </section>
 
+<!-- ===== SERVICES ===== -->
 <section class="fade-up">
   <h2>SERVICES</h2>
   <div class="services-grid">
@@ -205,6 +230,7 @@
   </div>
 </section>
 
+<!-- ===== CONTACT ===== -->
 <section class="fade-up">
   <h2>CONTACT</h2>
   <p class="sub">ご相談・制作依頼などお気軽にお問い合わせください。</p>
@@ -217,7 +243,7 @@
 </footer>
 
 <script>
-/* fade-up */
+/* ===== fade-up ===== */
 const targets = document.querySelectorAll('.fade-up');
 const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
@@ -225,6 +251,76 @@ const observer = new IntersectionObserver(entries => {
   });
 }, { threshold: 0.2 });
 targets.forEach(target => observer.observe(target));
+
+/* ===== パーティクル ===== */
+const canvas = document.getElementById('particle-canvas');
+const ctx = canvas.getContext('2d');
+let particles = [];
+let animId;
+
+function resizeCanvas() {
+  const section = canvas.parentElement;
+  canvas.width = section.offsetWidth;
+  canvas.height = section.offsetHeight;
+}
+
+function createParticles() {
+  particles = [];
+  const count = Math.floor((canvas.width * canvas.height) / 8000);
+  for (let i = 0; i < count; i++) {
+    particles.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: Math.random() * 1.8 + 0.4,
+      speedX: (Math.random() - 0.5) * 0.4,
+      speedY: (Math.random() - 0.5) * 0.4 - 0.3,
+      alpha: Math.random() * 0.6 + 0.2,
+      // ゴールド系とホワイト系をランダムで
+      color: Math.random() > 0.5
+        ? `rgba(255, ${180 + Math.floor(Math.random()*50)}, 80,`
+        : `rgba(255, 255, ${220 + Math.floor(Math.random()*35)},`
+    });
+  }
+}
+
+function animateParticles() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles.forEach(p => {
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.fillStyle = p.color + p.alpha + ')';
+    ctx.fill();
+
+    p.x += p.speedX;
+    p.y += p.speedY;
+    p.alpha -= 0.0015;
+
+    // 消えたら再生成
+    if (p.alpha <= 0 || p.y < -10) {
+      p.x = Math.random() * canvas.width;
+      p.y = canvas.height + 5;
+      p.alpha = Math.random() * 0.6 + 0.2;
+    }
+  });
+  animId = requestAnimationFrame(animateParticles);
+}
+
+// 画像読み込み後にキャンバスサイズを合わせる
+const heroImg = document.querySelector('.hero-img');
+function initParticles() {
+  resizeCanvas();
+  createParticles();
+  cancelAnimationFrame(animId);
+  animateParticles();
+}
+
+if (heroImg.complete) {
+  initParticles();
+} else {
+  heroImg.addEventListener('load', initParticles);
+}
+
+window.addEventListener('resize', initParticles);
 </script>
 
 </body>
