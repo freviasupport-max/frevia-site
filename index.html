@@ -113,11 +113,17 @@
   .about-section {
     position: relative;
     width: 100%;
-    height: 420px;
+    height: 600px;
     overflow: hidden;
     background: #000;
     padding: 0 !important;
     border-bottom: none !important;
+  }
+
+  @media (max-width: 768px) {
+    .about-section {
+      height: 420px;
+    }
   }
 
   #three-canvas {
@@ -251,16 +257,19 @@ targets.forEach(target => observer.observe(target));
 ============================ */
 const canvas3d = document.getElementById("three-canvas");
 const renderer = new THREE.WebGLRenderer({ canvas: canvas3d, antialias: true });
-renderer.setSize(canvas3d.clientWidth, canvas3d.clientHeight);
 renderer.setPixelRatio(window.devicePixelRatio);
 
+function resizeRenderer() {
+  const w = canvas3d.offsetWidth;
+  const h = canvas3d.offsetHeight;
+  renderer.setSize(w, h);
+  camera.aspect = w / h;
+  camera.updateProjectionMatrix();
+}
+window.addEventListener("resize", resizeRenderer);
+
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(
-  60,
-  canvas3d.clientWidth / canvas3d.clientHeight,
-  1,
-  5000
-);
+const camera = new THREE.PerspectiveCamera(60, canvas3d.offsetWidth / canvas3d.offsetHeight, 1, 5000);
 camera.position.z = 1200;
 
 /* メイン粒子 */
@@ -286,7 +295,7 @@ const mainMat = new THREE.PointsMaterial({
 const mainParticles = new THREE.Points(mainGeo, mainMat);
 scene.add(mainParticles);
 
-/* アンビエント粒子 */
+/* Ambient 粒子 */
 const AMBIENT_COUNT = 1500;
 const ambGeo = new THREE.BufferGeometry();
 const ambPos = new Float32Array(AMBIENT_COUNT * 3);
@@ -334,15 +343,15 @@ const ShockwaveShader = {
       vec2 dir = uv - center;
       float dist = length(dir);
 
-      float wave = sin((dist - time * 1.7) * 45.0) * 0.04;
-      wave *= smoothstep(0.45, 0.0, abs(dist - time));
+      float wave = sin((dist - time * 2.0) * 55.0) * 0.06;
+      wave *= smoothstep(0.55, 0.0, abs(dist - time));
 
       uv += normalize(dir) * wave;
 
       vec4 color = texture2D(tDiffuse, uv);
 
       float glow = smoothstep(0.02, 0.0, abs(dist - time));
-      color += vec4(1.0, 0.95, 0.7, 1.0) * glow * 1.0;
+      color += vec4(1.0, 0.95, 0.7, 1.0) * glow * 1.4;
 
       gl_FragColor = color;
     }
@@ -354,7 +363,7 @@ const composer = new THREE.EffectComposer(renderer);
 composer.addPass(new THREE.RenderPass(scene, camera));
 
 const bloomPass = new THREE.UnrealBloomPass(
-  new THREE.Vector2(canvas3d.clientWidth, canvas3d.clientHeight),
+  new THREE.Vector2(canvas3d.offsetWidth, canvas3d.offsetHeight),
   1.8,
   0.4,
   0.85
@@ -368,13 +377,13 @@ composer.addPass(shockwavePass);
 let t = 0;
 
 function animate() {
-  t += 0.012;
-  shockwavePass.uniforms.time.value = (t % 1.1);
+  t += 0.02;
+  shockwavePass.uniforms.time.value = (t % 1.0);
 
   /* メイン粒子 */
   const mp = mainGeo.attributes.position.array;
   for (let i = 0; i < MAIN_COUNT; i++) {
-    mp[i * 3 + 2] += 40;
+    mp[i * 3 + 2] += 45;
     if (mp[i * 3 + 2] > 250) {
       mp[i * 3 + 0] = (Math.random() - 0.5) * 2200;
       mp[i * 3 + 1] = (Math.random() - 0.5) * 2200;
@@ -383,11 +392,11 @@ function animate() {
   }
   mainGeo.attributes.position.needsUpdate = true;
 
-  /* アンビエント粒子 */
+  /* Ambient 粒子 */
   const ap = ambGeo.attributes.position.array;
   for (let i = 0; i < AMBIENT_COUNT; i++) {
-    ap[i * 3 + 0] += Math.sin(t + i) * 0.2;
-    ap[i * 3 + 1] += Math.cos(t + i) * 0.2;
+    ap[i * 3 + 0] += Math.sin(t + i) * 0.25;
+    ap[i * 3 + 1] += Math.cos(t + i) * 0.25;
   }
   ambGeo.attributes.position.needsUpdate = true;
 
@@ -395,14 +404,8 @@ function animate() {
   requestAnimationFrame(animate);
 }
 
+resizeRenderer();
 animate();
-
-/* Resize */
-window.addEventListener("resize", () => {
-  renderer.setSize(canvas3d.clientWidth, canvas3d.clientHeight);
-  camera.aspect = canvas3d.clientWidth / canvas3d.clientHeight;
-  camera.updateProjectionMatrix();
-});
 </script>
 
 </body>
