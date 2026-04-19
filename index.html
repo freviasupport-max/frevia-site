@@ -7,6 +7,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Cormorant+Garamond:ital,wght@1,300;1,600&family=Noto+Sans+JP:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
+  html { scroll-behavior: smooth; }
+
   body {
     margin: 0;
     background: #000;
@@ -41,6 +43,11 @@
     flex-shrink: 0;
   }
 
+  .logo a {
+    display: block;
+    height: 100%;
+  }
+
   .logo img {
     height: 110px;
     width: auto;
@@ -48,7 +55,6 @@
     margin-left: -12px;
   }
 
-  /* ナビゲーション */
   nav {
     display: flex;
     align-items: center;
@@ -66,12 +72,8 @@
     transition: color 0.3s ease;
   }
 
-  /* ホバー時にゴールドに */
-  nav a:hover {
-    color: #d4af37;
-  }
+  nav a:hover { color: #d4af37; }
 
-  /* アンダーラインアニメーション */
   nav a::after {
     content: '';
     position: absolute;
@@ -83,13 +85,9 @@
     transition: width 0.3s ease;
   }
 
-  nav a:hover::after {
-    width: 100%;
-  }
+  nav a:hover::after { width: 100%; }
 
-  main {
-    padding-top: 110px;
-  }
+  main { padding-top: 110px; }
 
   section {
     padding: 140px 10vw;
@@ -129,10 +127,8 @@
 
   #particle-canvas {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
     z-index: 5;
     pointer-events: none;
   }
@@ -140,8 +136,7 @@
   .about-content {
     position: absolute;
     z-index: 10;
-    top: 50%;
-    left: 50%;
+    top: 50%; left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
     white-space: nowrap;
@@ -160,15 +155,7 @@
     line-height: 1.0;
     letter-spacing: 0.04em;
     margin: 0 0 -4px;
-    background: linear-gradient(
-      100deg,
-      #4a90d9 0%,
-      #5bb8f5 15%,
-      #f5c842 40%,
-      #f0a030 55%,
-      #f0547a 80%,
-      #e8304a 100%
-    );
+    background: linear-gradient(100deg, #4a90d9 0%, #5bb8f5 15%, #f5c842 40%, #f0a030 55%, #f0547a 80%, #e8304a 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -184,12 +171,7 @@
     letter-spacing: 0.55em;
     text-transform: uppercase;
     margin-bottom: 14px;
-    background: linear-gradient(
-      100deg,
-      #4a90d9 0%,
-      #f5c842 45%,
-      #f0547a 100%
-    );
+    background: linear-gradient(100deg, #4a90d9 0%, #f5c842 45%, #f0547a 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -200,21 +182,14 @@
     display: block;
     width: 100%;
     height: 1px;
-    background: linear-gradient(to right,
-      transparent,
-      #4a90d9 10%,
-      #f5c842 50%,
-      #f0547a 90%,
-      transparent);
-    margin: 0 auto;
+    background: linear-gradient(to right, transparent, #4a90d9 10%, #f5c842 50%, #f0547a 90%, transparent);
     position: relative;
   }
 
   .title-underline::before {
     content: '◆';
     position: absolute;
-    top: 50%;
-    left: 50%;
+    top: 50%; left: 50%;
     transform: translate(-50%, -50%);
     font-size: 8px;
     color: #f5c842;
@@ -223,17 +198,20 @@
 
   .about-lower { background: #000; }
 
+  /* ===== SERVICES グリッド ===== */
   .services-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 40px;
+    gap: 24px;
   }
 
+  /* カード */
   .card {
-    padding: 40px 30px;
     border: 1px solid rgba(255,255,255,0.1);
     border-radius: 8px;
-    transition: 0.3s ease;
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color 0.3s ease, transform 0.3s ease;
   }
 
   .card:hover {
@@ -241,17 +219,128 @@
     transform: translateY(-4px);
   }
 
-  .card img {
+  .card.open {
+    border-color: #d4af37;
+    transform: translateY(0);
+  }
+
+  /* カードヘッダー部分（クリック領域） */
+  .card-header {
+    padding: 30px 30px 24px;
+  }
+
+  .card-header img {
     width: 100%;
     height: 180px;
     object-fit: cover;
     border-radius: 6px;
     margin-bottom: 20px;
     opacity: 0.9;
-    transition: 0.3s ease;
+    transition: opacity 0.3s ease;
   }
 
-  .card:hover img { opacity: 1; }
+  .card:hover .card-header img,
+  .card.open .card-header img { opacity: 1; }
+
+  .card-header h3 {
+    margin: 0 0 8px;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+  }
+
+  .card-header .card-sub {
+    color: #aaa;
+    font-size: 13px;
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  /* 矢印アイコン */
+  .card-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 16px;
+  }
+
+  .card-arrow span {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: #d4af37;
+    text-transform: uppercase;
+  }
+
+  .arrow-icon {
+    width: 20px;
+    height: 20px;
+    border: 1px solid rgba(212,175,55,0.4);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: #d4af37;
+    transition: transform 0.4s ease;
+  }
+
+  .card.open .arrow-icon {
+    transform: rotate(180deg);
+  }
+
+  /* ドロワー部分 */
+  .card-drawer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .card.open .card-drawer {
+    max-height: 500px;
+  }
+
+  .card-drawer-inner {
+    padding: 0 30px 30px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 20px;
+  }
+
+  /* ドロワー内のゴールドライン */
+  .drawer-line {
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: linear-gradient(to right, #4a90d9, #f5c842, #f0547a);
+    margin-bottom: 16px;
+  }
+
+  .card-drawer-inner p {
+    color: #ccc;
+    font-size: 13px;
+    line-height: 1.9;
+    margin: 0 0 12px;
+  }
+
+  .card-drawer-inner ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .card-drawer-inner ul li {
+    color: #bbb;
+    font-size: 12px;
+    line-height: 1.8;
+    padding-left: 14px;
+    position: relative;
+  }
+
+  .card-drawer-inner ul li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: #d4af37;
+  }
 
   footer {
     padding: 40px;
@@ -275,7 +364,6 @@
   .delay-2 { transition-delay: 0.2s; }
   .delay-3 { transition-delay: 0.3s; }
 
-  /* ハンバーガーメニュー（スマホ） */
   .hamburger {
     display: none;
     flex-direction: column;
@@ -289,29 +377,15 @@
     width: 24px;
     height: 1.5px;
     background: #fff;
-    transition: 0.3s ease;
   }
 
-  .nav-overlay {
-    display: none;
-  }
+  .nav-overlay { display: none; }
 
   @media (max-width: 768px) {
-    header {
-      height: 80px;
-      padding: 0 20px 0 0;
-    }
-
-    .logo img {
-      height: 80px;
-      margin-left: -8px;
-    }
-
+    header { height: 80px; padding: 0 20px 0 0; }
+    .logo img { height: 80px; margin-left: -8px; }
     main { padding-top: 80px; }
-
-    /* スマホはハンバーガーメニュー */
     nav { display: none; }
-
     .hamburger { display: flex; }
 
     .nav-overlay {
@@ -321,10 +395,8 @@
       justify-content: center;
       gap: 40px;
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       background: rgba(0,0,0,0.95);
       z-index: 200;
       opacity: 0;
@@ -332,10 +404,7 @@
       transition: opacity 0.3s ease;
     }
 
-    .nav-overlay.open {
-      opacity: 1;
-      pointer-events: all;
-    }
+    .nav-overlay.open { opacity: 1; pointer-events: all; }
 
     .nav-overlay a {
       color: #fff;
@@ -348,8 +417,7 @@
 
     .nav-overlay .close-btn {
       position: absolute;
-      top: 30px;
-      right: 24px;
+      top: 30px; right: 24px;
       font-size: 28px;
       color: #fff;
       cursor: pointer;
@@ -358,17 +426,15 @@
     }
 
     section { padding: 80px 6vw; }
-
     h2 { font-size: 20px; }
-
     .sub { font-size: 14px; }
 
     .services-grid {
       grid-template-columns: 1fr;
-      gap: 24px;
+      gap: 16px;
     }
 
-    .card { padding: 28px 20px; }
+    .card { transform: none !important; }
   }
 </style>
 </head>
@@ -377,27 +443,20 @@
 
 <header>
   <div class="logo">
-     <a href="#" style="display:block; height:100%;">
-    <img src="/frevia-site/images/logo.png" alt="FREVIA">
-      </a>
+    <a href="#">
+      <img src="/frevia-site/images/logo.png" alt="FREVIA">
+    </a>
   </div>
-
-  <!-- PC ナビ -->
   <nav>
     <a href="#about">About</a>
     <a href="#services">Services</a>
     <a href="#contact">Contact</a>
   </nav>
-
-  <!-- スマホ ハンバーガー -->
   <div class="hamburger" onclick="document.getElementById('navOverlay').classList.add('open')">
-    <span></span>
-    <span></span>
-    <span></span>
+    <span></span><span></span><span></span>
   </div>
 </header>
 
-<!-- スマホ オーバーレイメニュー -->
 <div class="nav-overlay" id="navOverlay">
   <button class="close-btn" onclick="document.getElementById('navOverlay').classList.remove('open')">✕</button>
   <a href="#about" onclick="document.getElementById('navOverlay').classList.remove('open')">About</a>
@@ -431,22 +490,79 @@
   <h2>SERVICES</h2>
   <div class="services-grid">
 
-    <div class="card fade-up delay-1">
-      <img src="/frevia-site/images/remake.jpg" alt="Remake">
-      <h3>REMAKE</h3>
-      <p class="sub">服のリメイク</p>
+    <!-- REMAKE -->
+    <div class="card fade-up delay-1" onclick="toggleCard(this)">
+      <div class="card-header">
+        <img src="/frevia-site/images/remake.jpg" alt="Remake">
+        <h3>REMAKE</h3>
+        <p class="card-sub">服のリメイク</p>
+        <div class="card-arrow">
+          <span>詳しく見る</span>
+          <div class="arrow-icon">▾</div>
+        </div>
+      </div>
+      <div class="card-drawer">
+        <div class="card-drawer-inner">
+          <span class="drawer-line"></span>
+          <p>着なくなった服に、新しい命を。あなたの思い出の一着を、今の自分に合ったスタイルへと生まれ変わらせます。</p>
+          <ul>
+            <li>デニムのリメイク・カスタム</li>
+            <li>サイズ調整・シルエット変更</li>
+            <li>パッチワーク・刺繍加工</li>
+            <li>ヴィンテージ加工・ダメージ加工</li>
+          </ul>
+        </div>
+      </div>
     </div>
 
-    <div class="card fade-up delay-2">
-      <img src="/frevia-site/images/handmade.jpg" alt="Handmade">
-      <h3>HANDMADE</h3>
-      <p class="sub">アクセサリー・時計などの一点物の制作</p>
+    <!-- HANDMADE -->
+    <div class="card fade-up delay-2" onclick="toggleCard(this)">
+      <div class="card-header">
+        <img src="/frevia-site/images/handmade.jpg" alt="Handmade">
+        <h3>HANDMADE</h3>
+        <p class="card-sub">アクセサリー・時計などの一点物の制作</p>
+        <div class="card-arrow">
+          <span>詳しく見る</span>
+          <div class="arrow-icon">▾</div>
+        </div>
+      </div>
+      <div class="card-drawer">
+        <div class="card-drawer-inner">
+          <span class="drawer-line"></span>
+          <p>世界にひとつだけの一点物を。丁寧な手仕事で、あなただけのアクセサリーや時計を制作します。</p>
+          <ul>
+            <li>オリジナルアクセサリー制作</li>
+            <li>カスタム時計・ウォッチバンド</li>
+            <li>レザークラフト・革小物</li>
+            <li>ギフト・記念品のオーダーメイド</li>
+          </ul>
+        </div>
+      </div>
     </div>
 
-    <div class="card fade-up delay-3">
-      <img src="/frevia-site/images/it-flow.jpg" alt="IT Solutions">
-      <h3>IT SOLUTIONS</h3>
-      <p class="sub">GAS / API / 自動化ツール開発。</p>
+    <!-- IT SOLUTIONS -->
+    <div class="card fade-up delay-3" onclick="toggleCard(this)">
+      <div class="card-header">
+        <img src="/frevia-site/images/it-flow.jpg" alt="IT Solutions">
+        <h3>IT SOLUTIONS</h3>
+        <p class="card-sub">GAS / API / 自動化ツール開発</p>
+        <div class="card-arrow">
+          <span>詳しく見る</span>
+          <div class="arrow-icon">▾</div>
+        </div>
+      </div>
+      <div class="card-drawer">
+        <div class="card-drawer-inner">
+          <span class="drawer-line"></span>
+          <p>ITで時間を奪い返す。繰り返しの作業を自動化し、あなたが本当にやりたいことに集中できる環境をつくります。</p>
+          <ul>
+            <li>Google Apps Script（GAS）開発</li>
+            <li>API連携・外部サービス統合</li>
+            <li>業務自動化ツール構築</li>
+            <li>Webスクレイピング・データ収集</li>
+          </ul>
+        </div>
+      </div>
     </div>
 
   </div>
@@ -464,6 +580,16 @@
 </footer>
 
 <script>
+/* ===== アコーディオン ===== */
+function toggleCard(card) {
+  const isOpen = card.classList.contains('open');
+  /* 他のカードを閉じる */
+  document.querySelectorAll('.card').forEach(c => c.classList.remove('open'));
+  /* クリックしたカードをトグル */
+  if (!isOpen) card.classList.add('open');
+}
+
+/* ===== fade-up ===== */
 const targets = document.querySelectorAll('.fade-up');
 const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
@@ -472,15 +598,14 @@ const observer = new IntersectionObserver(entries => {
 }, { threshold: 0.2 });
 targets.forEach(target => observer.observe(target));
 
+/* ===== パーティクル ===== */
 const canvas = document.getElementById('particle-canvas');
 const ctx = canvas.getContext('2d');
-let particles = [];
-let animId;
+let particles = [], animId;
 
 function resizeCanvas() {
-  const section = canvas.parentElement;
-  canvas.width = section.offsetWidth;
-  canvas.height = section.offsetHeight;
+  canvas.width = canvas.parentElement.offsetWidth;
+  canvas.height = canvas.parentElement.offsetHeight;
 }
 
 function createParticles() {
@@ -528,12 +653,7 @@ function initParticles() {
   animateParticles();
 }
 
-if (heroImg.complete) {
-  initParticles();
-} else {
-  heroImg.addEventListener('load', initParticles);
-}
-
+heroImg.complete ? initParticles() : heroImg.addEventListener('load', initParticles);
 window.addEventListener('resize', initParticles);
 </script>
 
