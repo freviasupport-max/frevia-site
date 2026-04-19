@@ -3,48 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>FREVIA – 3D Particle Intro</title>
+<title>FREVIA – Shockwave 3D Intro</title>
 
 <style>
   body {
     margin: 0;
     background: #000;
-    color: #fff;
-    font-family: "Noto Sans JP", sans-serif;
-    overflow-x: hidden;
-  }
-
-  header {
-    padding: 20px 40px;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-    position: fixed;
-    width: 100%;
-    top: 0;
-    background: rgba(0,0,0,0.6);
-    backdrop-filter: blur(8px);
-    z-index: 100;
-  }
-
-  .logo {
-    font-size: 18px;
-    font-weight: 600;
-    letter-spacing: 0.15em;
-  }
-
-  .about-section {
-    position: relative;
-    width: 100%;
-    height: 480px;
     overflow: hidden;
-  }
-
-  #three-canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: block;
+    font-family: "Noto Sans JP", sans-serif;
   }
 
   .title-box {
@@ -52,63 +18,57 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 10;
-    text-align: center;
-    pointer-events: none;
-  }
-
-  .title {
+    color: #fff;
     font-size: 56px;
     letter-spacing: 6px;
     font-weight: 700;
-    color: #fff;
+    text-align: center;
+    pointer-events: none;
+    z-index: 10;
     text-shadow:
       0 0 20px rgba(255,215,100,0.8),
       0 0 40px rgba(255,215,100,0.6),
       0 0 80px rgba(255,215,100,0.4);
-    animation: glow 4s ease-in-out infinite;
-  }
-
-  @keyframes glow {
-    0%   { filter: brightness(1); }
-    40%  { filter: brightness(1.4); }
-    70%  { filter: brightness(2.2); }
-    100% { filter: brightness(1.2); }
   }
 </style>
 </head>
 
 <body>
 
-<header>
-  <div class="logo">FREVIA</div>
-</header>
+<div class="title-box">FREVIA STUDIO</div>
 
-<section class="about-section">
-  <canvas id="three-canvas"></canvas>
+<canvas id="webgl"></canvas>
 
-  <div class="title-box">
-    <div class="title">FREVIA STUDIO</div>
-  </div>
-</section>
-
-<!-- Three.js CDN -->
+<!-- Three.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r152/three.min.js"></script>
+
+<!-- PostProcessing -->
+<script src="https://cdn.jsdelivr.net/npm/three@0.152/examples/js/postprocessing/EffectComposer.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.152/examples/js/postprocessing/RenderPass.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.152/examples/js/postprocessing/ShaderPass.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.152/examples/js/postprocessing/UnrealBloomPass.js"></script>
 
 <script>
 /* ============================
-   3D パーティクル演出
+   基本セットアップ
 ============================ */
-const canvas = document.getElementById("three-canvas");
+const canvas = document.getElementById("webgl");
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(window.devicePixelRatio);
-renderer.setSize(canvas.clientWidth, canvas.clientHeight, false);
 
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(60, canvas.clientWidth / canvas.clientHeight, 1, 5000);
-camera.position.z = 1000;
+const camera = new THREE.PerspectiveCamera(
+  60,
+  window.innerWidth / window.innerHeight,
+  1,
+  5000
+);
+camera.position.z = 1200;
 
-/* パーティクル生成 */
+/* ============================
+   パーティクル
+============================ */
 const COUNT = 2000;
 const geometry = new THREE.BufferGeometry();
 const positions = new Float32Array(COUNT * 3);
@@ -116,7 +76,7 @@ const positions = new Float32Array(COUNT * 3);
 for (let i = 0; i < COUNT; i++) {
   positions[i * 3 + 0] = (Math.random() - 0.5) * 2000;
   positions[i * 3 + 1] = (Math.random() - 0.5) * 2000;
-  positions[i * 3 + 2] = Math.random() * -3000; // 奥から
+  positions[i * 3 + 2] = Math.random() * -4000; // 奥
 }
 
 geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
@@ -131,33 +91,102 @@ const material = new THREE.PointsMaterial({
 const particles = new THREE.Points(geometry, material);
 scene.add(particles);
 
-/* アニメーション */
+/* ============================
+   Shockwave Shader（破裂波）
+============================ */
+const ShockwaveShader = {
+  uniforms: {
+    tDiffuse: { value: null },
+    time: { value: 0.0 },
+    center: { value: new THREE.Vector2(0.5, 0.5) }
+  },
+  vertexShader: `
+    varying vec2 vUv;
+    void main() {
+      vUv = uv;
+      gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
+    }
+  `,
+  fragmentShader: `
+    uniform sampler2D tDiffuse;
+    uniform float time;
+    uniform vec2 center;
+    varying vec2 vUv;
+
+    float rand(vec2 co){
+      return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
+    }
+
+    void main() {
+      vec2 uv = vUv;
+      vec2 dir = uv - center;
+      float dist = length(dir);
+
+      float wave = sin((dist - time * 1.5) * 40.0) * 0.03;
+      wave *= smoothstep(0.4, 0.0, abs(dist - time));
+
+      uv += normalize(dir) * wave;
+
+      vec4 color = texture2D(tDiffuse, uv);
+
+      float glow = smoothstep(0.02, 0.0, abs(dist - time));
+      color += vec4(1.0, 0.9, 0.6, 1.0) * glow * 0.8;
+
+      gl_FragColor = color;
+    }
+  `
+};
+
+/* ============================
+   ポストプロセス
+============================ */
+const composer = new THREE.EffectComposer(renderer);
+composer.addPass(new THREE.RenderPass(scene, camera));
+
+const bloomPass = new THREE.UnrealBloomPass(
+  new THREE.Vector2(window.innerWidth, window.innerHeight),
+  1.5,
+  0.4,
+  0.85
+);
+composer.addPass(bloomPass);
+
+const shockwavePass = new THREE.ShaderPass(ShockwaveShader);
+composer.addPass(shockwavePass);
+
+/* ============================
+   アニメーション
+============================ */
+let t = 0;
+
 function animate() {
+  t += 0.01;
+  shockwavePass.uniforms.time.value = (t % 1.2);
+
   const pos = geometry.attributes.position.array;
-
   for (let i = 0; i < COUNT; i++) {
-    pos[i * 3 + 2] += 25; // 手前へ飛んでくる
+    pos[i * 3 + 2] += 30; // 手前へ
 
-    // 手前まで来たら奥へ戻す（止まらない）
     if (pos[i * 3 + 2] > 200) {
       pos[i * 3 + 0] = (Math.random() - 0.5) * 2000;
       pos[i * 3 + 1] = (Math.random() - 0.5) * 2000;
-      pos[i * 3 + 2] = -3000;
+      pos[i * 3 + 2] = -4000;
     }
   }
-
   geometry.attributes.position.needsUpdate = true;
 
-  renderer.render(scene, camera);
+  composer.render();
   requestAnimationFrame(animate);
 }
 
 animate();
 
-/* リサイズ対応 */
+/* ============================
+   リサイズ
+============================ */
 window.addEventListener("resize", () => {
-  renderer.setSize(canvas.clientWidth, canvas.clientHeight, false);
-  camera.aspect = canvas.clientWidth / canvas.clientHeight;
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
 });
 </script>
