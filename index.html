@@ -55,6 +55,39 @@
     margin-bottom: 40px;
   }
 
+  /* ===== FREVIA STUDIO（背景画像） ===== */
+  .about-section {
+    position: relative;
+    width: 100%;
+    height: 420px;
+    overflow: hidden;
+    background: url("/frevia-site/images/about-workspace.jpg") center/cover no-repeat;
+    padding: 0 !important;
+    border-bottom: none !important;
+  }
+
+  .about-content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .title {
+    font-size: 48px;
+    letter-spacing: 4px;
+    margin-bottom: 12px;
+  }
+
+  .frevia { color: #fff; }
+  .studio { color: #d4af37; }
+
+  /* ===== ABOUT（背景画像なし＝黒背景） ===== */
+  .about-lower {
+    background: #000;
+  }
+
   .services-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -109,65 +142,6 @@
   .delay-2 { transition-delay: 0.2s; }
   .delay-3 { transition-delay: 0.3s; }
 
-  /* ===== ABOUT（上） ===== */
-  .about-section {
-    position: relative;
-    width: 100%;
-    height: 420px;
-    overflow: hidden;
-    background: url("/frevia-site/images/about-workspace.jpg") center/cover no-repeat;
-    padding: 0 !important;
-    border-bottom: none !important;
-  }
-
-  .about-content {
-    position: relative;
-    z-index: 10;
-    text-align: center;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-
-  .title {
-    font-size: 48px;
-    letter-spacing: 4px;
-    margin-bottom: 12px;
-  }
-
-  .frevia { color: #fff; }
-  .studio { color: #d4af37; }
-
-  .desc {
-    font-size: 16px;
-    line-height: 1.8;
-    opacity: 0.9;
-  }
-
-  /* ===== ABOUT（下）も工房写真で統一 ===== */
-  .about-lower {
-    position: relative;
-    width: 100%;
-    padding: 140px 10vw;
-    background: url("/frevia-site/images/about-workspace.jpg") center/cover no-repeat;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-    color: #fff;
-  }
-
-  /* 黒の半透明レイヤー（読みやすさUP） */
-  .about-lower::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.55);
-    z-index: 1;
-  }
-
-  .about-lower h2,
-  .about-lower p {
-    position: relative;
-    z-index: 2;
-  }
-
 </style>
 </head>
 
@@ -179,26 +153,23 @@
 
 <main>
 
-<!-- ===== ABOUT（上） ===== -->
+<!-- ===== FREVIA STUDIO（背景画像） ===== -->
 <section class="about-section fade-up">
   <div class="about-content">
     <h1 class="title">
       <span class="frevia">FREVIA</span>
       <span class="studio">STUDIO</span>
     </h1>
-    <p class="desc">
-      自由と創造をかたちにする、リメイク × ハンドメイド × IT の複合スタジオ。<br>
-      シンプルで、強く、美しいものづくりを追求します。
-    </p>
+    <!-- ↓ 文言削除済み -->
   </div>
 </section>
 
-<!-- ===== ABOUT（下）も工房写真で統一 ===== -->
+<!-- ===== ABOUT（背景なし・文言変更） ===== -->
 <section class="about-lower fade-up">
   <h2>ABOUT</h2>
   <p class="sub">
-    FREVIAは、リメイク・ハンドメイド制作  
-    ITシステム開発を組み合わせたハイブリッドスタジオです。
+    自由と創造をかたちにする、リメイク × ハンドメイド × IT の複合スタジオ。<br>
+    繊細で、強く、美しいものづくりを追求します。
   </p>
 </section>
 
