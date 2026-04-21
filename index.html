@@ -64,9 +64,10 @@
   }
 
   .nav-logo img {
-    height: 52px;
+    height: 56px;
     width: auto;
     object-fit: contain;
+    display: block;
   }
 
   .nav-links { display: flex; gap: 2.5rem; list-style: none; }
@@ -205,10 +206,12 @@
   .rainbow-divider {
     width: 60px;
     height: 2px;
-    background: linear-gradient(90deg, var(--rainbow-1), var(--rainbow-5), var(--rainbow-6));
+    background: linear-gradient(90deg, #e8433a, #e8943a, #e8d03a, #4caf50, #2196f3, #9c27b0);
     margin: 1.5rem 0 2.5rem;
     border-radius: 2px;
   }
+
+  #contact .rainbow-divider { margin: 1.5rem auto 2.5rem; }
 
   /* ABOUT */
   .about-grid {
@@ -511,7 +514,7 @@
 </section>
 
 <!-- ABOUT -->
-<section>
+<section id="about">
   <div class="section-inner">
     <div class="about-grid">
       <div class="about-text">
