@@ -2,922 +2,1669 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>FREVIA – Remake / Handmade / IT</title>
-<link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Cormorant+Garamond:ital,wght@1,300;1,600&family=Noto+Sans+JP:wght@400;600&display=swap" rel="stylesheet">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FREVIA STUDIO – Remake / Handmade / Select / IT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0a0a0a;
+    --white: #f8f6f1;
+    --gold: #b8975a;
+    --gold-light: #d4b47a;
+    --gray: #6b6b6b;
+    --rainbow-1: #e8433a;
+    --rainbow-2: #e8943a;
+    --rainbow-3: #e8d03a;
+    --rainbow-4: #4caf50;
+    --rainbow-5: #2196f3;
+    --rainbow-6: #9c27b0;
+    --font-display: 'Cormorant Garamond', serif;
+    --font-body: 'Jost', sans-serif;
+  }
+
   html { scroll-behavior: smooth; }
 
   body {
-    margin: 0;
-    background: #000;
-    color: #fff;
-    font-family: "Noto Sans JP", sans-serif;
-    letter-spacing: 0.03em;
-  }
-
-  header {
-    padding: 0 40px 0 0;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-    position: fixed;
-    width: 100%;
-    top: 0;
-    background: rgba(0,0,0,0.7);
-    backdrop-filter: blur(8px);
-    z-index: 100;
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 110px;
-    overflow: hidden;
-  }
-
-  .logo {
-    display: flex;
-    align-items: center;
-    height: 100%;
-    flex-shrink: 0;
-  }
-
-  .logo a { display: block; height: 100%; }
-
-  .logo img {
-    height: 110px;
-    width: auto;
-    display: block;
-    margin-left: -12px;
-  }
-
-  nav {
-    display: flex;
-    align-items: center;
-    gap: 36px;
-  }
-
-  nav a {
-    color: rgba(255,255,255,0.8);
-    text-decoration: none;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    position: relative;
-    transition: color 0.3s ease;
-  }
-
-  nav a:hover { color: #d4af37; }
-
-  nav a::after {
-    content: '';
-    position: absolute;
-    bottom: -4px;
-    left: 0;
-    width: 0;
-    height: 1px;
-    background: linear-gradient(to right, #4a90d9, #f5c842, #f0547a);
-    transition: width 0.3s ease;
-  }
-
-  nav a:hover::after { width: 100%; }
-
-  main { padding-top: 110px; }
-
-  section {
-    padding: 140px 10vw;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-  }
-
-  h2 {
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    font-size: 26px;
-    margin-bottom: 20px;
-  }
-
-  .sub {
-    color: #ddd;
-    max-width: 600px;
-    line-height: 1.8;
-    margin-bottom: 40px;
-  }
-
-  /* ===== HERO ===== */
-  .about-section {
-    position: relative;
-    width: 100%;
-    padding: 0 !important;
-    border-bottom: none !important;
-    background: #000;
-    overflow: hidden;
-  }
-
-  .about-section img.hero-img {
-    display: block; width: 100%; height: auto;
-  }
-
-  #particle-canvas {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    z-index: 5;
-    pointer-events: none;
-  }
-
-  .about-content {
-    position: absolute;
-    z-index: 10;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    white-space: nowrap;
-  }
-
-  .title-wrap {
-    display: inline-block;
-    text-align: center;
-    padding: 0 24px 18px;
-  }
-
-  .title-frevia {
-    display: block;
-    font-family: 'Pinyon Script', cursive;
-    font-size: clamp(64px, 13vw, 140px);
-    line-height: 1.0;
-    letter-spacing: 0.04em;
-    margin: 0 0 -4px;
-    background: linear-gradient(100deg, #4a90d9 0%, #5bb8f5 15%, #f5c842 40%, #f0a030 55%, #f0547a 80%, #e8304a 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    filter: drop-shadow(0 0 20px rgba(0,0,0,0.95)) drop-shadow(2px 3px 10px rgba(0,0,0,1));
-  }
-
-  .title-studio {
-    display: block;
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
+    background: var(--black);
+    color: var(--white);
+    font-family: var(--font-body);
     font-weight: 300;
-    font-size: clamp(16px, 3vw, 32px);
-    letter-spacing: 0.55em;
-    text-transform: uppercase;
-    margin-bottom: 14px;
-    background: linear-gradient(100deg, #4a90d9 0%, #f5c842 45%, #f0547a 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    filter: drop-shadow(0 0 12px rgba(0,0,0,0.95)) drop-shadow(1px 2px 6px rgba(0,0,0,1));
+    line-height: 1.7;
+    overflow-x: hidden;
   }
 
-  .title-underline {
-    display: block;
-    width: 100%;
-    height: 1px;
-    background: linear-gradient(to right, transparent, #4a90d9 10%, #f5c842 50%, #f0547a 90%, transparent);
-    position: relative;
+  /* RAINBOW LINE */
+  .rainbow-line {
+    height: 3px;
+    background: linear-gradient(90deg,
+      var(--rainbow-1) 0%,
+      var(--rainbow-2) 20%,
+      var(--rainbow-3) 40%,
+      var(--rainbow-4) 60%,
+      var(--rainbow-5) 80%,
+      var(--rainbow-6) 100%
+    );
   }
 
-  .title-underline::before {
-    content: '◆';
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 8px;
-    color: #f5c842;
-    line-height: 1;
-  }
-
-  .about-lower { background: #000; }
-
-  /* ===== SERVICES ===== */
-  .services-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-  }
-
-  .card {
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 8px;
-    overflow: hidden;
-    cursor: pointer;
-    transition: border-color 0.3s ease, transform 0.3s ease;
-  }
-
-  .card:hover { border-color: #d9a441; transform: translateY(-4px); }
-  .card.open { border-color: #d4af37; transform: translateY(0); }
-
-  .card-header { padding: 30px 30px 24px; }
-
-  .card-header img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-    border-radius: 6px;
-    margin-bottom: 20px;
-    opacity: 0.9;
-    transition: opacity 0.3s ease;
-  }
-
-  .card:hover .card-header img,
-  .card.open .card-header img { opacity: 1; }
-
-  .card-header h3 {
-    margin: 0 0 8px;
-    font-size: 16px;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-  }
-
-  .card-header .card-sub {
-    color: #aaa;
-    font-size: 13px;
-    margin: 0;
-    line-height: 1.6;
-  }
-
-  .card-arrow {
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-top: 16px;
+    padding: 1.2rem 4rem;
+    background: rgba(10,10,10,0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 0.5px solid rgba(255,255,255,0.08);
   }
 
-  .card-arrow span {
-    font-size: 11px;
-    letter-spacing: 0.15em;
-    color: #d4af37;
+  .nav-logo img {
+    height: 36px;
+    width: auto;
+    object-fit: contain;
+  }
+
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    color: rgba(248,246,241,0.6);
+    text-decoration: none;
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
+    transition: color 0.3s;
   }
+  .nav-links a:hover { color: var(--white); }
 
-  .arrow-icon {
-    width: 20px; height: 20px;
-    border: 1px solid rgba(212,175,55,0.4);
-    border-radius: 50%;
+  /* HERO */
+  .hero {
+    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 11px;
-    color: #d4af37;
-    transition: transform 0.4s ease;
-  }
-
-  .card.open .arrow-icon { transform: rotate(180deg); }
-
-  .card-drawer {
-    max-height: 0;
+    flex-direction: column;
+    text-align: center;
+    padding: 8rem 2rem 4rem;
+    position: relative;
     overflow: hidden;
-    transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    background: url('images/about-bg-steampunk.jpg') center/cover no-repeat;
   }
 
-  .card.open .card-drawer { max-height: 500px; }
-
-  .card-drawer-inner {
-    padding: 20px 30px 30px;
-    border-top: 1px solid rgba(255,255,255,0.08);
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(10,10,10,0.72);
   }
 
-  .drawer-line {
-    display: block;
-    width: 32px; height: 1px;
-    background: linear-gradient(to right, #4a90d9, #f5c842, #f0547a);
-    margin-bottom: 16px;
+  .hero-inner { position: relative; z-index: 1; }
+
+  .hero-logo { height: 80px; margin-bottom: 2rem; }
+
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(3.5rem, 10vw, 8rem);
+    font-weight: 300;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
   }
 
-  .card-drawer-inner p {
-    color: #ccc;
-    font-size: 13px;
-    line-height: 1.9;
-    margin: 0 0 12px;
+  .hero-title .rainbow-text {
+    background: linear-gradient(90deg,
+      var(--rainbow-1), var(--rainbow-2),
+      var(--rainbow-3), var(--rainbow-4),
+      var(--rainbow-5), var(--rainbow-6)
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 600;
   }
 
-  .card-drawer-inner ul {
-    list-style: none;
-    padding: 0; margin: 0;
+  .hero-sub {
+    font-size: 0.82rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(248,246,241,0.5);
+    margin-bottom: 2.5rem;
   }
 
-  .card-drawer-inner ul li {
-    color: #bbb;
-    font-size: 12px;
-    line-height: 1.8;
-    padding-left: 14px;
+  .hero-tags {
+    display: flex;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .hero-tag {
+    border: 0.5px solid rgba(255,255,255,0.2);
+    padding: 0.35rem 1rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(248,246,241,0.6);
+    border-radius: 2px;
+  }
+
+  .hero-tag:nth-child(1) { border-color: var(--rainbow-1); color: var(--rainbow-1); }
+  .hero-tag:nth-child(2) { border-color: var(--rainbow-3); color: var(--rainbow-3); }
+  .hero-tag:nth-child(3) { border-color: var(--rainbow-4); color: var(--rainbow-4); }
+  .hero-tag:nth-child(4) { border-color: var(--rainbow-5); color: var(--rainbow-5); }
+
+  /* SECTIONS */
+  section { padding: 7rem 4rem; }
+  .section-inner { max-width: 1200px; margin: 0 auto; }
+
+  .section-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+  }
+
+  .section-label.rainbow {
+    background: linear-gradient(90deg, var(--rainbow-1), var(--rainbow-5));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 4vw, 3.5rem);
+    font-weight: 300;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+
+  .rainbow-divider {
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--rainbow-1), var(--rainbow-5), var(--rainbow-6));
+    margin: 1.5rem 0 2.5rem;
+    border-radius: 2px;
+  }
+
+  /* ABOUT */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+  }
+
+  .about-text p {
+    color: rgba(248,246,241,0.65);
+    font-size: 0.92rem;
+    margin-bottom: 1rem;
+  }
+
+  .about-image {
+    aspect-ratio: 4/5;
+    overflow: hidden;
     position: relative;
   }
 
-  .card-drawer-inner ul li::before {
-    content: '▸';
-    position: absolute;
-    left: 0;
-    color: #d4af37;
-  }
-
-  /* ===== PRICING ===== */
-  .pricing-block {
-    margin-bottom: 80px;
-  }
-
-  .pricing-block:last-child { margin-bottom: 0; }
-
-  .pricing-block h3 {
-    font-size: 14px;
-    font-weight: 600;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: #d4af37;
-    margin: 0 0 24px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .pricing-block h3::after {
+  .about-image::after {
     content: '';
-    flex: 1;
-    height: 1px;
-    background: linear-gradient(to right, rgba(212,175,55,0.4), transparent);
+    position: absolute;
+    inset: 0;
+    border: 1px solid rgba(255,255,255,0.06);
+    pointer-events: none;
   }
 
-  /* ECボタングループ */
-  .ec-buttons {
-    display: flex;
-    gap: 16px;
-    flex-wrap: wrap;
+  .about-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: contrast(1.05);
+    transition: transform 0.8s ease;
   }
 
-  .ec-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 14px 28px;
-    border: 1px solid rgba(255,255,255,0.15);
-    border-radius: 4px;
-    color: #fff;
-    text-decoration: none;
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    transition: all 0.3s ease;
-    background: rgba(255,255,255,0.03);
+  .about-image:hover img { transform: scale(1.03); }
+
+  /* SERVICES */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1px;
+    background: rgba(255,255,255,0.05);
+    margin-top: 3rem;
+    border: 0.5px solid rgba(255,255,255,0.06);
   }
 
-  .ec-btn:hover {
-    border-color: #d4af37;
-    background: rgba(212,175,55,0.08);
-    color: #d4af37;
-    transform: translateY(-2px);
+  .service-card {
+    background: var(--black);
+    padding: 3rem 2.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.4s;
   }
 
-  .ec-btn .ec-icon {
-    font-size: 16px;
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 2px;
+    opacity: 0;
+    transition: opacity 0.4s;
   }
 
-  .ec-note {
-    margin-top: 16px;
-    color: #666;
-    font-size: 12px;
+  .service-card:nth-child(1)::before { background: linear-gradient(90deg, var(--rainbow-1), var(--rainbow-2)); }
+  .service-card:nth-child(2)::before { background: linear-gradient(90deg, var(--rainbow-3), var(--rainbow-4)); }
+  .service-card:nth-child(3)::before { background: linear-gradient(90deg, var(--rainbow-4), var(--rainbow-5)); }
+  .service-card:nth-child(4)::before { background: linear-gradient(90deg, var(--rainbow-5), var(--rainbow-6)); }
+
+  .service-card:hover { background: rgba(255,255,255,0.03); }
+  .service-card:hover::before { opacity: 1; }
+
+  .service-image {
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    margin-bottom: 1.5rem;
+    filter: grayscale(30%) contrast(1.05);
+    transition: filter 0.4s;
+  }
+
+  .service-card:hover .service-image { filter: grayscale(0%) contrast(1.05); }
+
+  .service-number {
+    font-family: var(--font-display);
+    font-size: 3rem;
+    font-weight: 300;
+    color: rgba(255,255,255,0.08);
+    line-height: 1;
+    margin-bottom: 1.2rem;
+  }
+
+  .service-title {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: 400;
+    margin-bottom: 0.4rem;
+  }
+
+  .service-subtitle {
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(248,246,241,0.4);
+    margin-bottom: 1.2rem;
+  }
+
+  .service-card:nth-child(1) .service-title { color: var(--rainbow-2); }
+  .service-card:nth-child(2) .service-title { color: var(--rainbow-3); }
+  .service-card:nth-child(3) .service-title { color: var(--rainbow-4); }
+  .service-card:nth-child(4) .service-title { color: var(--rainbow-5); }
+
+  .service-desc {
+    font-size: 0.83rem;
+    color: rgba(248,246,241,0.55);
+    margin-bottom: 1.5rem;
     line-height: 1.8;
   }
 
-  /* ITプランカード */
-  .plan-grid {
+  .service-list { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+  .service-list li {
+    font-size: 0.78rem;
+    color: rgba(248,246,241,0.45);
+    padding-left: 1rem;
+    position: relative;
+  }
+  .service-list li::before { content: '—'; position: absolute; left: 0; font-size: 0.65rem; opacity: 0.5; }
+
+  /* PRICING */
+  .pricing-section { margin-bottom: 5rem; }
+
+  .pricing-section-title {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 300;
+    padding-bottom: 1rem;
+    border-bottom: 0.5px solid rgba(255,255,255,0.08);
+    margin-bottom: 2rem;
+    color: rgba(248,246,241,0.75);
+  }
+
+  .ec-links { display: flex; gap: 0.8rem; flex-wrap: wrap; margin-bottom: 1rem; }
+  .ec-link {
+    border: 0.5px solid rgba(255,255,255,0.15);
+    padding: 0.45rem 1.1rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    color: rgba(248,246,241,0.55);
+    text-decoration: none;
+    transition: all 0.3s;
+    border-radius: 2px;
+  }
+  .ec-link:hover { background: rgba(255,255,255,0.06); color: var(--white); }
+
+  .plans-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 1px;
+    background: rgba(255,255,255,0.05);
+    border: 0.5px solid rgba(255,255,255,0.06);
+    margin-bottom: 1.5rem;
   }
 
   .plan-card {
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 8px;
-    padding: 32px 24px;
+    background: var(--black);
+    padding: 2.5rem 2rem;
     position: relative;
-    transition: border-color 0.3s ease, transform 0.3s ease;
+    transition: background 0.3s;
+  }
+  .plan-card:hover { background: rgba(255,255,255,0.03); }
+  .plan-card.featured { background: rgba(255,255,255,0.03); border-top: 2px solid; border-image: linear-gradient(90deg, var(--rainbow-1), var(--rainbow-5), var(--rainbow-6)) 1; }
+
+  .plan-popular {
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    background: linear-gradient(90deg, var(--rainbow-1), var(--rainbow-5));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.8rem;
+  }
+
+  .plan-name { font-family: var(--font-display); font-size: 1.7rem; font-weight: 400; margin-bottom: 0.3rem; }
+  .plan-target { font-size: 0.7rem; color: rgba(248,246,241,0.35); margin-bottom: 1.2rem; }
+  .plan-price { font-size: 1.8rem; font-weight: 500; color: var(--white); margin-bottom: 0.3rem; }
+  .plan-price span { font-size: 0.75rem; font-weight: 300; color: rgba(248,246,241,0.35); }
+  .plan-divider { border: none; border-top: 0.5px solid rgba(255,255,255,0.07); margin: 1rem 0; }
+  .plan-features { list-style: none; display: flex; flex-direction: column; gap: 0.55rem; }
+  .plan-features li { font-size: 0.78rem; color: rgba(248,246,241,0.5); padding-left: 1rem; position: relative; }
+  .plan-features li::before { content: '·'; position: absolute; left: 0; color: var(--rainbow-5); }
+  .plan-note { font-size: 0.68rem; color: rgba(248,246,241,0.25); margin-top: 1rem; }
+
+  .options-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1px;
+    background: rgba(255,255,255,0.05);
+    border: 0.5px solid rgba(255,255,255,0.06);
+    margin-bottom: 1rem;
+  }
+
+  .option-card { background: var(--black); padding: 2rem 1.8rem; transition: background 0.3s; }
+  .option-card:hover { background: rgba(255,255,255,0.03); }
+
+  .option-badge {
+    display: inline-block;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    border: 0.5px solid rgba(255,255,255,0.2);
+    padding: 0.2rem 0.6rem;
+    margin-bottom: 0.8rem;
+    border-radius: 2px;
+    color: rgba(248,246,241,0.5);
+  }
+
+  .option-name { font-family: var(--font-display); font-size: 1.2rem; margin-bottom: 0.2rem; }
+  .option-target { font-size: 0.68rem; color: rgba(248,246,241,0.3); margin-bottom: 0.8rem; }
+  .option-price { font-size: 1.3rem; font-weight: 500; margin-bottom: 0.8rem; }
+  .option-price span { font-size: 0.72rem; font-weight: 300; color: rgba(248,246,241,0.35); }
+  .option-features { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
+  .option-features li { font-size: 0.76rem; color: rgba(248,246,241,0.45); padding-left: 1rem; position: relative; }
+  .option-features li::before { content: '·'; position: absolute; left: 0; opacity: 0.5; }
+
+  .catch-box {
+    border-left: 2px solid;
+    border-image: linear-gradient(180deg, var(--rainbow-1), var(--rainbow-5)) 1;
+    padding: 1.2rem 1.8rem;
+    margin-bottom: 2rem;
     background: rgba(255,255,255,0.02);
   }
+  .catch-label { font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(248,246,241,0.4); margin-bottom: 0.6rem; }
+  .catch-box p { font-size: 0.83rem; color: rgba(248,246,241,0.55); margin-bottom: 0.35rem; }
+  .catch-box p:last-child { margin: 0; }
 
-  .plan-card:hover {
-    border-color: #d4af37;
-    transform: translateY(-4px);
-    background: rgba(212,175,55,0.04);
+  .pricing-note { font-size: 0.72rem; color: rgba(248,246,241,0.25); margin-top: 0.5rem; }
+
+  /* CONTACT */
+  #contact { text-align: center; border-top: 0.5px solid rgba(255,255,255,0.06); }
+  .contact-inner { max-width: 600px; margin: 0 auto; }
+  .contact-mail {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    text-decoration: none;
+    margin-top: 2rem;
+    padding-bottom: 0.3rem;
+    background: linear-gradient(90deg, var(--rainbow-1), var(--rainbow-5), var(--rainbow-6));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    border-bottom: 0.5px solid rgba(255,255,255,0.15);
+    transition: border-color 0.3s;
+  }
+  .contact-mail:hover { border-color: rgba(255,255,255,0.4); }
+  .contact-sub { font-size: 0.75rem; color: rgba(248,246,241,0.3); margin-top: 1.5rem; }
+
+  footer { text-align: center; padding: 1.5rem; font-size: 0.68rem; color: rgba(248,246,241,0.2); letter-spacing: 0.1em; }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { gap: 1rem; }
+    section { padding: 5rem 1.5rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .about-image { display: none; }
+    .plans-grid, .options-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="rainbow-line"></div>
+
+<nav>
+  <a href="#" class="nav-logo"><img src="images/logo.png" alt="FREVIA STUDIO"></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <img src="images/logo.png" alt="FREVIA" class="hero-logo">
+    <h1 class="hero-title">FREVIA<br><span class="rainbow-text">STUDIO</span></h1>
+    <p class="hero-sub">Remake × Handmade × Select × IT</p>
+    <div class="hero-tags">
+      <span class="hero-tag">リメイク</span>
+      <span class="hero-tag">ハンドメイド</span>
+      <span class="hero-tag">セレクト買付</span>
+      <span class="hero-tag">IT 自動化</span>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section>
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-text">
+        <p class="section-label rainbow">About</p>
+        <h2 class="section-title">自由と創造を<br>かたちにする</h2>
+        <div class="rainbow-divider"></div>
+        <p>リメイク × ハンドメイド × セレクト買付 × IT の複合スタジオ。</p>
+        <p>繊細で、温かく、美しく。ITで時間を解放し、創造する自由へ。</p>
+        <p>一点一点丁寧に手作りした作品から、業務を劇的に効率化するIT自動化ソリューションまで、幅広いサービスを提供しています。</p>
+      </div>
+      <div class="about-image">
+        <img src="images/about-workspace.jpg" alt="FREVIA STUDIO workspace">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section style="background: rgba(255,255,255,0.015);">
+  <div class="section-inner" id="services">
+    <p class="section-label rainbow">Services</p>
+    <h2 class="section-title">4つの事業</h2>
+    <div class="rainbow-divider"></div>
+    <div class="services-grid">
+
+      <div class="service-card">
+        <img src="images/remake.jpg" alt="Remake" class="service-image">
+        <p class="service-number">01</p>
+        <h3 class="service-title">Remake</h3>
+        <p class="service-subtitle">服のリメイク</p>
+        <p class="service-desc">色を抜き、染め直す。その一枚にしかない表情をつくる。タイダイ染・脱色加工で、服をアートに変えます。</p>
+        <ul class="service-list">
+          <li>タイダイ染め（絞り染め・スパイラル・グラデーション）</li>
+          <li>脱色加工・ブリーチアート</li>
+          <li>デニムのカスタム・リメイク</li>
+          <li>サイズ調整・シルエット変更</li>
+          <li>パッチワーク・刺繍加工</li>
+        </ul>
+      </div>
+
+      <div class="service-card">
+        <img src="images/handmade.jpg" alt="Handmade" class="service-image">
+        <p class="service-number">02</p>
+        <h3 class="service-title">Handmade</h3>
+        <p class="service-subtitle">アクセサリー・時計などの一点物制作</p>
+        <p class="service-desc">世界にひとつだけの一点物を。丁寧な手仕事で、あなただけのアクセサリーや時計を制作します。</p>
+        <ul class="service-list">
+          <li>オリジナルアクセサリー制作（ピアス・ネックレス・ブレスレット）</li>
+          <li>スケルトン懐中時計・スチームパンクデザイン</li>
+          <li>オリジナル照明器具</li>
+          <li>フェルトを使った小物・インテリア雑貨</li>
+          <li>ギフト・記念品のオーダーメイド</li>
+        </ul>
+      </div>
+
+      <div class="service-card">
+        <p class="service-number">03</p>
+        <h3 class="service-title">Select</h3>
+        <p class="service-subtitle">セレクト買付・キュレーション販売</p>
+        <p class="service-desc">バイヤーの目線で厳選したアイテムをお届け。フィギュア・トレカ・ヴィンテージ衣類など、価値あるものを丁寧に選び抜きます。</p>
+        <ul class="service-list">
+          <li>フィギュア・アニメグッズのセレクト</li>
+          <li>トレーディングカードの厳選買付</li>
+          <li>ヴィンテージ・古着のキュレーション</li>
+          <li>ゲーム・カルチャーグッズ</li>
+          <li>国内（メルカリ）・海外（eBay）にて販売</li>
+        </ul>
+      </div>
+
+      <div class="service-card">
+        <img src="images/it-flow.jpg" alt="IT Solutions" class="service-image">
+        <p class="service-number">04</p>
+        <h3 class="service-title">IT Solutions</h3>
+        <p class="service-subtitle">GAS / VBA / 自動化ツール開発</p>
+        <p class="service-desc">毎日の繰り返し作業を、ITの力でスマートに自動化。生まれた時間で、あなたが本当にやりたいことへ。</p>
+        <ul class="service-list">
+          <li>Excel / VBAマクロ開発・自動化</li>
+          <li>Google Apps Script（GAS）開発</li>
+          <li>Webスクレイピング・データ自動収集</li>
+          <li>フォーム〜スプレッドシート〜通知の自動連携</li>
+          <li>API連携・外部サービス統合</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="section-inner">
+    <p class="section-label rainbow">Pricing</p>
+    <h2 class="section-title">料金プラン</h2>
+    <div class="rainbow-divider"></div>
+
+    <div class="pricing-section">
+      <p class="pricing-section-title">Remake &amp; Handmade</p>
+      <p style="font-size:0.83rem;color:rgba(248,246,241,0.5);margin-bottom:1.5rem;">作品はECサイトにて販売中。オーダーメイド・カスタム依頼はCONTACTよりお問い合わせください。</p>
+      <div class="ec-links">
+        <a class="ec-link" href="https://minne.com" target="_blank">minne</a>
+        <a class="ec-link" href="https://www.creema.jp" target="_blank">Creema</a>
+        <a class="ec-link" href="https://thebase.com" target="_blank">BASE</a>
+        <a class="ec-link" href="https://jp.mercari.com" target="_blank">メルカリ</a>
+      </div>
+    </div>
+
+    <div class="pricing-section">
+      <p class="pricing-section-title">Select — セレクト買付</p>
+      <p style="font-size:0.83rem;color:rgba(248,246,241,0.5);margin-bottom:1.5rem;">バイヤーの目線で厳選したアイテムを国内外のマーケットプレイスにて販売中。お探しのアイテムのご相談はCONTACTよりどうぞ。</p>
+      <div class="ec-links">
+        <a class="ec-link" href="https://jp.mercari.com" target="_blank">メルカリ（国内）</a>
+        <a class="ec-link" href="https://www.ebay.com" target="_blank">eBay（海外・2期より開始）</a>
+      </div>
+    </div>
+
+    <div class="pricing-section">
+      <p class="pricing-section-title">IT Solutions — 単発プラン</p>
+      <div class="catch-box">
+        <p class="catch-label">こんなお悩みはありませんか？</p>
+        <p>「毎月1時間かかる集計作業…ボタン1つで数秒に短縮できるかもしれません」</p>
+        <p>「Excelへの転記・コピペ作業、GASやVBAで自動化すれば時間を大幅に節約できます」</p>
+        <p>「まずはお気軽にご相談ください。見積もりは無料です」</p>
+      </div>
+      <div class="plans-grid">
+        <div class="plan-card">
+          <p class="plan-name">Light</p>
+          <p class="plan-target">小規模・お試し向け</p>
+          <p class="plan-price">¥8,000 <span>〜（税抜）</span></p>
+          <hr class="plan-divider">
+          <ul class="plan-features">
+            <li>単純作業1つの自動化</li>
+            <li>VBA または GAS</li>
+            <li>納品後3日サポート</li>
+            <li>修正1回まで対応</li>
+          </ul>
+        </div>
+        <div class="plan-card">
+          <p class="plan-name">Starter</p>
+          <p class="plan-target">個人事業主向け</p>
+          <p class="plan-price">¥30,000 <span>〜（税抜）</span></p>
+          <hr class="plan-divider">
+          <ul class="plan-features">
+            <li>単発・スポット自動化</li>
+            <li>VBA / GAS</li>
+            <li>納品後1週間サポート</li>
+            <li>修正2回まで対応</li>
+            <li>簡易マニュアル付き</li>
+          </ul>
+        </div>
+        <div class="plan-card featured">
+          <p class="plan-popular">— おすすめ —</p>
+          <p class="plan-name">Business</p>
+          <p class="plan-target">中小企業・複数業務向け</p>
+          <p class="plan-price">¥50,000 <span>〜（税抜）</span></p>
+          <hr class="plan-divider">
+          <ul class="plan-features">
+            <li>複数業務の自動化</li>
+            <li>VBA / GAS / スクレイピング</li>
+            <li>納品後2週間サポート</li>
+            <li>修正3回まで対応</li>
+            <li>運用マニュアル付き</li>
+          </ul>
+        </div>
+        <div class="plan-card">
+          <p class="plan-name">Enterprise</p>
+          <p class="plan-target">本格システム構築向け</p>
+          <p class="plan-price">¥100,000 <span>〜（税抜）</span></p>
+          <hr class="plan-divider">
+          <ul class="plan-features">
+            <li>3ツール以上の連携開発</li>
+            <li>API連携・外部サービス統合</li>
+            <li>納品後1ヶ月サポート</li>
+            <li>修正無制限（期間内）</li>
+            <li>運用マニュアル付き</li>
+            <li>追加開発の優先対応</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="pricing-section">
+      <p class="pricing-section-title">IT Solutions — 月額プラン（保守・継続開発）</p>
+      <div class="plans-grid">
+        <div class="plan-card">
+          <p class="plan-name">Monthly S</p>
+          <p class="plan-target">軽微な保守・メンテナンス</p>
+          <p class="plan-price">¥5,000 <span>/ 月（税抜）</span></p>
+          <hr class="plan-divider">
+          <ul class="plan-features">
+            <li>軽微な修正・バグ対応</li>
+            <li>月2回までの対応</li>
+            <li>メール・チャットサポート</li>
+          </ul>
+        </div>
+        <div class="plan-card featured">
+          <p class="plan-popular">— おすすめ —</p>
+          <p class="plan-name">Monthly M</p>
+          <p class="plan-target">継続開発・機能改善</p>
+          <p class="plan-price">¥15,000 <span>/ 月（税抜）</span></p>
+          <hr class="plan-divider">
+          <ul class="plan-features">
+            <li>継続的な機能追加・改善</li>
+            <li>月4回までの対応</li>
+            <li>優先サポート対応</li>
+            <li>月次レポート付き</li>
+          </ul>
+          <p class="plan-note">※ 最低3ヶ月契約</p>
+        </div>
+        <div class="plan-card">
+          <p class="plan-name">Monthly L</p>
+          <p class="plan-target">専属サポート・新規開発込み</p>
+          <p class="plan-price">¥50,000 <span>/ 月（税抜）</span></p>
+          <hr class="plan-divider">
+          <ul class="plan-features">
+            <li>新規ツール開発込み</li>
+            <li>対応回数無制限</li>
+            <li>専属担当として対応</li>
+            <li>月次レポート付き</li>
+            <li>追加開発の優先対応</li>
+          </ul>
+          <p class="plan-note">※ 最低3ヶ月契約</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="pricing-section">
+      <p class="pricing-section-title">IT Solutions — オプション</p>
+      <p style="font-size:0.75rem;color:rgba(248,246,241,0.3);margin-bottom:1.5rem;">※ オプションはすべてFREVIA受注案件限定です。他社製ツールは対象外となります。</p>
+      <div class="options-grid">
+        <div class="option-card">
+          <span class="option-badge">オプション</span>
+          <p class="option-name">スポット保守</p>
+          <p class="option-target">納品済みツールの修正・バグ対応</p>
+          <p class="option-price">¥5,000 <span>/ 回（税抜）</span></p>
+          <ul class="option-features">
+            <li>軽微な修正・バグ対応</li>
+            <li>動作確認込み</li>
+            <li>FREVIA受注案件限定</li>
+          </ul>
+        </div>
+        <div class="option-card">
+          <span class="option-badge">オプション</span>
+          <p class="option-name">機能追加</p>
+          <p class="option-target">既存ツールへの機能追加</p>
+          <p class="option-price">¥10,000 <span>〜/ 回（税抜）</span></p>
+          <ul class="option-features">
+            <li>既存ツールへの機能追加</li>
+            <li>仕様変更への対応</li>
+            <li>FREVIA受注案件限定</li>
+            <li>内容により別途お見積り</li>
+          </ul>
+        </div>
+        <div class="option-card">
+          <span class="option-badge">オプション</span>
+          <p class="option-name">コード解読・引き継ぎ</p>
+          <p class="option-target">前任者のツールを引き継ぎたい方</p>
+          <p class="option-price">¥15,000 <span>〜/ 回（税抜）</span></p>
+          <ul class="option-features">
+            <li>既存コードの解読・整理</li>
+            <li>マニュアル作成</li>
+            <li>FREVIA受注案件限定</li>
+            <li>引き継ぎドキュメント付き</li>
+          </ul>
+        </div>
+      </div>
+      <p class="pricing-note">※ 料金はすべて税抜き表示です。内容により変動する場合があります。まずはお気軽にご相談ください。</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="contact-inner">
+      <p class="section-label rainbow">Contact</p>
+      <h2 class="section-title">お問い合わせ</h2>
+      <div class="rainbow-divider"></div>
+      <p style="font-size:0.85rem;color:rgba(248,246,241,0.45);">ご相談・制作依頼・お見積りなどお気軽にお問い合わせください。</p>
+      <a href="mailto:freviasupport@gmail.com" class="contact-mail">freviasupport@gmail.com</a>
+      <p class="contact-sub">© 2026 合同会社FREVIA — FREVIA STUDIO</p>
+    </div>
+  </div>
+</section>
+
+<div class="rainbow-line"></div>
+<footer>© 2026 合同会社FREVIA. All rights reserved.</footer>
+
+</body>
+</html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FREVIA STUDIO – Remake / Handmade / Select / IT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0e0e0e;
+    --white: #f8f6f1;
+    --cream: #f0ece3;
+    --gold: #b8975a;
+    --gold-light: #d4b47a;
+    --gray: #6b6b6b;
+    --light-gray: #e0ddd7;
+    --font-display: 'Cormorant Garamond', serif;
+    --font-body: 'Jost', sans-serif;
   }
 
-  /* おすすめバッジ */
-  .plan-card.recommended {
-    border-color: #d4af37;
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: var(--font-body);
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
   }
 
-  .plan-badge {
-    position: absolute;
-    top: -12px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: linear-gradient(100deg, #4a90d9, #f5c842, #f0547a);
-    color: #000;
-    font-size: 10px;
-    font-weight: 700;
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem 4rem;
+    background: rgba(14,14,14,0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 0.5px solid rgba(184,151,90,0.2);
+  }
+
+  .nav-logo {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 600;
     letter-spacing: 0.15em;
-    padding: 4px 16px;
-    border-radius: 20px;
-    white-space: nowrap;
+    color: var(--gold);
+    text-decoration: none;
+  }
+
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    color: rgba(248,246,241,0.7);
+    text-decoration: none;
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 8rem 2rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 60%, rgba(184,151,90,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.72rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(4rem, 12vw, 10rem);
+    font-weight: 300;
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+    margin-bottom: 2rem;
+  }
+
+  .hero-title span { color: var(--gold); font-weight: 600; }
+
+  .hero-sub {
+    font-size: 0.85rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(248,246,241,0.5);
+    margin-bottom: 3rem;
+  }
+
+  .hero-tags {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 3rem;
+  }
+
+  .hero-tag {
+    border: 0.5px solid rgba(184,151,90,0.4);
+    padding: 0.4rem 1.2rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    border-radius: 2px;
+  }
+
+  /* SECTIONS */
+  section { padding: 7rem 4rem; }
+
+  .section-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 300;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+
+  .divider {
+    width: 40px;
+    height: 0.5px;
+    background: var(--gold);
+    margin: 2rem 0;
+  }
+
+  /* ABOUT */
+  #about {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .about-text p {
+    color: rgba(248,246,241,0.7);
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+  }
+
+  .about-image {
+    aspect-ratio: 4/5;
+    overflow: hidden;
+    border: 0.5px solid rgba(184,151,90,0.2);
+  }
+
+  .about-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(20%) contrast(1.05);
+    transition: transform 0.8s ease;
+  }
+
+  .about-image:hover img { transform: scale(1.03); }
+
+  /* SERVICES */
+  #services { background: var(--black); max-width: 1200px; margin: 0 auto; }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5px;
+    margin-top: 4rem;
+    border: 0.5px solid rgba(184,151,90,0.15);
+  }
+
+  .service-card {
+    padding: 3rem 2.5rem;
+    border: 0.5px solid rgba(184,151,90,0.15);
+    position: relative;
+    overflow: hidden;
+    transition: background 0.4s;
+    cursor: pointer;
+  }
+
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 2px;
+    height: 0;
+    background: var(--gold);
+    transition: height 0.4s ease;
+  }
+
+  .service-card:hover { background: rgba(184,151,90,0.04); }
+  .service-card:hover::before { height: 100%; }
+
+  .service-number {
+    font-family: var(--font-display);
+    font-size: 3.5rem;
+    font-weight: 300;
+    color: rgba(184,151,90,0.15);
+    line-height: 1;
+    margin-bottom: 1.5rem;
+  }
+
+  .service-title {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: 400;
+    margin-bottom: 0.5rem;
+    color: var(--white);
+  }
+
+  .service-subtitle {
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+  }
+
+  .service-desc {
+    font-size: 0.85rem;
+    color: rgba(248,246,241,0.6);
+    margin-bottom: 1.5rem;
+    line-height: 1.8;
+  }
+
+  .service-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .service-list li {
+    font-size: 0.8rem;
+    color: rgba(248,246,241,0.5);
+    padding-left: 1rem;
+    position: relative;
+  }
+
+  .service-list li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+    font-size: 0.7rem;
+  }
+
+  /* PRICING */
+  #pricing { max-width: 1200px; margin: 0 auto; }
+
+  .pricing-section { margin-bottom: 5rem; }
+
+  .pricing-section-title {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: 300;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 0.5px solid rgba(184,151,90,0.2);
+    color: rgba(248,246,241,0.8);
+  }
+
+  .ec-links {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+  }
+
+  .ec-link {
+    border: 0.5px solid rgba(184,151,90,0.3);
+    padding: 0.5rem 1.2rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    color: var(--gold-light);
+    text-decoration: none;
+    transition: all 0.3s;
+    border-radius: 2px;
+  }
+
+  .ec-link:hover {
+    background: rgba(184,151,90,0.1);
+    border-color: var(--gold);
+  }
+
+  .plans-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1px;
+    background: rgba(184,151,90,0.1);
+    border: 0.5px solid rgba(184,151,90,0.2);
+    margin-bottom: 1.5rem;
+  }
+
+  .plan-card {
+    background: var(--black);
+    padding: 2.5rem 2rem;
+    position: relative;
+    transition: background 0.3s;
+  }
+
+  .plan-card:hover { background: rgba(184,151,90,0.04); }
+
+  .plan-card.featured {
+    background: rgba(184,151,90,0.06);
+    border-top: 2px solid var(--gold);
+  }
+
+  .plan-popular {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
   }
 
   .plan-name {
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: #d4af37;
-    margin: 0 0 12px;
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    font-weight: 400;
+    margin-bottom: 0.3rem;
+  }
+
+  .plan-target {
+    font-size: 0.72rem;
+    color: rgba(248,246,241,0.4);
+    letter-spacing: 0.05em;
+    margin-bottom: 1.2rem;
   }
 
   .plan-price {
-    font-size: 36px;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    margin: 0 0 4px;
-    line-height: 1;
+    font-size: 2rem;
+    font-weight: 500;
+    color: var(--gold);
+    margin-bottom: 0.3rem;
   }
 
   .plan-price span {
-    font-size: 14px;
-    font-weight: 400;
-    color: #888;
-    letter-spacing: 0;
-  }
-
-  .plan-from {
-    font-size: 11px;
-    color: #666;
-    margin: 0 0 20px;
+    font-size: 0.8rem;
+    font-weight: 300;
+    color: rgba(248,246,241,0.4);
   }
 
   .plan-divider {
-    height: 1px;
-    background: rgba(255,255,255,0.08);
-    margin: 0 0 20px;
-  }
-
-  .plan-desc {
-    color: #aaa;
-    font-size: 13px;
-    line-height: 1.7;
-    margin: 0 0 16px;
+    border: none;
+    border-top: 0.5px solid rgba(184,151,90,0.2);
+    margin: 1.2rem 0;
   }
 
   .plan-features {
     list-style: none;
-    padding: 0; margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
   }
 
   .plan-features li {
-    color: #bbb;
-    font-size: 12px;
-    line-height: 1.8;
-    padding-left: 16px;
+    font-size: 0.8rem;
+    color: rgba(248,246,241,0.55);
+    padding-left: 1rem;
     position: relative;
   }
 
   .plan-features li::before {
-    content: '✓';
+    content: '·';
     position: absolute;
     left: 0;
-    color: #d4af37;
-    font-size: 11px;
+    color: var(--gold);
   }
 
   .plan-note {
-    margin-top: 24px;
-    color: #555;
-    font-size: 11px;
-    line-height: 1.8;
-    letter-spacing: 0.05em;
+    font-size: 0.7rem;
+    color: rgba(248,246,241,0.3);
+    margin-top: 1rem;
   }
 
-  /* ===== CONTACT ===== */
-  footer {
-    padding: 40px;
-    text-align: center;
-    color: #777;
-    font-size: 14px;
+  /* OPTIONS */
+  .options-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1px;
+    background: rgba(184,151,90,0.1);
+    border: 0.5px solid rgba(184,151,90,0.2);
+    margin-bottom: 1rem;
   }
 
-  .fade-up {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: all 0.9s ease;
+  .option-card {
+    background: var(--black);
+    padding: 2rem 1.8rem;
+    transition: background 0.3s;
   }
 
-  .fade-up.show { opacity: 1; transform: translateY(0); }
+  .option-card:hover { background: rgba(184,151,90,0.04); }
 
-  .delay-1 { transition-delay: 0.1s; }
-  .delay-2 { transition-delay: 0.2s; }
-  .delay-3 { transition-delay: 0.3s; }
+  .option-badge {
+    display: inline-block;
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 0.5px solid rgba(184,151,90,0.4);
+    padding: 0.2rem 0.6rem;
+    margin-bottom: 0.8rem;
+    border-radius: 2px;
+  }
 
-  .hamburger {
-    display: none;
+  .option-name {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .option-target {
+    font-size: 0.7rem;
+    color: rgba(248,246,241,0.35);
+    margin-bottom: 0.8rem;
+  }
+
+  .option-price {
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: var(--gold);
+    margin-bottom: 0.8rem;
+  }
+
+  .option-price span {
+    font-size: 0.75rem;
+    font-weight: 300;
+    color: rgba(248,246,241,0.4);
+  }
+
+  .option-features {
+    list-style: none;
+    display: flex;
     flex-direction: column;
-    gap: 5px;
-    cursor: pointer;
-    padding: 8px;
+    gap: 0.4rem;
   }
 
-  .hamburger span {
-    display: block;
-    width: 24px;
-    height: 1.5px;
-    background: #fff;
+  .option-features li {
+    font-size: 0.78rem;
+    color: rgba(248,246,241,0.5);
+    padding-left: 1rem;
+    position: relative;
   }
 
-  .nav-overlay { display: none; }
+  .option-features li::before {
+    content: '·';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+  }
 
+  .pricing-note {
+    font-size: 0.75rem;
+    color: rgba(248,246,241,0.35);
+    margin-top: 0.5rem;
+  }
+
+  /* CATCH COPY */
+  .catch-box {
+    border: 0.5px solid rgba(184,151,90,0.25);
+    padding: 1.5rem 2rem;
+    margin-bottom: 2rem;
+    border-left: 2px solid var(--gold);
+  }
+
+  .catch-box p {
+    font-size: 0.85rem;
+    color: rgba(248,246,241,0.6);
+    margin-bottom: 0.4rem;
+  }
+
+  .catch-box p:last-child { margin: 0; }
+
+  .catch-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.8rem;
+  }
+
+  /* CONTACT */
+  #contact {
+    text-align: center;
+    background: rgba(184,151,90,0.03);
+    border-top: 0.5px solid rgba(184,151,90,0.15);
+    border-bottom: 0.5px solid rgba(184,151,90,0.15);
+  }
+
+  .contact-inner { max-width: 600px; margin: 0 auto; }
+
+  .contact-mail {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    color: var(--gold);
+    text-decoration: none;
+    border-bottom: 0.5px solid rgba(184,151,90,0.4);
+    padding-bottom: 0.3rem;
+    transition: border-color 0.3s;
+    margin-top: 2rem;
+  }
+
+  .contact-mail:hover { border-color: var(--gold); }
+
+  .contact-sub {
+    font-size: 0.8rem;
+    color: rgba(248,246,241,0.4);
+    margin-top: 1.5rem;
+  }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 2rem;
+    font-size: 0.72rem;
+    color: rgba(248,246,241,0.25);
+    letter-spacing: 0.1em;
+  }
+
+  /* RESPONSIVE */
   @media (max-width: 768px) {
-    header { height: 80px; padding: 0 20px 0 0; }
-    .logo img { height: 80px; margin-left: -8px; }
-    main { padding-top: 80px; }
-    nav { display: none; }
-    .hamburger { display: flex; }
-
-    .nav-overlay {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 40px;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.95);
-      z-index: 200;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s ease;
-    }
-
-    .nav-overlay.open { opacity: 1; pointer-events: all; }
-
-    .nav-overlay a {
-      color: rgba(255,255,255,0.8);
-      text-decoration: none;
-      font-size: 20px;
-      font-weight: 600;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      transition: all 0.3s ease;
-      -webkit-text-fill-color: rgba(255,255,255,0.8);
-    }
-    
-    .nav-overlay a:hover,
-    .nav-overlay a:active {
-      background: linear-gradient(100deg, #4a90d9 0%, #f5c842 50%, #f0547a 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .nav-overlay .close-btn {
-      position: absolute;
-      top: 30px; right: 24px;
-      font-size: 28px;
-      color: #fff;
-      cursor: pointer;
-      background: none;
-      border: none;
-    }
-
-    section { padding: 80px 6vw; }
-    h2 { font-size: 20px; }
-    .sub { font-size: 14px; }
-
-    .services-grid { grid-template-columns: 1fr; gap: 16px; }
-    .card { transform: none !important; }
-
-    .plan-grid { grid-template-columns: 1fr; gap: 16px; }
-
-    .ec-buttons { flex-direction: column; }
-    .ec-btn { justify-content: center; }
+    nav { padding: 1.2rem 1.5rem; }
+    .nav-links { gap: 1.2rem; }
+    section { padding: 5rem 1.5rem; }
+    #about { grid-template-columns: 1fr; gap: 3rem; }
+    .about-image { display: none; }
+    .plans-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
-
 <body>
 
-<header>
-  <div class="logo">
-    <a href="#">
-      <img src="/frevia-site/images/logo.png" alt="FREVIA">
-    </a>
+<nav>
+  <a href="#" class="nav-logo">FREVIA</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <p class="hero-eyebrow">合同会社 FREVIA</p>
+  <h1 class="hero-title">FREVIA<br><span>STUDIO</span></h1>
+  <p class="hero-sub">Remake × Handmade × Select × IT</p>
+  <div class="hero-tags">
+    <span class="hero-tag">リメイク</span>
+    <span class="hero-tag">ハンドメイド</span>
+    <span class="hero-tag">セレクト買付</span>
+    <span class="hero-tag">IT 自動化</span>
   </div>
-  <nav>
-    <a href="#about">About</a>
-    <a href="#services">Services</a>
-    <a href="#pricing">Pricing</a>
-    <a href="#contact">Contact</a>
-  </nav>
-  <div class="hamburger" onclick="document.getElementById('navOverlay').classList.add('open')">
-    <span></span><span></span><span></span>
-  </div>
-</header>
+</section>
 
-<div class="nav-overlay" id="navOverlay">
-  <button class="close-btn" onclick="document.getElementById('navOverlay').classList.remove('open')">✕</button>
-  <a href="#about" onclick="document.getElementById('navOverlay').classList.remove('open')">About</a>
-  <a href="#services" onclick="document.getElementById('navOverlay').classList.remove('open')">Services</a>
-  <a href="#pricing" onclick="document.getElementById('navOverlay').classList.remove('open')">Pricing</a>
-  <a href="#contact" onclick="document.getElementById('navOverlay').classList.remove('open')">Contact</a>
-</div>
-
-<main>
-
-<section class="about-section fade-up">
-  <img class="hero-img" src="/frevia-site/images/about-workspace.jpg" alt="FREVIA STUDIO workspace">
-  <canvas id="particle-canvas"></canvas>
-  <div class="about-content">
-    <div class="title-wrap">
-      <span class="title-frevia">Frevia</span>
-      <span class="title-studio">Studio</span>
-      <span class="title-underline"></span>
+<!-- ABOUT -->
+<section>
+  <div id="about">
+    <div class="about-text">
+      <p class="section-label">About</p>
+      <h2 class="section-title">自由と創造を<br>かたちにする</h2>
+      <div class="divider"></div>
+      <p>リメイク × ハンドメイド × セレクト買付 × IT の複合スタジオ。</p>
+      <p>繊細で、温かく、美しく。ITで時間を解放し、創造する自由へ。</p>
+      <p>一点一点丁寧に手作りした作品から、業務を劇的に効率化するIT自動化ソリューションまで、幅広いサービスを提供しています。</p>
+    </div>
+    <div class="about-image">
+      <img src="images/about-workspace.jpg" alt="FREVIA STUDIO workspace">
     </div>
   </div>
 </section>
 
-<section class="about-lower fade-up" id="about">
-  <h2>ABOUT</h2>
-  <p class="sub">
-    自由と創造をかたちにする、リメイク × ハンドメイド × IT の複合スタジオ。<br>
-    繊細で、温かく、美しく。ITで時間を解放し、創造する自由へ。
-  </p>
-</section>
+<!-- SERVICES -->
+<section>
+  <div id="services">
+    <p class="section-label">Services</p>
+    <h2 class="section-title">4つの事業</h2>
+    <div class="divider"></div>
+    <div class="services-grid">
 
-<section class="fade-up" id="services">
-  <h2>SERVICES</h2>
-  <div class="services-grid">
-
-    <div class="card fade-up delay-1" onclick="toggleCard(this)">
-      <div class="card-header">
-        <img src="/frevia-site/images/remake.jpg" alt="Remake">
-        <h3>REMAKE</h3>
-        <p class="card-sub">服のリメイク</p>
-        <div class="card-arrow">
-          <span>詳しく見る</span>
-          <div class="arrow-icon">▾</div>
-        </div>
-      </div>
-      <div class="card-drawer">
-        <div class="card-drawer-inner">
-          <span class="drawer-line"></span>
-          <p>色を抜き、染め直す。その一枚にしかない表情をつくる。<br>タイダイ染・脱色加工で、服をアートに変えます。</p>
-          <ul>
-            <li>タイダイ染め（絞り染め・スパイラル・グラデーション）</li>
-            <li>脱色加工・ブリーチアート</li>
-            <li>デニムのカスタム・リメイク</li>
-            <li>サイズ調整・シルエット変更</li>
-            <li>パッチワーク・刺繍加工</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    <div class="card fade-up delay-2" onclick="toggleCard(this)">
-      <div class="card-header">
-        <img src="/frevia-site/images/handmade.jpg" alt="Handmade">
-        <h3>HANDMADE</h3>
-        <p class="card-sub">アクセサリー・時計などの一点物の制作</p>
-        <div class="card-arrow">
-          <span>詳しく見る</span>
-          <div class="arrow-icon">▾</div>
-        </div>
-      </div>
-      <div class="card-drawer">
-        <div class="card-drawer-inner">
-          <span class="drawer-line"></span>
-            <p>世界にひとつだけの一点物を。丁寧な手仕事で、あなただけのアクセサリーや時計を制作します。</p>
-          <ul>
-            <li>オリジナルアクセサリー制作（ピアス・ネックレス・ブレスレット）</li>
-            <li>カスタム時計・ウォッチバンド制作</li>
-            <li>フェルトを使った小物・インテリア雑貨</li>
-            <li>ギフト・記念品のオーダーメイド</li>
-            <li>世界にひとつのプレゼント制作</li>
-          </ul>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    <div class="card fade-up delay-3" onclick="toggleCard(this)">
-      <div class="card-header">
-        <img src="/frevia-site/images/it-flow.jpg" alt="IT Solutions">
-        <h3>IT SOLUTIONS</h3>
-        <p class="card-sub">GAS / API / 自動化ツール開発</p>
-        <div class="card-arrow">
-          <span>詳しく見る</span>
-          <div class="arrow-icon">▾</div>
-        </div>
-      </div>
-      <div class="card-drawer">
-        <div class="card-drawer-inner">
-          <span class="drawer-line"></span>
-          <p>毎日の繰り返し作業を、ITの力でスマートに自動化。<br>生まれた時間で、あなたが本当にやりたいことへ。</p>
-          <ul>
-            <li>Excel / VBAマクロ開発・自動化</li>
-            <li>Google Apps Script（GAS）開発</li>
-            <li>Webスクレイピング・データ自動収集</li>
-            <li>日次・定期レポートの自動生成</li>
-            <li>フォーム〜スプレッドシート〜通知の自動連携</li>
-            <li>繰り返し作業のワンクリック化</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ===== PRICING ===== -->
-<section class="fade-up" id="pricing">
-  <h2>PRICING</h2>
-
-  <!-- REMAKE / HANDMADE -->
-  <div class="pricing-block fade-up">
-    <h3>Remake &amp; Handmade</h3>
-    <p class="sub">作品はECサイトにて販売中。ご要望はお気軽にご相談ください。</p>
-    <div class="ec-buttons">
-      <a href="https://minne.com" target="_blank" class="ec-btn">
-        <span class="ec-icon">🧵</span> minne
-      </a>
-      <a href="https://www.creema.jp" target="_blank" class="ec-btn">
-        <span class="ec-icon">✂️</span> Creema
-      </a>
-      <a href="https://thebase.com" target="_blank" class="ec-btn">
-        <span class="ec-icon">🛍️</span> BASE
-      </a>
-      <a href="https://jp.mercari.com" target="_blank" class="ec-btn">
-        <span class="ec-icon">🔴</span> メルカリ
-      </a>
-    </div>
-    <p class="ec-note">※ オーダーメイド・カスタム依頼はCONTACTよりお問い合わせください。</p>
-  </div>
-
-  <!-- IT SOLUTIONS -->
-  <div class="pricing-block fade-up">
-    <h3>IT Solutions</h3>
-    <div class="plan-grid">
-
-      <!-- ライト -->
-      <div class="plan-card fade-up delay-1">
-        <p class="plan-name">Light</p>
-        <p class="plan-price">¥30,000<span> 〜</span></p>
-        <p class="plan-from">小規模・スポット自動化</p>
-        <div class="plan-divider"></div>
-        <p class="plan-desc">まず試したい方に。単一の繰り返し作業をひとつのツールで自動化します。</p>
-        <ul class="plan-features">
-          <li>自動化ツール 1本</li>
-          <li>VBA または GAS</li>
-          <li>納品後1週間サポート</li>
-          <li>修正1回まで対応</li>
+      <div class="service-card">
+        <p class="service-number">01</p>
+        <h3 class="service-title">Remake</h3>
+        <p class="service-subtitle">服のリメイク</p>
+        <p class="service-desc">色を抜き、染め直す。その一枚にしかない表情をつくる。タイダイ染・脱色加工で、服をアートに変えます。</p>
+        <ul class="service-list">
+          <li>タイダイ染め（絞り染め・スパイラル・グラデーション）</li>
+          <li>脱色加工・ブリーチアート</li>
+          <li>デニムのカスタム・リメイク</li>
+          <li>サイズ調整・シルエット変更</li>
+          <li>パッチワーク・刺繍加工</li>
         </ul>
       </div>
 
-      <!-- スタンダード -->
-      <div class="plan-card recommended fade-up delay-2">
-        <div class="plan-badge">MOST POPULAR</div>
-        <p class="plan-name">Standard</p>
-        <p class="plan-price">¥50,000<span> 〜</span></p>
-        <p class="plan-from">中規模・複数ツール対応</p>
-        <div class="plan-divider"></div>
-        <p class="plan-desc">複数の業務をまとめて自動化。GAS・VBA・スクレイピングを組み合わせて対応します。</p>
-        <ul class="plan-features">
-          <li>自動化ツール 2〜3本</li>
-          <li>VBA / GAS / スクレイピング</li>
-          <li>納品後2週間サポート</li>
-          <li>修正3回まで対応</li>
-          <li>運用マニュアル付き</li>
+      <div class="service-card">
+        <p class="service-number">02</p>
+        <h3 class="service-title">Handmade</h3>
+        <p class="service-subtitle">アクセサリー・時計などの一点物制作</p>
+        <p class="service-desc">世界にひとつだけの一点物を。丁寧な手仕事で、あなただけのアクセサリーや時計を制作します。</p>
+        <ul class="service-list">
+          <li>オリジナルアクセサリー制作（ピアス・ネックレス・ブレスレット）</li>
+          <li>スケルトン懐中時計・スチームパンクデザイン</li>
+          <li>オリジナル照明器具</li>
+          <li>フェルトを使った小物・インテリア雑貨</li>
+          <li>ギフト・記念品のオーダーメイド</li>
         </ul>
       </div>
 
-      <!-- プレミアム -->
-      <div class="plan-card fade-up delay-3">
-        <p class="plan-name">Premium</p>
-        <p class="plan-price">¥100,000<span> 〜</span></p>
-        <p class="plan-from">本格システム・複数連携</p>
-        <div class="plan-divider"></div>
-        <p class="plan-desc">複数ツールを連携させた本格的な自動化システムを構築。業務フロー全体を設計します。</p>
-        <ul class="plan-features">
-          <li>自動化ツール 3本以上</li>
+      <div class="service-card">
+        <p class="service-number">03</p>
+        <h3 class="service-title">Select</h3>
+        <p class="service-subtitle">セレクト買付・キュレーション販売</p>
+        <p class="service-desc">バイヤーの目線で厳選したアイテムをお届け。フィギュア・トレカ・ヴィンテージ衣類など、価値あるものを丁寧に選び抜きます。</p>
+        <ul class="service-list">
+          <li>フィギュア・アニメグッズのセレクト</li>
+          <li>トレーディングカードの厳選買付</li>
+          <li>ヴィンテージ・古着のキュレーション</li>
+          <li>ゲーム・カルチャーグッズ</li>
+          <li>国内（メルカリ）・海外（eBay）にて販売</li>
+        </ul>
+      </div>
+
+      <div class="service-card">
+        <p class="service-number">04</p>
+        <h3 class="service-title">IT Solutions</h3>
+        <p class="service-subtitle">GAS / VBA / 自動化ツール開発</p>
+        <p class="service-desc">毎日の繰り返し作業を、ITの力でスマートに自動化。生まれた時間で、あなたが本当にやりたいことへ。</p>
+        <ul class="service-list">
+          <li>Excel / VBAマクロ開発・自動化</li>
+          <li>Google Apps Script（GAS）開発</li>
+          <li>Webスクレイピング・データ自動収集</li>
+          <li>フォーム〜スプレッドシート〜通知の自動連携</li>
           <li>API連携・外部サービス統合</li>
-          <li>納品後1ヶ月サポート</li>
-          <li>修正無制限（期間内）</li>
-          <li>運用マニュアル付き</li>
-          <li>追加開発の優先対応</li>
         </ul>
       </div>
 
     </div>
-    <p class="plan-note">※ 料金はすべて税抜き表示です。内容により変動する場合があります。まずはお気軽にご相談ください。</p>
   </div>
-
 </section>
 
-<section class="fade-up" id="contact">
-  <h2>CONTACT</h2>
-  <p class="sub">ご相談・制作依頼などお気軽にお問い合わせください。</p>
-  <a href="mailto:freviasupport@gmail.com" style="
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    color: #d4af37;
-    text-decoration: none;
-    font-size: 15px;
-    letter-spacing: 0.08em;
-    border-bottom: 1px solid rgba(212,175,55,0.3);
-    padding-bottom: 4px;
-    transition: border-color 0.3s ease, opacity 0.3s ease;
-  "
-  onmouseover="this.style.opacity='0.7'"
-  onmouseout="this.style.opacity='1'"
-  >
-    ✉ freviasupport@gmail.com
-  </a>
+<!-- PRICING -->
+<section>
+  <div id="pricing">
+    <p class="section-label">Pricing</p>
+    <h2 class="section-title">料金プラン</h2>
+    <div class="divider"></div>
+
+    <!-- Remake & Handmade -->
+    <div class="pricing-section">
+      <p class="pricing-section-title">Remake &amp; Handmade</p>
+      <p style="font-size:0.85rem;color:rgba(248,246,241,0.55);margin-bottom:1.5rem;">作品はECサイトにて販売中。オーダーメイド・カスタム依頼はCONTACTよりお問い合わせください。</p>
+      <div class="ec-links">
+        <a class="ec-link" href="https://minne.com" target="_blank">minne</a>
+        <a class="ec-link" href="https://www.creema.jp" target="_blank">Creema</a>
+        <a class="ec-link" href="https://thebase.com" target="_blank">BASE</a>
+        <a class="ec-link" href="https://jp.mercari.com" target="_blank">メルカリ</a>
+      </div>
+    </div>
+
+    <!-- Select -->
+    <div class="pricing-section">
+      <p class="pricing-section-title">Select — セレクト買付</p>
+      <p style="font-size:0.85rem;color:rgba(248,246,241,0.55);margin-bottom:1.5rem;">バイヤーの目線で厳選したアイテムを国内外のマーケットプレイスにて販売中。お探しのアイテムのご相談はCONTACTよりどうぞ。</p>
+      <div class="ec-links">
+        <a class="ec-link" href="https://jp.mercari.com" target="_blank">メルカリ（国内）</a>
+        <a class="ec-link" href="https://www.ebay.com" target="_blank">eBay（海外・2期より開始）</a>
+      </div>
+    </div>
+
+    <!-- IT 単発 -->
+    <div class="pricing-section">
+      <p class="pricing-section-title">IT Solutions — 単発プラン</p>
+
+      <div class="catch-box">
+        <p class="catch-label">こんなお悩みはありませんか？</p>
+        <p>「毎月1時間かかる集計作業…ボタン1つで数秒に短縮できるかもしれません」</p>
+        <p>「Excelへの転記・コピペ作業、GASやVBAで自動化すれば時間を大幅に節約できます」</p>
+        <p>「まずはお気軽にご相談ください。見積もりは無料です」</p>
+      </div>
+
+      <div class="plans-grid">
+        <div class="plan-card">
+          <p class="plan-name">Light</p>
+          <p class="plan-target">小規模・お試し向け</p>
+          <p class="plan-price">¥8,000 <span>〜（税抜）</span></p>
+          <hr class="plan-divider">
+          <ul class="plan-features">
+            <li>単純作業1つの自動化</li>
+            <li>VBA または GAS</li>
+            <li>納品後3日サポート</li>
+            <li>修正1回まで対応</li>
+          </ul>
+        </div>
+
+        <div class="plan-card">
+          <p class="plan-name">Starter</p>
+          <p class="plan-target">個人事業主向け</p>
+          <p class="plan-price">¥30,000 <span>〜（税抜）</span></p>
+          <hr class="plan-divider">
+          <ul class="plan-features">
+            <li>単発・スポット自動化</li>
+            <li>VBA / GAS</li>
+            <li>納品後1週間サポート</li>
+            <li>修正2回まで対応</li>
+            <li>簡易マニュアル付き</li>
+          </ul>
+        </div>
+
+        <div class="plan-card featured">
+          <p class="plan-popular">— おすすめ —</p>
+          <p class="plan-name">Business</p>
+          <p class="plan-target">中小企業・複数業務向け</p>
+          <p class="plan-price">¥50,000 <span>〜（税抜）</span></p>
+          <hr class="plan-divider">
+          <ul class="plan-features">
+            <li>複数業務の自動化</li>
+            <li>VBA / GAS / スクレイピング</li>
+            <li>納品後2週間サポート</li>
+            <li>修正3回まで対応</li>
+            <li>運用マニュアル付き</li>
+          </ul>
+        </div>
+
+        <div class="plan-card">
+          <p class="plan-name">Enterprise</p>
+          <p class="plan-target">本格システム構築向け</p>
+          <p class="plan-price">¥100,000 <span>〜（税抜）</span></p>
+          <hr class="plan-divider">
+          <ul class="plan-features">
+            <li>3ツール以上の連携開発</li>
+            <li>API連携・外部サービス統合</li>
+            <li>納品後1ヶ月サポート</li>
+            <li>修正無制限（期間内）</li>
+            <li>運用マニュアル付き</li>
+            <li>追加開発の優先対応</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- IT 月額 -->
+    <div class="pricing-section">
+      <p class="pricing-section-title">IT Solutions — 月額プラン（保守・継続開発）</p>
+      <div class="plans-grid">
+        <div class="plan-card">
+          <p class="plan-name">Monthly S</p>
+          <p class="plan-target">軽微な保守・メンテナンス</p>
+          <p class="plan-price">¥5,000 <span>/ 月（税抜）</span></p>
+          <hr class="plan-divider">
+          <ul class="plan-features">
+            <li>軽微な修正・バグ対応</li>
+            <li>月2回までの対応</li>
+            <li>メール・チャットサポート</li>
+          </ul>
+        </div>
+
+        <div class="plan-card featured">
+          <p class="plan-popular">— おすすめ —</p>
+          <p class="plan-name">Monthly M</p>
+          <p class="plan-target">継続開発・機能改善</p>
+          <p class="plan-price">¥15,000 <span>/ 月（税抜）</span></p>
+          <hr class="plan-divider">
+          <ul class="plan-features">
+            <li>継続的な機能追加・改善</li>
+            <li>月4回までの対応</li>
+            <li>優先サポート対応</li>
+            <li>月次レポート付き</li>
+          </ul>
+          <p class="plan-note">※ 最低3ヶ月契約</p>
+        </div>
+
+        <div class="plan-card">
+          <p class="plan-name">Monthly L</p>
+          <p class="plan-target">専属サポート・新規開発込み</p>
+          <p class="plan-price">¥50,000 <span>/ 月（税抜）</span></p>
+          <hr class="plan-divider">
+          <ul class="plan-features">
+            <li>新規ツール開発込み</li>
+            <li>対応回数無制限</li>
+            <li>専属担当として対応</li>
+            <li>月次レポート付き</li>
+            <li>追加開発の優先対応</li>
+          </ul>
+          <p class="plan-note">※ 最低3ヶ月契約</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- オプション -->
+    <div class="pricing-section">
+      <p class="pricing-section-title">IT Solutions — オプション</p>
+      <p style="font-size:0.78rem;color:rgba(248,246,241,0.35);margin-bottom:1.5rem;">※ オプションはすべてFREVIA受注案件限定です。他社製ツールは対象外となります。</p>
+      <div class="options-grid">
+        <div class="option-card">
+          <span class="option-badge">オプション</span>
+          <p class="option-name">スポット保守</p>
+          <p class="option-target">納品済みツールの修正・バグ対応</p>
+          <p class="option-price">¥5,000 <span>/ 回（税抜）</span></p>
+          <ul class="option-features">
+            <li>軽微な修正・バグ対応</li>
+            <li>動作確認込み</li>
+            <li>FREVIA受注案件限定</li>
+          </ul>
+        </div>
+
+        <div class="option-card">
+          <span class="option-badge">オプション</span>
+          <p class="option-name">機能追加</p>
+          <p class="option-target">既存ツールへの機能追加</p>
+          <p class="option-price">¥10,000 <span>〜/ 回（税抜）</span></p>
+          <ul class="option-features">
+            <li>既存ツールへの機能追加</li>
+            <li>仕様変更への対応</li>
+            <li>FREVIA受注案件限定</li>
+            <li>内容により別途お見積り</li>
+          </ul>
+        </div>
+
+        <div class="option-card">
+          <span class="option-badge">オプション</span>
+          <p class="option-name">コード解読・引き継ぎ</p>
+          <p class="option-target">前任者のツールを引き継ぎたい方</p>
+          <p class="option-price">¥15,000 <span>〜/ 回（税抜）</span></p>
+          <ul class="option-features">
+            <li>既存コードの解読・整理</li>
+            <li>マニュアル作成</li>
+            <li>FREVIA受注案件限定</li>
+            <li>引き継ぎドキュメント付き</li>
+          </ul>
+        </div>
+      </div>
+      <p class="pricing-note">※ 料金はすべて税抜き表示です。内容により変動する場合があります。まずはお気軽にご相談ください。</p>
+    </div>
+
+  </div>
 </section>
 
-</main>
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <p class="section-label">Contact</p>
+    <h2 class="section-title">お問い合わせ</h2>
+    <div class="divider" style="margin:1.5rem auto;"></div>
+    <p style="font-size:0.85rem;color:rgba(248,246,241,0.5);">ご相談・制作依頼・お見積りなどお気軽にお問い合わせください。</p>
+    <a href="mailto:freviasupport@gmail.com" class="contact-mail">freviasupport@gmail.com</a>
+    <p class="contact-sub">© 2026 合同会社FREVIA — FREVIA STUDIO</p>
+  </div>
+</section>
 
-<footer>
-  © FREVIA STUDIO
-</footer>
-
-<script>
-function toggleCard(card) {
-  const isOpen = card.classList.contains('open');
-  document.querySelectorAll('.card').forEach(c => c.classList.remove('open'));
-  if (!isOpen) card.classList.add('open');
-}
-
-const targets = document.querySelectorAll('.fade-up');
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) entry.target.classList.add('show');
-  });
-}, { threshold: 0.2 });
-targets.forEach(target => observer.observe(target));
-
-const canvas = document.getElementById('particle-canvas');
-const ctx = canvas.getContext('2d');
-let particles = [], animId;
-
-function resizeCanvas() {
-  canvas.width = canvas.parentElement.offsetWidth;
-  canvas.height = canvas.parentElement.offsetHeight;
-}
-
-function createParticles() {
-  particles = [];
-  const count = Math.floor((canvas.width * canvas.height) / 8000);
-  for (let i = 0; i < count; i++) {
-    particles.push({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height,
-      r: Math.random() * 1.8 + 0.4,
-      speedX: (Math.random() - 0.5) * 0.4,
-      speedY: (Math.random() - 0.5) * 0.4 - 0.3,
-      alpha: Math.random() * 0.6 + 0.2,
-      color: Math.random() > 0.5
-        ? `rgba(255, ${180 + Math.floor(Math.random()*50)}, 80,`
-        : `rgba(255, 255, ${220 + Math.floor(Math.random()*35)},`
-    });
-  }
-}
-
-function animateParticles() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  particles.forEach(p => {
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-    ctx.fillStyle = p.color + p.alpha + ')';
-    ctx.fill();
-    p.x += p.speedX;
-    p.y += p.speedY;
-    p.alpha -= 0.0015;
-    if (p.alpha <= 0 || p.y < -10) {
-      p.x = Math.random() * canvas.width;
-      p.y = canvas.height + 5;
-      p.alpha = Math.random() * 0.6 + 0.2;
-    }
-  });
-  animId = requestAnimationFrame(animateParticles);
-}
-
-const heroImg = document.querySelector('.hero-img');
-function initParticles() {
-  resizeCanvas();
-  createParticles();
-  cancelAnimationFrame(animId);
-  animateParticles();
-}
-
-heroImg.complete ? initParticles() : heroImg.addEventListener('load', initParticles);
-window.addEventListener('resize', initParticles);
-</script>
+<footer>© 2026 合同会社FREVIA. All rights reserved.</footer>
 
 </body>
 </html>
