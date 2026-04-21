@@ -587,6 +587,53 @@ nav.hide {
 }
 
   }
+
+ /* スマホで横スクロールにする */
+@media (max-width: 768px) {
+
+  /* 4つの事業（Services） */
+  .services-grid {
+    display: flex;
+    overflow-x: auto;
+    gap: 1rem;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 1rem;
+  }
+
+  .service-card {
+    min-width: 80%;
+    scroll-snap-align: start;
+  }
+
+  /* プラン（Pricing） */
+  .plans-grid {
+    display: flex;
+    overflow-x: auto;
+    gap: 1rem;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 1rem;
+  }
+
+  .plan-card {
+    min-width: 80%;
+    scroll-snap-align: start;
+  }
+
+  /* オプション（Options） */
+  .options-grid {
+    display: flex;
+    overflow-x: auto;
+    gap: 1rem;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 1rem;
+  }
+
+  .option-card {
+    min-width: 80%;
+    scroll-snap-align: start;
+  }
+}
+
 </style>
 </head>
 <body>
