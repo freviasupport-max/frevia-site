@@ -654,7 +654,7 @@ nav.hide {
 }
 
 /* ================================
-   アコーディオン（＋は下・金色で囲む）
+   アコーディオン（＋は下・金色ライン）
    ================================ */
 
 .service-card {
@@ -662,23 +662,23 @@ nav.hide {
   cursor: pointer;
   padding-bottom: 3.5rem; /* 下の＋スペース */
   border-bottom: 1px solid rgba(255, 215, 0, 0.35); /* 金色ライン */
-  transition: background 0.3s ease, border-color 0.3s ease;
+  transition: border-color 0.3s ease;
 }
 
-/* 開いたカードは金色を強める */
+/* 開いたカードは金色ラインを強調 */
 .service-card.open {
-  border-bottom: 1px solid rgba(255, 215, 0, 0.8);
+  border-bottom: 1px solid rgba(255, 215, 0, 0.9);
 }
 
-/* ＋アイコン（下中央） */
+/* ＋アイコン（カード下中央） */
 .service-card::after {
   content: '+';
   position: absolute;
-  bottom: 0.6rem;
+  bottom: 0.8rem;
   left: 50%;
   transform: translateX(-50%);
   font-size: 1.8rem;
-  color: rgba(255, 215, 0, 0.7); /* 金色 */
+  color: rgba(255, 215, 0, 0.7);
   transition: color 0.3s ease;
 }
 
