@@ -653,33 +653,39 @@ nav.hide {
   }
 }
 
- /* ================================
-   PC・スマホ共通アコーディオン
+/* ================================
+   アコーディオン（＋は下・金色で囲む）
    ================================ */
 
-/* カード全体をタップ/クリック可能に */
 .service-card {
   position: relative;
   cursor: pointer;
-  transition: background 0.3s ease;
+  padding-bottom: 3.5rem; /* 下の＋スペース */
+  border-bottom: 1px solid rgba(255, 215, 0, 0.35); /* 金色ライン */
+  transition: background 0.3s ease, border-color 0.3s ease;
 }
 
-/* ＋アイコン（閉じている状態） */
+/* 開いたカードは金色を強める */
+.service-card.open {
+  border-bottom: 1px solid rgba(255, 215, 0, 0.8);
+}
+
+/* ＋アイコン（下中央） */
 .service-card::after {
   content: '+';
   position: absolute;
-  bottom: 1rem;   /* ← 下に配置 */
+  bottom: 0.6rem;
   left: 50%;
   transform: translateX(-50%);
   font-size: 1.8rem;
-  color: rgba(255,255,255,0.7);
-  transition: transform 0.3s ease, color 0.3s ease;
+  color: rgba(255, 215, 0, 0.7); /* 金色 */
+  transition: color 0.3s ease;
 }
 
 /* 開いたら − に変わる */
 .service-card.open::after {
   content: '−';
-  color: var(--rainbow-4); /* あなたのサイトの緑ラインに合わせて視認性UP */
+  color: rgba(255, 215, 0, 1);
 }
 
 /* 開閉アニメーション */
@@ -694,16 +700,9 @@ nav.hide {
 /* 開いた状態 */
 .service-card.open .service-desc,
 .service-card.open .service-list {
-  max-height: 500px; /* 内容に合わせて十分大きく */
+  max-height: 600px;
   opacity: 1;
 }
-
-/* 開いたカードの背景を少し明るくして視認性UP */
-.service-card.open {
-  background: rgba(255,255,255,0.05);
-}
-
-
  
 </style>
 </head>
