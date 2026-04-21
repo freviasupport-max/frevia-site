@@ -569,6 +569,15 @@
     .about-image { display: none; }
     .plans-grid { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
     .options-grid { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+   /* Scroll Hide/Show Nav */
+nav {
+  transition: transform 0.35s ease;
+}
+
+nav.hide {
+  transform: translateY(-100%);
+}
+
   }
 </style>
 </head>
@@ -893,6 +902,22 @@
 
 <div class="rainbow-line"></div>
 <footer>© 2026 合同会社FREVIA. All rights reserved.</footer>
+<script>
+let lastScroll = 0;
+const nav = document.querySelector("nav");
+
+window.addEventListener("scroll", () => {
+  const current = window.pageYOffset;
+
+  if (current > lastScroll) {
+    nav.classList.add("hide");   // 下スクロール → 隠す
+  } else {
+    nav.classList.remove("hide"); // 上スクロール → 出す
+  }
+
+  lastScroll = current;
+});
+</script>
 
 </body>
 <script>
