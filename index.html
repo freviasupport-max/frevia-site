@@ -902,38 +902,42 @@ nav.hide {
 
 <div class="rainbow-line"></div>
 <footer>© 2026 合同会社FREVIA. All rights reserved.</footer>
+
+<!-- スクロールでナビを隠す／出す -->
 <script>
 let lastScroll = 0;
 const nav = document.querySelector("nav");
 
 window.addEventListener("scroll", () => {
-  const current = window.pageYOffset;
+    const current = window.pageYOffset;
 
-  if (current > lastScroll) {
-    nav.classList.add("hide");   // 下スクロール → 隠す
-  } else {
-    nav.classList.remove("hide"); // 上スクロール → 出す
-  }
+    if (current > lastScroll) { // 下スクロール → 隠す
+        nav.classList.add("hide");
+    } else {
+        nav.classList.remove("hide"); // 上スクロール → 出す
+    }
 
-  lastScroll = current;
+    lastScroll = current;
 });
 </script>
 
-</body>
+<!-- ハンバーガーメニュー -->
 <script>
 const hamburger = document.getElementById('hamburger');
-const navLinks = document.getElementById('nav-links');
+const navlinks = document.getElementById('nav-links');
 if (hamburger) {
-  hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('open');
-    navLinks.classList.toggle('open');
-  });
-  navLinks.querySelectorAll('a').forEach(a => {
-    a.addEventListener('click', () => {
-      hamburger.classList.remove('open');
-      navLinks.classList.remove('open');
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('open');
+        navlinks.classList.toggle('open');
     });
-  });
+    navlinks.querySelectorAll('a').forEach((a) => {
+        a.addEventListener('click', () => {
+            hamburger.classList.remove('open');
+            navlinks.classList.remove('open');
+        });
+    });
 }
 </script>
+
+</body>
 </html>
