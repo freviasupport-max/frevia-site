@@ -633,6 +633,25 @@ nav.hide {
     scroll-snap-align: start;
   }
 }
+@media (max-width: 768px) {
+
+  /* 初期状態：詳細を隠す */
+  .service-desc,
+  .service-list {
+    display: none;
+  }
+
+  /* 開いた状態 */
+  .service-card.open .service-desc,
+  .service-card.open .service-list {
+    display: block;
+  }
+
+  /* タップできるように */
+  .service-card {
+    cursor: pointer;
+  }
+}
 
 </style>
 </head>
@@ -973,6 +992,23 @@ window.addEventListener("scroll", () => {
     }
 
     lastScroll = current;
+});
+</script>
+
+ <script>
+document.querySelectorAll('.service-card').forEach(card => {
+  card.addEventListener('click', () => {
+
+    // すでに開いているカードを全部閉じる
+    document.querySelectorAll('.service-card.open').forEach(openCard => {
+      if (openCard !== card) {
+        openCard.classList.remove('open');
+      }
+    });
+
+    // 自分を開閉
+    card.classList.toggle('open');
+  });
 });
 </script>
 
