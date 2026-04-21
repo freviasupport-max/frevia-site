@@ -385,7 +385,40 @@
     transition: background 0.3s;
   }
   .plan-card:hover { background: rgba(255,255,255,0.03); }
-  .plan-card.featured { background: rgba(255,255,255,0.03); border-top: 2px solid; border-image: linear-gradient(90deg, var(--rainbow-1), var(--rainbow-5), var(--rainbow-6)) 1; }
+  .plan-card:hover::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 1.5px;
+    background: linear-gradient(135deg, #e8433a, #e8943a, #e8d03a, #4caf50, #2196f3, #9c27b0);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    z-index: 2;
+  }
+  .plan-card.featured { background: rgba(255,255,255,0.03); border-top: 2px solid; border-image: linear-gradient(90deg, #e8433a, #e8943a, #e8d03a, #4caf50, #2196f3, #9c27b0) 1; }
+
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+    background: none;
+    border: none;
+  }
+  .hamburger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: rgba(248,246,241,0.7);
+    border-radius: 2px;
+    transition: all 0.3s;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
   .plan-popular {
     font-size: 0.62rem;
@@ -476,12 +509,31 @@
   footer { text-align: center; padding: 1.5rem; font-size: 0.68rem; color: rgba(248,246,241,0.2); letter-spacing: 0.1em; }
 
   @media (max-width: 768px) {
-    nav { padding: 1rem 1.5rem; }
-    .nav-links { gap: 1rem; }
+    nav { padding: 0.8rem 1.5rem; }
+    .hamburger { display: flex; }
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0; right: 0;
+      flex-direction: column;
+      gap: 0;
+      background: rgba(10,10,10,0.98);
+      border-bottom: 0.5px solid rgba(255,255,255,0.08);
+      padding: 0.5rem 0;
+    }
+    .nav-links.open { display: flex; }
+    .nav-links li { width: 100%; }
+    .nav-links a {
+      display: block;
+      padding: 0.9rem 2rem;
+      border-bottom: 0.5px solid rgba(255,255,255,0.05);
+    }
     section { padding: 5rem 1.5rem; }
     .about-grid { grid-template-columns: 1fr; gap: 3rem; }
     .about-image { display: none; }
-    .plans-grid, .options-grid { grid-template-columns: 1fr; }
+    .plans-grid { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+    .options-grid { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
   }
 </style>
 </head>
@@ -491,7 +543,10 @@
 
 <nav>
   <a href="#" class="nav-logo"><img src="images/logo.png" alt="FREVIA STUDIO"></a>
-  <ul class="nav-links">
+  <button class="hamburger" id="hamburger" aria-label="メニュー">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links" id="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#services">Services</a></li>
     <li><a href="#pricing">Pricing</a></li>
@@ -626,7 +681,7 @@
       <p style="font-size:0.83rem;color:rgba(248,246,241,0.5);margin-bottom:1.5rem;">バイヤーの目線で厳選したアイテムを国内外のマーケットプレイスにて販売中。お探しのアイテムのご相談はCONTACTよりどうぞ。</p>
       <div class="ec-links">
         <a class="ec-link" href="https://jp.mercari.com" target="_blank">メルカリ（国内）</a>
-        <a class="ec-link" href="https://www.ebay.com" target="_blank">eBay（海外・2期より開始）</a>
+        <a class="ec-link" href="https://www.ebay.com" target="_blank">eBay（海外・今後展開予定）</a>
       </div>
     </div>
 
@@ -804,3 +859,20 @@
 <footer>© 2026 合同会社FREVIA. All rights reserved.</footer>
 
 </body>
+<script>
+const hamburger = document.getElementById('hamburger');
+const navLinks = document.getElementById('nav-links');
+if (hamburger) {
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    navLinks.classList.toggle('open');
+  });
+  navLinks.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      navLinks.classList.remove('open');
+    });
+  });
+}
+</script>
+</html>
