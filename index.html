@@ -653,6 +653,57 @@ nav.hide {
   }
 }
 
+ /* ================================
+   PC・スマホ共通アコーディオン
+   ================================ */
+
+/* カード全体をタップ/クリック可能に */
+.service-card {
+  position: relative;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+/* ＋アイコン（閉じている状態） */
+.service-card::after {
+  content: '+';
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 1.6rem;
+  color: rgba(255,255,255,0.6);
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+/* 開いたら − に変わる */
+.service-card.open::after {
+  content: '−';
+  color: var(--rainbow-4); /* あなたのサイトの緑ラインに合わせて視認性UP */
+}
+
+/* 開閉アニメーション */
+.service-desc,
+.service-list {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.35s ease, opacity 0.25s ease;
+}
+
+/* 開いた状態 */
+.service-card.open .service-desc,
+.service-card.open .service-list {
+  max-height: 500px; /* 内容に合わせて十分大きく */
+  opacity: 1;
+}
+
+/* 開いたカードの背景を少し明るくして視認性UP */
+.service-card.open {
+  background: rgba(255,255,255,0.05);
+}
+
+
+ 
 </style>
 </head>
 <body>
@@ -995,11 +1046,11 @@ window.addEventListener("scroll", () => {
 });
 </script>
 
- <script>
+<script>
 document.querySelectorAll('.service-card').forEach(card => {
   card.addEventListener('click', () => {
 
-    // すでに開いているカードを全部閉じる
+    // 他のカードを閉じる
     document.querySelectorAll('.service-card.open').forEach(openCard => {
       if (openCard !== card) {
         openCard.classList.remove('open');
