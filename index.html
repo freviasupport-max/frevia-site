@@ -668,10 +668,11 @@ nav.hide {
 .service-card::after {
   content: '+';
   position: absolute;
-  top: 1rem;
-  right: 1rem;
-  font-size: 1.6rem;
-  color: rgba(255,255,255,0.6);
+  bottom: 1rem;   /* ← 下に配置 */
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.8rem;
+  color: rgba(255,255,255,0.7);
   transition: transform 0.3s ease, color 0.3s ease;
 }
 
