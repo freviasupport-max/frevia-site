@@ -217,22 +217,27 @@
   }
   .services-grid {
     display: flex;
+    flex-wrap: nowrap;
     gap: 0;
     overflow: hidden;
     border: 0.5px solid rgba(255,255,255,0.06);
+    width: 100%;
   }
   .service-card {
-    flex: 0 0 25%;
+    flex: 0 0 100%;
+    width: 25%;
     min-width: 0;
     box-sizing: border-box;
     background: var(--black);
     padding: 3rem 2.5rem 4.5rem;
     position: relative;
-    overflow: hidden;
+    overflow: visible;
     cursor: pointer;
+    border-right: 0.5px solid rgba(255,255,255,0.06);
     border-bottom: 1px solid rgba(255,215,0,0.35);
     transition: background 0.4s, border-color 0.3s, transform 0.5s cubic-bezier(0.4,0,0.2,1);
   }
+  .service-card:last-child { border-right: none; }
   .slider-nav {
     display: flex;
     justify-content: space-between;
@@ -265,9 +270,7 @@
   }
   .slider-arrow:hover { border-color: rgba(255,255,255,0.4); color: var(--white); background: rgba(255,255,255,0.04); }
   .slider-arrow:disabled { opacity: 0.2; cursor: default; }
-  @media (max-width: 1024px) {
-    .service-card { flex: 0 0 50%; }
-  }
+
   .service-card.open { border-bottom: 1px solid rgba(255,215,0,0.9); }
   .service-card::before { border-radius: 0; }
   .service-card::before {
@@ -920,8 +923,9 @@
     section { padding: 5rem 1.5rem; }
     .about-grid { grid-template-columns: 1fr; gap: 3rem; }
     .about-image { display: none; }
-    .services-grid { border: none; }
-    .service-card { flex: 0 0 85%; border: 0.5px solid rgba(255,255,255,0.06); }
+    .services-grid { border: 0.5px solid rgba(255,255,255,0.06); }
+    .service-card { flex: 0 0 100%; width: 100%; border-right: none; }
+    .slider-nav { margin-top: 1rem; }
     .plans-grid { display: flex; overflow-x: auto; gap: 1rem; scroll-snap-type: x mandatory; padding-bottom: 1rem; }
     .plan-card { min-width: 80%; scroll-snap-align: start; }
     .options-grid { display: flex; overflow-x: auto; gap: 1rem; scroll-snap-type: x mandatory; padding-bottom: 1rem; }
@@ -1040,6 +1044,7 @@
     <h2 class="section-title">4つの事業</h2>
     <div class="rainbow-divider"></div>
     <div class="services-slider-wrap">
+    <div style="overflow:hidden;width:100%;">
     <div class="services-grid" id="services-grid">
 
       <div class="service-card">
@@ -1103,6 +1108,7 @@
       </div>
 
     </div><!-- /services-grid -->
+    </div><!-- /overflow-hidden -->
 
     <div class="slider-nav">
       <div class="slider-dots">
@@ -1111,9 +1117,12 @@
         <div class="slider-dot" onclick="goToSlide(2)"></div>
         <div class="slider-dot" onclick="goToSlide(3)"></div>
       </div>
-      <div class="slider-arrows">
-        <button class="slider-arrow" id="slide-prev" onclick="slideServices(-1)" disabled>&#8592;</button>
-        <button class="slider-arrow" id="slide-next" onclick="slideServices(1)">&#8594;</button>
+      <div style="display:flex;align-items:center;gap:1.2rem;">
+        <span id="slide-counter" style="font-size:0.68rem;letter-spacing:0.15em;color:rgba(248,246,241,0.2);">01 / 04</span>
+        <div class="slider-arrows">
+          <button class="slider-arrow" id="slide-prev" onclick="slideServices(-1)" disabled>&#8592;</button>
+          <button class="slider-arrow" id="slide-next" onclick="slideServices(1)">&#8594;</button>
+        </div>
       </div>
     </div>
     </div><!-- /services-slider-wrap -->
@@ -1803,7 +1812,7 @@ if (hamburger) {
 <script>
 (function() {
   let currentSlide = 0;
-  const visibleCount = () => window.innerWidth <= 768 ? 1 : window.innerWidth <= 1024 ? 2 : 4;
+  const visibleCount = () => window.innerWidth < 768 ? 1 : window.innerWidth <= 1024 ? 2 : 4;
 
   function updateSlider() {
     const grid   = document.getElementById('services-grid');
@@ -1813,8 +1822,18 @@ if (hamburger) {
     const maxIdx = Math.max(0, total - vis);
     if (currentSlide > maxIdx) currentSlide = maxIdx;
 
-    const pct = (100 / vis) * currentSlide;
-    cards.forEach(c => { c.style.transform = `translateX(-${pct * vis}%)`; });
+    // Translate the grid by card-width units
+    const cardWidthPct = 100 / vis;
+    const translatePct = currentSlide * cardWidthPct;
+    grid.style.transform = `translateX(-${translatePct}%)`;
+    grid.style.transition = 'transform 0.5s cubic-bezier(0.4,0,0.2,1)';
+
+    // Each card must be exactly 1/vis of viewport
+    cards.forEach(c => {
+      c.style.flex = `0 0 ${cardWidthPct}%`;
+      c.style.width = `${cardWidthPct}%`;
+      c.style.transform = '';
+    });
 
     const dots = document.querySelectorAll('.slider-dot');
     dots.forEach((d, i) => d.classList.toggle('active', i === currentSlide));
@@ -1823,6 +1842,8 @@ if (hamburger) {
     const next = document.getElementById('slide-next');
     if (prev) prev.disabled = currentSlide === 0;
     if (next) next.disabled = currentSlide >= maxIdx;
+    const counter = document.getElementById('slide-counter');
+    if (counter) counter.textContent = String(currentSlide + 1).padStart(2,'0') + ' / ' + String(total).padStart(2,'0');
   }
 
   window.slideServices = function(dir) {
@@ -1833,9 +1854,14 @@ if (hamburger) {
     currentSlide = Math.max(0, Math.min(currentSlide + dir, max));
     updateSlider();
   };
+  window.addEventListener('load', updateSlider);
 
   window.goToSlide = function(idx) {
-    currentSlide = idx;
+    const grid  = document.getElementById('services-grid');
+    const cards = grid ? grid.querySelectorAll('.service-card') : [];
+    const vis   = visibleCount();
+    const max   = Math.max(0, cards.length - vis);
+    currentSlide = Math.max(0, Math.min(idx, max));
     updateSlider();
   };
 
@@ -1849,6 +1875,16 @@ if (hamburger) {
       const diff = touchStartX - e.changedTouches[0].clientX;
       if (Math.abs(diff) > 50) slideServices(diff > 0 ? 1 : -1);
     });
+    // Also handle mouse drag on desktop
+    let mouseStartX = 0, isDragging = false;
+    grid.addEventListener('mousedown', e => { mouseStartX = e.clientX; isDragging = true; });
+    grid.addEventListener('mouseup', e => {
+      if (!isDragging) return;
+      isDragging = false;
+      const diff = mouseStartX - e.clientX;
+      if (Math.abs(diff) > 60) slideServices(diff > 0 ? 1 : -1);
+    });
+    grid.addEventListener('mouseleave', () => { isDragging = false; });
     updateSlider();
   });
   window.addEventListener('resize', updateSlider);
