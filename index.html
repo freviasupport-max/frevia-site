@@ -36,7 +36,6 @@
     overflow-x: hidden;
   }
 
-  /* RAINBOW LINE */
   .rainbow-line {
     height: 3px;
     background: linear-gradient(90deg,
@@ -49,11 +48,10 @@
     );
   }
 
-  /* NAV */
   nav {
     position: fixed;
     top: 0; left: 0; right: 0;
-    z-index: 100;
+    z-index: 9999;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -61,7 +59,9 @@
     background: rgba(10,10,10,0.95);
     backdrop-filter: blur(8px);
     border-bottom: 0.5px solid rgba(255,255,255,0.08);
+    transition: transform 0.35s ease;
   }
+  nav.hide { transform: translateY(-100%) !important; }
 
   .nav-logo {
     display: block;
@@ -70,7 +70,6 @@
     line-height: 0;
     margin-left: -12px;
   }
-
   .nav-logo img {
     height: 120px;
     width: auto;
@@ -95,8 +94,7 @@
     content: '';
     position: absolute;
     bottom: 0; left: 0;
-    width: 0;
-    height: 2px;
+    width: 0; height: 2px;
     background: linear-gradient(90deg, #e8433a, #e8943a, #e8d03a, #4caf50, #2196f3, #9c27b0);
     border-radius: 2px;
     transition: width 0.3s ease;
@@ -104,7 +102,6 @@
   .nav-links a:hover { color: var(--white); }
   .nav-links a:hover::after { width: 100%; }
 
-  /* HERO */
   .hero {
     min-height: 100vh;
     display: flex;
@@ -117,25 +114,14 @@
     overflow: hidden;
     background: url('images/about-bg-steampunk.jpg') center/cover no-repeat;
   }
-
-  .hero::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: rgba(5,3,1,0.72);
-  }
-
   .hero::before {
     content: '';
     position: absolute;
     inset: 0;
     background: rgba(10,10,10,0.72);
   }
-
   .hero-inner { position: relative; z-index: 1; }
-
   .hero-logo { height: 80px; margin-bottom: 2rem; }
-
   .hero-title {
     font-family: var(--font-display);
     font-size: clamp(3.5rem, 10vw, 8rem);
@@ -144,19 +130,13 @@
     letter-spacing: -0.02em;
     margin-bottom: 1rem;
   }
-
   .hero-title .rainbow-text {
-    background: linear-gradient(90deg,
-      var(--rainbow-1), var(--rainbow-2),
-      var(--rainbow-3), var(--rainbow-4),
-      var(--rainbow-5), var(--rainbow-6)
-    );
+    background: linear-gradient(90deg, var(--rainbow-1), var(--rainbow-2), var(--rainbow-3), var(--rainbow-4), var(--rainbow-5), var(--rainbow-6));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     font-weight: 600;
   }
-
   .hero-sub {
     font-size: 0.82rem;
     letter-spacing: 0.22em;
@@ -164,14 +144,7 @@
     color: rgba(248,246,241,0.5);
     margin-bottom: 2.5rem;
   }
-
-  .hero-tags {
-    display: flex;
-    gap: 0.8rem;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
+  .hero-tags { display: flex; gap: 0.8rem; flex-wrap: wrap; justify-content: center; }
   .hero-tag {
     border: 0.5px solid rgba(255,255,255,0.2);
     padding: 0.35rem 1rem;
@@ -181,30 +154,25 @@
     color: rgba(248,246,241,0.6);
     border-radius: 2px;
   }
-
   .hero-tag:nth-child(1) { border-color: var(--rainbow-1); color: var(--rainbow-1); }
   .hero-tag:nth-child(2) { border-color: var(--rainbow-3); color: var(--rainbow-3); }
   .hero-tag:nth-child(3) { border-color: var(--rainbow-4); color: var(--rainbow-4); }
   .hero-tag:nth-child(4) { border-color: var(--rainbow-5); color: var(--rainbow-5); }
 
-  /* SECTIONS */
   section { padding: 7rem 4rem; }
   .section-inner { max-width: 1200px; margin: 0 auto; }
-
   .section-label {
     font-size: 0.68rem;
     letter-spacing: 0.3em;
     text-transform: uppercase;
     margin-bottom: 0.8rem;
   }
-
   .section-label.rainbow {
     background: linear-gradient(90deg, var(--rainbow-1), var(--rainbow-5));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
-
   .section-title {
     font-family: var(--font-display);
     font-size: clamp(2.2rem, 4vw, 3.5rem);
@@ -212,37 +180,22 @@
     line-height: 1.1;
     margin-bottom: 1.5rem;
   }
-
   .rainbow-divider {
-    width: 60px;
-    height: 2px;
+    width: 60px; height: 2px;
     background: linear-gradient(90deg, #e8433a, #e8943a, #e8d03a, #4caf50, #2196f3, #9c27b0);
     margin: 1.5rem 0 2.5rem;
     border-radius: 2px;
   }
-
   #contact .rainbow-divider { margin: 1.5rem auto 2.5rem; }
 
-  /* ABOUT */
   .about-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 6rem;
     align-items: center;
   }
-
-  .about-text p {
-    color: rgba(248,246,241,0.65);
-    font-size: 0.92rem;
-    margin-bottom: 1rem;
-  }
-
-  .about-image {
-    aspect-ratio: 4/5;
-    overflow: hidden;
-    position: relative;
-  }
-
+  .about-text p { color: rgba(248,246,241,0.65); font-size: 0.92rem; margin-bottom: 1rem; }
+  .about-image { aspect-ratio: 4/5; overflow: hidden; position: relative; }
   .about-image::after {
     content: '';
     position: absolute;
@@ -250,18 +203,14 @@
     border: 1px solid rgba(255,255,255,0.06);
     pointer-events: none;
   }
-
   .about-image img {
-    width: 100%;
-    height: 100%;
+    width: 100%; height: 100%;
     object-fit: cover;
     filter: contrast(1.05);
     transition: transform 0.8s ease;
   }
-
   .about-image:hover img { transform: scale(1.03); }
 
-  /* SERVICES */
   .services-grid {
     display: flex;
     flex-wrap: wrap;
@@ -271,83 +220,69 @@
     border: 0.5px solid rgba(255,255,255,0.06);
     align-items: flex-start;
   }
-
   .service-card {
     flex: 1 1 260px;
     min-width: 260px;
     max-width: 100%;
     box-sizing: border-box;
     background: var(--black);
-  }
-
-  .service-card {
-    background: var(--black);
     padding: 3rem 2.5rem;
     position: relative;
     overflow: hidden;
-    transition: background 0.4s, box-shadow 0.3s ease;
+    cursor: pointer;
+    padding-bottom: 3.5rem;
+    border-bottom: 1px solid rgba(255,215,0,0.35);
+    transition: background 0.4s, border-color 0.3s;
   }
-
-  /* ホバー時に虹色の枠線 */
+  .service-card.open { border-bottom: 1px solid rgba(255,215,0,0.9); }
   .service-card::before {
     content: '';
     position: absolute;
     top: 0; left: 0;
-    width: 100%;
-    height: 100%;
+    width: 100%; height: 100%;
     border-radius: 4px;
     opacity: 0;
     transition: opacity 0.3s ease;
     pointer-events: none;
   }
-
-  .service-card:nth-child(1):hover::before { 
-    opacity: 1; 
-    border: 2px solid var(--rainbow-1);
-    box-shadow: 0 0 0 1px var(--rainbow-2);
-  }
-  .service-card:nth-child(2):hover::before { 
-    opacity: 1; 
-    border: 2px solid var(--rainbow-3);
-    box-shadow: 0 0 0 1px var(--rainbow-4);
-  }
-  .service-card:nth-child(3):hover::before { 
-    opacity: 1; 
-    border: 2px solid var(--rainbow-4);
-    box-shadow: 0 0 0 1px var(--rainbow-5);
-  }
-  .service-card:nth-child(4):hover::before { 
-    opacity: 1; 
-    border: 2px solid var(--rainbow-5);
-    box-shadow: 0 0 0 1px var(--rainbow-6);
-  }
-
-
+  .service-card:nth-child(1):hover::before,
+  .service-card:nth-child(1).open::before { opacity: 1; border: 2px solid var(--rainbow-1); box-shadow: 0 0 0 1px var(--rainbow-2); }
+  .service-card:nth-child(2):hover::before,
+  .service-card:nth-child(2).open::before { opacity: 1; border: 2px solid var(--rainbow-3); box-shadow: 0 0 0 1px var(--rainbow-4); }
+  .service-card:nth-child(3):hover::before,
+  .service-card:nth-child(3).open::before { opacity: 1; border: 2px solid var(--rainbow-4); box-shadow: 0 0 0 1px var(--rainbow-5); }
+  .service-card:nth-child(4):hover::before,
+  .service-card:nth-child(4).open::before { opacity: 1; border: 2px solid var(--rainbow-5); box-shadow: 0 0 0 1px var(--rainbow-6); }
   .service-card:hover { background: transparent; }
-  .service-card:hover::before { opacity: 1; }
-
-  /* open状態の枠線を虹色で維持 */
-  .service-card.open:nth-child(1)::before {
-    opacity: 1;
-    border: 2px solid var(--rainbow-1);
-    box-shadow: 0 0 0 1px var(--rainbow-2);
+  .service-card > .service-desc,
+  .service-card > .service-list {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1), opacity 0.35s cubic-bezier(0.4,0,0.2,1), transform 0.35s cubic-bezier(0.4,0,0.2,1);
+    margin-top: 0;
+    padding-top: 0;
   }
-  .service-card.open:nth-child(2)::before {
+  .service-card.open > .service-desc,
+  .service-card.open > .service-list {
+    max-height: 500px;
     opacity: 1;
-    border: 2px solid var(--rainbow-3);
-    box-shadow: 0 0 0 1px var(--rainbow-4);
+    transform: translateY(0);
+    margin-top: 1.5rem;
+    padding-top: 1rem;
   }
-  .service-card.open:nth-child(3)::before {
-    opacity: 1;
-    border: 2px solid var(--rainbow-4);
-    box-shadow: 0 0 0 1px var(--rainbow-5);
+  .service-card::after {
+    content: '+';
+    position: absolute;
+    bottom: 0.8rem;
+    left: 50%;
+    transform: translateX(-50%) rotate(0deg);
+    font-size: 1.8rem;
+    color: rgba(255,215,0,0.7);
+    transition: color 0.3s ease, transform 0.4s cubic-bezier(0.4,0,0.2,1);
   }
-  .service-card.open:nth-child(4)::before {
-    opacity: 1;
-    border: 2px solid var(--rainbow-5);
-    box-shadow: 0 0 0 1px var(--rainbow-6);
-  }
-
+  .service-card.open::after { content: '×'; color: rgba(255,215,0,1); transform: translateX(-50%) rotate(90deg); }
   .service-image {
     width: 100%;
     aspect-ratio: 16/9;
@@ -356,57 +291,178 @@
     filter: grayscale(30%) contrast(1.05);
     transition: filter 0.4s;
   }
-
   .service-card:hover .service-image { filter: grayscale(0%) contrast(1.05); }
-
-  .service-number {
-    font-family: var(--font-display);
-    font-size: 3rem;
-    font-weight: 300;
-    color: rgba(255,255,255,0.08);
-    line-height: 1;
-    margin-bottom: 1.2rem;
-  }
-
-  .service-title {
-    font-family: var(--font-display);
-    font-size: 1.6rem;
-    font-weight: 400;
-    margin-bottom: 0.4rem;
-  }
-
-  .service-subtitle {
-    font-size: 0.7rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: rgba(248,246,241,0.4);
-    margin-bottom: 1.2rem;
-  }
-
+  .service-number { font-family: var(--font-display); font-size: 3rem; font-weight: 300; color: rgba(255,255,255,0.08); line-height: 1; margin-bottom: 1.2rem; }
+  .service-title { font-family: var(--font-display); font-size: 1.6rem; font-weight: 400; margin-bottom: 0.4rem; }
+  .service-subtitle { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(248,246,241,0.4); margin-bottom: 1.2rem; }
   .service-card:nth-child(1) .service-title { color: var(--rainbow-2); }
   .service-card:nth-child(2) .service-title { color: var(--rainbow-3); }
   .service-card:nth-child(3) .service-title { color: var(--rainbow-4); }
   .service-card:nth-child(4) .service-title { color: var(--rainbow-5); }
-
-  .service-desc {
-    font-size: 0.83rem;
-    color: rgba(248,246,241,0.55);
-    margin-bottom: 1.5rem;
-    line-height: 1.8;
-  }
-
+  .service-desc { font-size: 0.83rem; color: rgba(248,246,241,0.55); margin-bottom: 1.5rem; line-height: 1.8; }
   .service-list { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
-  .service-list li {
-    font-size: 0.78rem;
-    color: rgba(248,246,241,0.45);
-    padding-left: 1rem;
-    position: relative;
-  }
+  .service-list li { font-size: 0.78rem; color: rgba(248,246,241,0.45); padding-left: 1rem; position: relative; }
   .service-list li::before { content: '—'; position: absolute; left: 0; font-size: 0.65rem; opacity: 0.5; }
 
-  /* PRICING */
-  .pricing-section { margin-bottom: 5rem; }
+  /* =============================
+     無料診断 CTA（NEW）
+  ============================== */
+  .diagnosis-cta {
+    border: 0.5px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.02);
+    padding: 3rem 3.5rem;
+    margin-bottom: 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .diagnosis-cta::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px; height: 100%;
+    background: linear-gradient(180deg, var(--rainbow-1), var(--rainbow-5));
+  }
+  .diagnosis-cta-label {
+    font-size: 0.62rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    background: linear-gradient(90deg, var(--rainbow-1), var(--rainbow-5));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.8rem;
+  }
+  .diagnosis-cta h3 {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
+    font-weight: 300;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+  .diagnosis-cta p {
+    font-size: 0.85rem;
+    color: rgba(248,246,241,0.55);
+    margin-bottom: 0.5rem;
+    line-height: 1.8;
+  }
+  .diagnosis-steps {
+    display: flex;
+    gap: 2rem;
+    margin: 2rem 0;
+    flex-wrap: wrap;
+  }
+  .diagnosis-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    flex: 1;
+    min-width: 180px;
+  }
+  .diagnosis-step-num {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 300;
+    color: rgba(255,255,255,0.08);
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  .diagnosis-step-text { font-size: 0.78rem; color: rgba(248,246,241,0.55); line-height: 1.7; }
+  .diagnosis-step-text strong { display: block; font-weight: 500; font-size: 0.83rem; color: rgba(248,246,241,0.8); margin-bottom: 0.2rem; }
+  .cta-button {
+    display: inline-block;
+    margin-top: 1.5rem;
+    padding: 0.75rem 2.2rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--white);
+    border: 0.5px solid rgba(255,255,255,0.2);
+    position: relative;
+    transition: color 0.3s, background 0.3s;
+    border-radius: 2px;
+  }
+  .cta-button:hover { background: rgba(255,255,255,0.06); border-color: transparent; }
+  .cta-button:hover::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    background: linear-gradient(135deg, #e8433a, #e8943a, #e8d03a, #4caf50, #2196f3, #9c27b0);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    border-radius: 2px;
+  }
+  .cta-free-badge {
+    display: inline-block;
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.7rem;
+    border: 0.5px solid rgba(255,255,255,0.2);
+    color: rgba(248,246,241,0.5);
+    border-radius: 2px;
+    margin-left: 0.8rem;
+    vertical-align: middle;
+  }
 
+  /* =============================
+     業種別パッケージ（NEW）
+  ============================== */
+  .packages-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1px;
+    background: rgba(255,255,255,0.05);
+    border: 0.5px solid rgba(255,255,255,0.06);
+    margin-bottom: 1.5rem;
+  }
+  .package-card {
+    background: var(--black);
+    padding: 2.2rem 2rem;
+    position: relative;
+    transition: background 0.3s;
+  }
+  .package-card:hover { background: rgba(255,255,255,0.03); }
+  .package-card:hover::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 1.5px;
+    background: linear-gradient(135deg, #e8433a, #e8943a, #e8d03a, #4caf50, #2196f3, #9c27b0);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    z-index: 2;
+  }
+  .package-icon {
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(248,246,241,0.3);
+    margin-bottom: 0.6rem;
+    border: 0.5px solid rgba(255,255,255,0.12);
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    border-radius: 2px;
+  }
+  .package-name { font-family: var(--font-display); font-size: 1.3rem; font-weight: 400; margin-bottom: 0.3rem; }
+  .package-target { font-size: 0.7rem; color: rgba(248,246,241,0.35); margin-bottom: 1rem; }
+  .package-price { font-size: 1.6rem; font-weight: 500; margin-bottom: 0.3rem; }
+  .package-price span { font-size: 0.72rem; font-weight: 300; color: rgba(248,246,241,0.35); }
+  .package-divider { border: none; border-top: 0.5px solid rgba(255,255,255,0.07); margin: 0.8rem 0; }
+  .package-features { list-style: none; display: flex; flex-direction: column; gap: 0.45rem; }
+  .package-features li { font-size: 0.76rem; color: rgba(248,246,241,0.5); padding-left: 1rem; position: relative; }
+  .package-features li::before { content: '·'; position: absolute; left: 0; color: var(--rainbow-4); }
+  .packages-note { font-size: 0.72rem; color: rgba(248,246,241,0.25); margin-top: 0.5rem; }
+
+  /* =============================
+     料金プラン
+  ============================== */
+  .pricing-section { margin-bottom: 5rem; }
   .pricing-section-title {
     font-family: var(--font-display);
     font-size: 1.5rem;
@@ -416,7 +472,6 @@
     margin-bottom: 2rem;
     color: rgba(248,246,241,0.75);
   }
-
   .ec-links { display: flex; gap: 0.8rem; flex-wrap: wrap; margin-bottom: 1rem; }
   .ec-link {
     border: 0.5px solid rgba(255,255,255,0.15);
@@ -442,7 +497,6 @@
     pointer-events: none;
     border-radius: 2px;
   }
-
   .plans-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
@@ -451,7 +505,6 @@
     border: 0.5px solid rgba(255,255,255,0.06);
     margin-bottom: 1.5rem;
   }
-
   .plan-card {
     background: var(--black);
     padding: 2.5rem 2rem;
@@ -472,41 +525,10 @@
     z-index: 2;
   }
   .plan-card.featured { background: rgba(255,255,255,0.03); border-top: 2px solid; border-image: linear-gradient(90deg, #e8433a, #e8943a, #e8d03a, #4caf50, #2196f3, #9c27b0) 1; }
-
-  .hamburger {
-    display: none;
-    flex-direction: column;
-    gap: 5px;
-    cursor: pointer;
-    padding: 4px;
-    background: none;
-    border: none;
-  }
-  .hamburger span {
-    display: block;
-    width: 24px;
-    height: 2px;
-    background: rgba(248,246,241,0.7);
-    border-radius: 2px;
-    transition: all 0.3s;
-  }
-  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-  .hamburger.open span:nth-child(2) { opacity: 0; }
-  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-  .plan-popular {
-    font-size: 0.62rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    background: linear-gradient(90deg, var(--rainbow-1), var(--rainbow-5));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 0.8rem;
-  }
-
+  .plan-popular { font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; background: linear-gradient(90deg, var(--rainbow-1), var(--rainbow-5)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 0.8rem; }
   .plan-name { font-family: var(--font-display); font-size: 1.7rem; font-weight: 400; margin-bottom: 0.3rem; }
-  .plan-target { font-size: 0.7rem; color: rgba(248,246,241,0.35); margin-bottom: 1.2rem; }
+  .plan-target { font-size: 0.7rem; color: rgba(248,246,241,0.35); margin-bottom: 0.6rem; }
+  .plan-who { font-size: 0.72rem; color: rgba(248,246,241,0.45); margin-bottom: 1rem; font-style: italic; line-height: 1.6; }
   .plan-price { font-size: 1.8rem; font-weight: 500; color: var(--white); margin-bottom: 0.3rem; }
   .plan-price span { font-size: 0.75rem; font-weight: 300; color: rgba(248,246,241,0.35); }
   .plan-divider { border: none; border-top: 0.5px solid rgba(255,255,255,0.07); margin: 1rem 0; }
@@ -514,6 +536,17 @@
   .plan-features li { font-size: 0.78rem; color: rgba(248,246,241,0.5); padding-left: 1rem; position: relative; }
   .plan-features li::before { content: '·'; position: absolute; left: 0; color: var(--rainbow-5); }
   .plan-note { font-size: 0.68rem; color: rgba(248,246,241,0.25); margin-top: 1rem; }
+
+  /* 月額アップセル誘導テキスト */
+  .upsell-bridge {
+    border-left: 2px solid;
+    border-image: linear-gradient(180deg, var(--rainbow-4), var(--rainbow-5)) 1;
+    padding: 1rem 1.5rem;
+    margin-bottom: 2rem;
+    background: rgba(255,255,255,0.02);
+  }
+  .upsell-bridge p { font-size: 0.82rem; color: rgba(248,246,241,0.5); line-height: 1.8; }
+  .upsell-bridge strong { color: rgba(248,246,241,0.8); font-weight: 500; }
 
   .options-grid {
     display: grid;
@@ -523,7 +556,6 @@
     border: 0.5px solid rgba(255,255,255,0.06);
     margin-bottom: 1rem;
   }
-
   .option-card { background: var(--black); padding: 2rem 1.8rem; transition: background 0.3s; position: relative; }
   .option-card:hover { background: rgba(255,255,255,0.03); }
   .option-card:hover::after {
@@ -538,19 +570,7 @@
     pointer-events: none;
     z-index: 2;
   }
-
-  .option-badge {
-    display: inline-block;
-    font-size: 0.6rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    border: 0.5px solid rgba(255,255,255,0.2);
-    padding: 0.2rem 0.6rem;
-    margin-bottom: 0.8rem;
-    border-radius: 2px;
-    color: rgba(248,246,241,0.5);
-  }
-
+  .option-badge { display: inline-block; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; border: 0.5px solid rgba(255,255,255,0.2); padding: 0.2rem 0.6rem; margin-bottom: 0.8rem; border-radius: 2px; color: rgba(248,246,241,0.5); }
   .option-name { font-family: var(--font-display); font-size: 1.2rem; margin-bottom: 0.2rem; }
   .option-target { font-size: 0.68rem; color: rgba(248,246,241,0.3); margin-bottom: 0.8rem; }
   .option-price { font-size: 1.3rem; font-weight: 500; margin-bottom: 0.8rem; }
@@ -558,6 +578,7 @@
   .option-features { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
   .option-features li { font-size: 0.76rem; color: rgba(248,246,241,0.45); padding-left: 1rem; position: relative; }
   .option-features li::before { content: '·'; position: absolute; left: 0; opacity: 0.5; }
+  .option-frevia-note { font-size: 0.65rem; color: rgba(248,246,241,0.25); margin-top: 0.8rem; border-top: 0.5px solid rgba(255,255,255,0.07); padding-top: 0.6rem; }
 
   .catch-box {
     border-left: 2px solid;
@@ -569,10 +590,88 @@
   .catch-label { font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(248,246,241,0.4); margin-bottom: 0.6rem; }
   .catch-box p { font-size: 0.83rem; color: rgba(248,246,241,0.55); margin-bottom: 0.35rem; }
   .catch-box p:last-child { margin: 0; }
-
   .pricing-note { font-size: 0.72rem; color: rgba(248,246,241,0.25); margin-top: 0.5rem; }
 
-  /* CONTACT */
+  /* =============================
+     FAQ（NEW）
+  ============================== */
+  #faq { border-top: 0.5px solid rgba(255,255,255,0.06); }
+  .faq-section-block { margin-bottom: 3rem; }
+  .faq-category-label {
+    font-size: 0.62rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(248,246,241,0.3);
+    border-bottom: 0.5px solid rgba(255,255,255,0.06);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  .faq-item {
+    border-bottom: 0.5px solid rgba(255,255,255,0.06);
+    overflow: hidden;
+  }
+  .faq-q {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 1.2rem 0;
+    text-align: left;
+    font-family: var(--font-body);
+    font-size: 0.88rem;
+    font-weight: 400;
+    color: rgba(248,246,241,0.75);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+    letter-spacing: 0.02em;
+    line-height: 1.6;
+    transition: color 0.3s;
+  }
+  .faq-q:hover { color: var(--white); }
+  .faq-icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    border: 0.5px solid rgba(255,255,255,0.15);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: rgba(248,246,241,0.35);
+    transition: transform 0.3s ease, border-color 0.3s, color 0.3s;
+  }
+  .faq-icon.open {
+    transform: rotate(45deg);
+    border-color: rgba(255,255,255,0.35);
+    color: rgba(248,246,241,0.8);
+  }
+  .faq-a {
+    font-size: 0.82rem;
+    color: rgba(248,246,241,0.45);
+    line-height: 1.85;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1), padding 0.3s;
+    padding: 0;
+  }
+  .faq-a.open {
+    max-height: 400px;
+    padding-bottom: 1.2rem;
+  }
+  .faq-priority {
+    font-size: 0.58rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    background: linear-gradient(90deg, var(--rainbow-2), var(--rainbow-3));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    flex-shrink: 0;
+  }
+
   #contact { text-align: center; border-top: 0.5px solid rgba(255,255,255,0.06); }
   .contact-inner { max-width: 600px; margin: 0 auto; }
   .contact-mail {
@@ -591,181 +690,61 @@
   }
   .contact-mail:hover { border-color: rgba(255,255,255,0.4); }
   .contact-sub { font-size: 0.75rem; color: rgba(248,246,241,0.3); margin-top: 1.5rem; }
+  .contact-flow {
+    display: flex;
+    gap: 0;
+    margin: 2rem auto 0;
+    max-width: 500px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .contact-flow-step {
+    font-size: 0.72rem;
+    color: rgba(248,246,241,0.45);
+    padding: 0.4rem 0.8rem;
+    border: 0.5px solid rgba(255,255,255,0.1);
+    border-radius: 2px;
+    position: relative;
+    white-space: nowrap;
+  }
+  .contact-flow-arrow {
+    font-size: 0.72rem;
+    color: rgba(248,246,241,0.2);
+    display: flex;
+    align-items: center;
+    padding: 0 0.3rem;
+  }
 
   footer { text-align: center; padding: 1.5rem; font-size: 0.68rem; color: rgba(248,246,241,0.2); letter-spacing: 0.1em; }
+
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
+  .hamburger span { display: block; width: 24px; height: 2px; background: rgba(248,246,241,0.7); border-radius: 2px; transition: all 0.3s; }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
   @media (max-width: 768px) {
     nav { padding: 0.8rem 1.5rem; }
     .hamburger { display: flex; }
-    .nav-links {
-      display: none;
-      position: absolute;
-      top: 100%;
-      left: 0; right: 0;
-      flex-direction: column;
-      gap: 0;
-      background: rgba(10,10,10,0.98);
-      border-bottom: 0.5px solid rgba(255,255,255,0.08);
-      padding: 0.5rem 0;
-    }
+    .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; gap: 0; background: rgba(10,10,10,0.98); border-bottom: 0.5px solid rgba(255,255,255,0.08); padding: 0.5rem 0; }
     .nav-links.open { display: flex; }
     .nav-links li { width: 100%; }
-    .nav-links a {
-      display: block;
-      padding: 0.9rem 2rem;
-      border-bottom: 0.5px solid rgba(255,255,255,0.05);
-    }
+    .nav-links a { display: block; padding: 0.9rem 2rem; border-bottom: 0.5px solid rgba(255,255,255,0.05); }
     section { padding: 5rem 1.5rem; }
     .about-grid { grid-template-columns: 1fr; gap: 3rem; }
     .about-image { display: none; }
-    .plans-grid { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
-    .options-grid { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
-   /* Scroll Hide/Show Nav */
-nav {
-  transition: transform 0.35s ease;
-}
-
-nav.hide {
-  transform: translateY(-100%) !important;
-}
-/* Nav を最前面にする（重要） */
-nav {
-    z-index: 9999 !important;
-}
-
-nav.hide {
-    transform: translateY(-100%) !important;
-}
-
+    .services-grid { display: flex; overflow-x: auto; gap: 1rem; scroll-snap-type: x mandatory; padding-bottom: 1rem; }
+    .service-card { min-width: 80%; scroll-snap-align: start; }
+    .plans-grid { display: flex; overflow-x: auto; gap: 1rem; scroll-snap-type: x mandatory; padding-bottom: 1rem; }
+    .plan-card { min-width: 80%; scroll-snap-align: start; }
+    .options-grid { display: flex; overflow-x: auto; gap: 1rem; scroll-snap-type: x mandatory; padding-bottom: 1rem; }
+    .option-card { min-width: 80%; scroll-snap-align: start; }
+    .packages-grid { display: flex; overflow-x: auto; gap: 1rem; scroll-snap-type: x mandatory; padding-bottom: 1rem; }
+    .package-card { min-width: 80%; scroll-snap-align: start; }
+    .diagnosis-steps { flex-direction: column; gap: 1.2rem; }
+    .diagnosis-cta { padding: 2rem 1.5rem; }
+    .contact-flow { flex-direction: column; align-items: center; gap: 0.3rem; }
   }
-
- /* スマホで横スクロールにする */
-@media (max-width: 768px) {
-
-  /* 4つの事業（Services） */
-  .services-grid {
-    display: flex;
-    overflow-x: auto;
-    gap: 1rem;
-    scroll-snap-type: x mandatory;
-    padding-bottom: 1rem;
-  }
-
-  .service-card {
-    min-width: 80%;
-    scroll-snap-align: start;
-  }
-
-  /* プラン（Pricing） */
-  .plans-grid {
-    display: flex;
-    overflow-x: auto;
-    gap: 1rem;
-    scroll-snap-type: x mandatory;
-    padding-bottom: 1rem;
-  }
-
-  .plan-card {
-    min-width: 80%;
-    scroll-snap-align: start;
-  }
-
-  /* オプション（Options） */
-  .options-grid {
-    display: flex;
-    overflow-x: auto;
-    gap: 1rem;
-    scroll-snap-type: x mandatory;
-    padding-bottom: 1rem;
-  }
-
-  .option-card {
-    min-width: 80%;
-    scroll-snap-align: start;
-  }
-}
-@media (max-width: 768px) {
-
-  /* 初期状態：詳細を隠す */
-  .service-desc,
-  .service-list {
-    display: none;
-  }
-
-  /* 開いた状態 */
-  .service-card.open .service-desc,
-  .service-card.open .service-list {
-    display: block;
-  }
-
-  /* タップできるように */
-  .service-card {
-    cursor: pointer;
-  }
-}
-
-/* ================================
-   アコーディオン（＋は下・金色ライン）
-   ================================ */
-
-.service-card {
-  position: relative;
-  cursor: pointer;
-  padding-bottom: 3.5rem; /* 下の＋スペース */
-  border-bottom: 1px solid rgba(255, 215, 0, 0.35); /* 金色ライン */
-  transition: border-color 0.3s ease;
-}
-
-/* 開いたカードは金色ラインを強調 */
-.service-card.open {
-  border-bottom: 1px solid rgba(255, 215, 0, 0.9);
-}
-
-/* 開閉アニメーション（スムーズ） */
-
-/* すべて閉じる（初期状態） */
-.service-card > .service-desc,
-.service-card > .service-list {
-  max-height: 0;
-  overflow: hidden;
-  opacity: 0;
-  transform: translateY(-10px);
-  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-              opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-              transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-  margin-top: 0;
-  padding-top: 0;
-}
-
-/* 開いたカードの直下だけ開く */
-.service-card.open > .service-desc,
-.service-card.open > .service-list {
-  max-height: 500px;
-  opacity: 1;
-  transform: translateY(0);
-  margin-top: 1.5rem;
-  padding-top: 1rem;
-}
-
-/* ＋アイコンのアニメーション */
-.service-card::after {
-  content: '+';
-  position: absolute;
-  bottom: 0.8rem;
-  left: 50%;
-  transform: translateX(-50%) rotate(0deg);
-  font-size: 1.8rem;
-  color: rgba(255, 215, 0, 0.7);
-  transition: color 0.3s ease, transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* 開いたら × に変わる */
-.service-card.open::after {
-  content: '×';
-  color: rgba(255, 215, 0, 1);
-  transform: translateX(-50%) rotate(90deg);
-}
- 
 </style>
 </head>
 <body>
@@ -781,6 +760,7 @@ nav.hide {
     <li><a href="#about">私たちについて</a></li>
     <li><a href="#services">サービス</a></li>
     <li><a href="#pricing">料金</a></li>
+    <li><a href="#faq">FAQ</a></li>
     <li><a href="#contact">お問い合わせ</a></li>
   </ul>
 </nav>
@@ -897,6 +877,7 @@ nav.hide {
     <h2 class="section-title">料金プラン</h2>
     <div class="rainbow-divider"></div>
 
+    <!-- Remake & Handmade -->
     <div class="pricing-section">
       <p class="pricing-section-title">Remake &amp; Handmade</p>
       <p style="font-size:0.83rem;color:rgba(248,246,241,0.5);margin-bottom:1.5rem;">作品はECサイトにて販売中。オーダーメイド・カスタム依頼はCONTACTよりお問い合わせください。</p>
@@ -908,6 +889,7 @@ nav.hide {
       </div>
     </div>
 
+    <!-- Select -->
     <div class="pricing-section">
       <p class="pricing-section-title">Select — セレクト買付</p>
       <p style="font-size:0.83rem;color:rgba(248,246,241,0.5);margin-bottom:1.5rem;">バイヤーの目線で厳選したアイテムを国内外のマーケットプレイスにて販売中。お探しのアイテムのご相談はCONTACTよりどうぞ。</p>
@@ -917,6 +899,102 @@ nav.hide {
       </div>
     </div>
 
+    <!-- 無料診断 CTA（NEW） -->
+    <div class="pricing-section">
+      <p class="pricing-section-title">IT Solutions</p>
+
+      <div class="diagnosis-cta">
+        <p class="diagnosis-cta-label">まず無料診断から</p>
+        <h3>「自動化できる業務」を<br>無料で診断します</h3>
+        <p style="margin-top:1rem;">「何が自動化できるかわからない」「費用がどのくらいかかるか不安」——そんな方のために、30分のヒアリングと業務診断レポートを無料でご提供しています。</p>
+        <div class="diagnosis-steps">
+          <div class="diagnosis-step">
+            <div class="diagnosis-step-num">01</div>
+            <div class="diagnosis-step-text">
+              <strong>無料ヒアリング（30分）</strong>
+              現在の業務フローをお聞きします。技術知識は不要です。
+            </div>
+          </div>
+          <div class="diagnosis-step">
+            <div class="diagnosis-step-num">02</div>
+            <div class="diagnosis-step-text">
+              <strong>診断レポート</strong>
+              自動化できる業務・削減できる時間・想定費用をご提示します。
+            </div>
+          </div>
+          <div class="diagnosis-step">
+            <div class="diagnosis-step-num">03</div>
+            <div class="diagnosis-step-text">
+              <strong>ご依頼は任意</strong>
+              診断後のご発注は完全に任意。まずお気軽にどうぞ。
+            </div>
+          </div>
+        </div>
+        <a href="#contact" class="cta-button">無料診断を申し込む <span class="cta-free-badge">Free</span></a>
+      </div>
+
+      <!-- 業種別パッケージ（NEW） -->
+      <p class="pricing-section-title" style="margin-top:3rem;">IT Solutions — 業種別パッケージ</p>
+      <p style="font-size:0.83rem;color:rgba(248,246,241,0.5);margin-bottom:1.5rem;">「どのプランか迷う」を解消するために、業務・業種ごとに必要な自動化をまとめたパッケージです。</p>
+
+      <div class="packages-grid">
+        <div class="package-card">
+          <span class="package-icon">個人事業主</span>
+          <p class="package-name">請求書自動発行パック</p>
+          <p class="package-target">フリーランス・士業・コンサルタント向け</p>
+          <p class="package-price">¥39,800 <span>〜（税抜）</span></p>
+          <hr class="package-divider">
+          <ul class="package-features">
+            <li>Googleフォーム入力で請求書PDF自動生成</li>
+            <li>Googleドライブへの自動保存</li>
+            <li>メール自動送信（任意）</li>
+            <li>納品後1週間サポート付き</li>
+          </ul>
+        </div>
+        <div class="package-card">
+          <span class="package-icon">小規模法人</span>
+          <p class="package-name">勤怠集計自動化パック</p>
+          <p class="package-target">スタッフ5〜20名規模の事業者向け</p>
+          <p class="package-price">¥59,800 <span>〜（税抜）</span></p>
+          <hr class="package-divider">
+          <ul class="package-features">
+            <li>スプレッドシート勤怠データの自動集計</li>
+            <li>月次レポート自動生成・共有</li>
+            <li>残業アラート通知機能</li>
+            <li>納品後2週間サポート付き</li>
+          </ul>
+        </div>
+        <div class="package-card">
+          <span class="package-icon">EC・小売</span>
+          <p class="package-name">在庫管理自動化パック</p>
+          <p class="package-target">ネットショップ・実店舗運営者向け</p>
+          <p class="package-price">¥49,800 <span>〜（税抜）</span></p>
+          <hr class="package-divider">
+          <ul class="package-features">
+            <li>売上データの自動取込・在庫更新</li>
+            <li>在庫切れアラート通知</li>
+            <li>週次・月次レポート自動生成</li>
+            <li>納品後2週間サポート付き</li>
+          </ul>
+        </div>
+        <div class="package-card">
+          <span class="package-icon">全業種</span>
+          <p class="package-name">問い合わせ自動振り分けパック</p>
+          <p class="package-target">問い合わせ対応に時間を取られている方向け</p>
+          <p class="package-price">¥39,800 <span>〜（税抜）</span></p>
+          <hr class="package-divider">
+          <ul class="package-features">
+            <li>Googleフォーム受付の自動仕分け</li>
+            <li>担当者へのSlack・メール通知</li>
+            <li>スプレッドシートへの自動記録</li>
+            <li>納品後1週間サポート付き</li>
+          </ul>
+        </div>
+      </div>
+      <p class="packages-note">※ パッケージ以外の業務もお気軽にご相談ください。内容によりお見積もりします。</p>
+    </div>
+
+    <!-- 単発プラン（価格改定済み） -->
     <div class="pricing-section">
       <p class="pricing-section-title">IT Solutions — 単発プラン</p>
       <div class="catch-box">
@@ -928,8 +1006,9 @@ nav.hide {
       <div class="plans-grid">
         <div class="plan-card">
           <p class="plan-name">Light</p>
-          <p class="plan-target">小規模・お試し向け</p>
-          <p class="plan-price">¥8,000 <span>〜（税抜）</span></p>
+          <p class="plan-target">スモールスタート向け</p>
+          <p class="plan-who">「まず1つだけ試してみたい」個人・小規模事業者の方に</p>
+          <p class="plan-price">¥19,800 <span>〜（税抜）</span></p>
           <hr class="plan-divider">
           <ul class="plan-features">
             <li>単純作業1つの自動化</li>
@@ -941,7 +1020,8 @@ nav.hide {
         <div class="plan-card">
           <p class="plan-name">Starter</p>
           <p class="plan-target">個人事業主向け</p>
-          <p class="plan-price">¥30,000 <span>〜（税抜）</span></p>
+          <p class="plan-who">請求・集計・フォーム連携など、業務の一部をまとめて改善したい方に</p>
+          <p class="plan-price">¥39,800 <span>〜（税抜）</span></p>
           <hr class="plan-divider">
           <ul class="plan-features">
             <li>単発・スポット自動化</li>
@@ -955,7 +1035,8 @@ nav.hide {
           <p class="plan-popular">— おすすめ —</p>
           <p class="plan-name">Business</p>
           <p class="plan-target">中小企業・複数業務向け</p>
-          <p class="plan-price">¥50,000 <span>〜（税抜）</span></p>
+          <p class="plan-who">バックオフィス全体を効率化したい企業・チームに</p>
+          <p class="plan-price">¥69,800 <span>〜（税抜）</span></p>
           <hr class="plan-divider">
           <ul class="plan-features">
             <li>複数業務の自動化</li>
@@ -968,7 +1049,8 @@ nav.hide {
         <div class="plan-card">
           <p class="plan-name">Enterprise</p>
           <p class="plan-target">本格システム構築向け</p>
-          <p class="plan-price">¥100,000 <span>〜（税抜）</span></p>
+          <p class="plan-who">複数ツールの連携・API統合など、ゼロから仕組みを構築したい企業に</p>
+          <p class="plan-price">¥150,000 <span>〜（税抜）</span></p>
           <hr class="plan-divider">
           <ul class="plan-features">
             <li>3ツール以上の連携開発</li>
@@ -980,15 +1062,23 @@ nav.hide {
           </ul>
         </div>
       </div>
+      <p class="pricing-note">※ 料金はすべて税抜き表示です。内容により変動する場合があります。まずはお気軽にご相談ください。</p>
     </div>
 
+    <!-- 月額プラン（価格改定済み） -->
     <div class="pricing-section">
       <p class="pricing-section-title">IT Solutions — 月額プラン（保守・継続開発）</p>
+
+      <div class="upsell-bridge">
+        <p>納品後もツールを安心して使い続けたい方へ。<strong>単発プランご利用後、Monthly Sへのご移行が特におすすめです。</strong>月額プランに切り替えることで、バグ対応・仕様変更・機能追加をいつでも依頼できる体制が整います。</p>
+      </div>
+
       <div class="plans-grid">
         <div class="plan-card">
           <p class="plan-name">Monthly S</p>
           <p class="plan-target">軽微な保守・メンテナンス</p>
-          <p class="plan-price">¥5,000 <span>/ 月（税抜）</span></p>
+          <p class="plan-who">納品済みツールを長く使い続けたい方の安心プラン</p>
+          <p class="plan-price">¥9,800 <span>/ 月（税抜）</span></p>
           <hr class="plan-divider">
           <ul class="plan-features">
             <li>軽微な修正・バグ対応</li>
@@ -1000,7 +1090,8 @@ nav.hide {
           <p class="plan-popular">— おすすめ —</p>
           <p class="plan-name">Monthly M</p>
           <p class="plan-target">継続開発・機能改善</p>
-          <p class="plan-price">¥15,000 <span>/ 月（税抜）</span></p>
+          <p class="plan-who">業務の変化に合わせてツールを育てていきたい方に</p>
+          <p class="plan-price">¥24,800 <span>/ 月（税抜）</span></p>
           <hr class="plan-divider">
           <ul class="plan-features">
             <li>継続的な機能追加・改善</li>
@@ -1013,7 +1104,8 @@ nav.hide {
         <div class="plan-card">
           <p class="plan-name">Monthly L</p>
           <p class="plan-target">専属サポート・新規開発込み</p>
-          <p class="plan-price">¥50,000 <span>/ 月（税抜）</span></p>
+          <p class="plan-who">社内IT担当の代わりに、まるごとお任せしたい企業向け</p>
+          <p class="plan-price">¥59,800 <span>/ 月（税抜）</span></p>
           <hr class="plan-divider">
           <ul class="plan-features">
             <li>新規ツール開発込み</li>
@@ -1027,9 +1119,9 @@ nav.hide {
       </div>
     </div>
 
+    <!-- オプション -->
     <div class="pricing-section">
       <p class="pricing-section-title">IT Solutions — オプション</p>
-      <p style="font-size:0.75rem;color:rgba(248,246,241,0.3);margin-bottom:1.5rem;">※ オプションはすべてFREVIA受注案件限定です。他社製ツールは対象外となります。</p>
       <div class="options-grid">
         <div class="option-card">
           <span class="option-badge">オプション</span>
@@ -1039,8 +1131,8 @@ nav.hide {
           <ul class="option-features">
             <li>軽微な修正・バグ対応</li>
             <li>動作確認込み</li>
-            <li>FREVIA受注案件限定</li>
           </ul>
+          <p class="option-frevia-note">FREVIA受注案件限定</p>
         </div>
         <div class="option-card">
           <span class="option-badge">オプション</span>
@@ -1050,9 +1142,9 @@ nav.hide {
           <ul class="option-features">
             <li>既存ツールへの機能追加</li>
             <li>仕様変更への対応</li>
-            <li>FREVIA受注案件限定</li>
             <li>内容により別途お見積り</li>
           </ul>
+          <p class="option-frevia-note">FREVIA受注案件限定</p>
         </div>
         <div class="option-card">
           <span class="option-badge">オプション</span>
@@ -1062,12 +1154,146 @@ nav.hide {
           <ul class="option-features">
             <li>既存コードの解読・整理</li>
             <li>マニュアル作成</li>
-            <li>FREVIA受注案件限定</li>
             <li>引き継ぎドキュメント付き</li>
           </ul>
+          <p class="option-frevia-note">FREVIA受注案件限定</p>
         </div>
       </div>
       <p class="pricing-note">※ 料金はすべて税抜き表示です。内容により変動する場合があります。まずはお気軽にご相談ください。</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- FAQ（NEW） -->
+<section id="faq" style="background: rgba(255,255,255,0.015);">
+  <div class="section-inner">
+    <p class="section-label rainbow">よくある質問</p>
+    <h2 class="section-title">FAQ</h2>
+    <div class="rainbow-divider"></div>
+
+    <div class="faq-section-block">
+      <p class="faq-category-label">依頼・相談について</p>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>どんな業務が自動化できますか？</span>
+          <div style="display:flex;align-items:center;gap:10px;flex-shrink:0">
+            <span class="faq-priority">必読</span>
+            <div class="faq-icon">+</div>
+          </div>
+        </button>
+        <div class="faq-a">Excel・Googleスプレッドシートへの転記、毎月の集計・レポート作成、フォーム回答の自動仕分けや通知、請求書・見積書の自動生成、Webサイトからの情報収集など、「毎回同じことをしている」作業のほとんどが対象です。まずはどんな作業でもご相談ください。</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>ITに詳しくなくても依頼できますか？</span>
+          <div style="display:flex;align-items:center;gap:10px;flex-shrink:0">
+            <span class="faq-priority">必読</span>
+            <div class="faq-icon">+</div>
+          </div>
+        </button>
+        <div class="faq-a">まったく問題ありません。ヒアリングでは「今どんな作業を、どんな手順でやっているか」をお聞きするだけです。技術的な知識は不要で、「毎日これが面倒で…」という言葉だけで十分です。</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>相談・見積もりは本当に無料ですか？</span>
+          <div class="faq-icon">+</div>
+        </button>
+        <div class="faq-a">はい、完全無料です。初回の業務ヒアリング（約30分）と、自動化できる業務の診断レポートは無料でご提供しています。その後のご依頼は任意ですので、まずはお気軽にどうぞ。</div>
+      </div>
+    </div>
+
+    <div class="faq-section-block">
+      <p class="faq-category-label">価格・費用について</p>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>なぜこの価格なのですか？</span>
+          <div style="display:flex;align-items:center;gap:10px;flex-shrink:0">
+            <span class="faq-priority">必読</span>
+            <div class="faq-icon">+</div>
+          </div>
+        </button>
+        <div class="faq-a">作業時間だけでなく、要件ヒアリング・設計・テスト・納品後のサポートまで含めた価格です。「安く作って後で動かない」ではなく、実際の業務で使えるものをお届けするために必要なコストを反映しています。</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>もっと費用を抑えることはできますか？</span>
+          <div class="faq-icon">+</div>
+        </button>
+        <div class="faq-a">まずLightプラン（¥19,800〜）でスモールスタートし、効果を確認してから追加開発するご提案も可能です。また、無料診断で「本当に自動化すべき業務」を絞り込むことで、最小限の費用で最大の効果を狙えます。</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>追加費用はかかりますか？</span>
+          <div class="faq-icon">+</div>
+        </button>
+        <div class="faq-a">着手前にお見積もりを提示し、ご承認いただいてから制作を開始します。プランに含まれる修正回数の範囲内であれば追加費用は発生しません。仕様変更が生じた場合は都度ご相談・再見積もりします。</div>
+      </div>
+    </div>
+
+    <div class="faq-section-block">
+      <p class="faq-category-label">納期・流れについて</p>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>依頼から納品までどのくらいかかりますか？</span>
+          <div style="display:flex;align-items:center;gap:10px;flex-shrink:0">
+            <span class="faq-priority">必読</span>
+            <div class="faq-icon">+</div>
+          </div>
+        </button>
+        <div class="faq-a">Lightプランで約1〜2週間、Businessプランで2〜4週間が目安です。内容や込み具合によって変わりますので、ヒアリング時にお伝えします。急ぎのご依頼もご相談ください。</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>依頼の流れを教えてください</span>
+          <div class="faq-icon">+</div>
+        </button>
+        <div class="faq-a">①無料相談・ヒアリング → ②お見積もり提示 → ③ご承認・着手 → ④開発・テスト → ⑤納品・動作確認 → ⑥サポート期間、の流れです。途中で仕様を確認しながら進めるので、「思っていたのと違う」を防ぎます。</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>納品後、自分で使い続けられますか？</span>
+          <div class="faq-icon">+</div>
+        </button>
+        <div class="faq-a">はい。操作マニュアルを納品物に含めており（Starterプラン以上）、ボタン一つで動く設計を心がけています。継続的なメンテナンスにはMonthlyプランもご用意しています。</div>
+      </div>
+    </div>
+
+    <div class="faq-section-block">
+      <p class="faq-category-label">安心・信頼について</p>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>依頼したのに動かなかったらどうなりますか？</span>
+          <div class="faq-icon">+</div>
+        </button>
+        <div class="faq-a">納品前に実際のデータを使った動作確認を行います。万が一不具合があればサポート期間内に無償対応します。お客様の業務環境で正常に動くことを確認してから納品完了とします。</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>作ってもらったツールはどこに保存されますか？</span>
+          <div class="faq-icon">+</div>
+        </button>
+        <div class="faq-a">VBAはお客様のExcelファイル内、GASはお客様のGoogleアカウント内に保存されます。FREVIAがデータを保持・管理することはなく、納品後はすべてお客様の管理下に置かれます。</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>月額プランは途中でやめられますか？</span>
+          <div class="faq-icon">+</div>
+        </button>
+        <div class="faq-a">最低3ヶ月契約のあと、1ヶ月前のご連絡で解約可能です。解約後も納品済みツールはそのままお使いいただけます。</div>
+      </div>
     </div>
 
   </div>
@@ -1080,12 +1306,20 @@ nav.hide {
       <p class="section-label rainbow">お問い合わせ</p>
       <h2 class="section-title">お問い合わせ</h2>
       <div class="rainbow-divider"></div>
-      <p style="font-size:0.85rem;color:rgba(248,246,241,0.45);">ご相談・制作依頼・お見積りなどお気軽にお問い合わせください。</p>
+      <p style="font-size:0.85rem;color:rgba(248,246,241,0.45);">ご相談・制作依頼・お見積りなどお気軽にお問い合わせください。<br>まずは無料相談から。その後お見積もりをご提示します。</p>
+      <div class="contact-flow">
+        <div class="contact-flow-step">無料相談</div>
+        <div class="contact-flow-arrow">→</div>
+        <div class="contact-flow-step">お見積もり</div>
+        <div class="contact-flow-arrow">→</div>
+        <div class="contact-flow-step">ご承認</div>
+        <div class="contact-flow-arrow">→</div>
+        <div class="contact-flow-step">開発・納品</div>
+      </div>
       <a href="mailto:freviasupport@gmail.com" class="contact-mail">freviasupport@gmail.com</a>
-            <p class="contact-address" style="margin-top:0.8rem; font-size:0.85rem; color:rgba(248,246,241,0.55);">
-                〒170-0013  
-                東京都豊島区東池袋2丁目62番8号　BIGオフィスプラザ池袋1206
-            </p>
+      <p class="contact-address" style="margin-top:0.8rem; font-size:0.85rem; color:rgba(248,246,241,0.55);">
+        〒170-0013　東京都豊島区東池袋2丁目62番8号　BIGオフィスプラザ池袋1206
+      </p>
       <p class="contact-sub">© 2026 合同会社FREVIA — FREVIA STUDIO</p>
     </div>
   </div>
@@ -1094,21 +1328,14 @@ nav.hide {
 <div class="rainbow-line"></div>
 <footer>© 2026 合同会社FREVIA. All rights reserved.</footer>
 
-<!-- スクロールでナビを隠す／出す -->
 <script>
 let lastScroll = 0;
 const nav = document.querySelector("nav");
-
 window.addEventListener("scroll", () => {
-    const current = window.pageYOffset;
-
-    if (current > lastScroll) { // 下スクロール → 隠す
-        nav.classList.add("hide");
-    } else {
-        nav.classList.remove("hide"); // 上スクロール → 出す
-    }
-
-    lastScroll = current;
+  const current = window.pageYOffset;
+  if (current > lastScroll) { nav.classList.add("hide"); }
+  else { nav.classList.remove("hide"); }
+  lastScroll = current;
 });
 </script>
 
@@ -1117,44 +1344,47 @@ document.querySelectorAll('.service-card').forEach(card => {
   card.addEventListener('click', (e) => {
     e.stopPropagation();
     const isOpen = card.classList.contains('open');
-    
-    // 他のカードを閉じる
-    document.querySelectorAll('.service-card.open').forEach(openCard => {
-      openCard.classList.remove('open');
-    });
-
-    // 自分を開閉（閉じていたなら開く）
-    if (!isOpen) {
-      card.classList.add('open');
-    }
+    document.querySelectorAll('.service-card.open').forEach(c => c.classList.remove('open'));
+    if (!isOpen) card.classList.add('open');
   });
 });
-
-// ドキュメントをクリックで全部閉じる
 document.addEventListener('click', (e) => {
   if (!e.target.closest('.service-card')) {
-    document.querySelectorAll('.service-card.open').forEach(card => {
-      card.classList.remove('open');
-    });
+    document.querySelectorAll('.service-card.open').forEach(c => c.classList.remove('open'));
   }
 });
 </script>
 
-<!-- ハンバーガーメニュー -->
 <script>
 const hamburger = document.getElementById('hamburger');
 const navlinks = document.getElementById('nav-links');
 if (hamburger) {
-    hamburger.addEventListener('click', () => {
-        hamburger.classList.toggle('open');
-        navlinks.classList.toggle('open');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    navlinks.classList.toggle('open');
+  });
+  navlinks.querySelectorAll('a').forEach((a) => {
+    a.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      navlinks.classList.remove('open');
     });
-    navlinks.querySelectorAll('a').forEach((a) => {
-        a.addEventListener('click', () => {
-            hamburger.classList.remove('open');
-            navlinks.classList.remove('open');
-        });
-    });
+  });
+}
+</script>
+
+<script>
+function toggleFaq(btn) {
+  const a = btn.nextElementSibling;
+  const icon = btn.querySelector('.faq-icon');
+  const isOpen = a.classList.contains('open');
+  document.querySelectorAll('.faq-a.open').forEach(el => {
+    el.classList.remove('open');
+    el.previousElementSibling.querySelector('.faq-icon').classList.remove('open');
+  });
+  if (!isOpen) {
+    a.classList.add('open');
+    icon.classList.add('open');
+  }
 }
 </script>
 
