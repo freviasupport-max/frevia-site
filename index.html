@@ -272,25 +272,23 @@
   .slider-arrow:disabled { opacity: 0.2; cursor: default; }
 
   .service-card.open { border-bottom: 1px solid rgba(255,215,0,0.9); }
-  .service-card::before { border-radius: 0; }
   .service-card::before {
     content: '';
     position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    border-radius: 4px;
+    inset: 0;
     opacity: 0;
     transition: opacity 0.3s ease;
     pointer-events: none;
+    z-index: 1;
   }
   .service-card:nth-child(1):hover::before,
-  .service-card:nth-child(1).open::before { opacity: 1; border: 2px solid var(--rainbow-1); box-shadow: 0 0 0 1px var(--rainbow-2); }
+  .service-card:nth-child(1).open::before { opacity: 1; box-shadow: inset 0 0 0 2px var(--rainbow-1); }
   .service-card:nth-child(2):hover::before,
-  .service-card:nth-child(2).open::before { opacity: 1; border: 2px solid var(--rainbow-3); box-shadow: 0 0 0 1px var(--rainbow-4); }
+  .service-card:nth-child(2).open::before { opacity: 1; box-shadow: inset 0 0 0 2px var(--rainbow-3); }
   .service-card:nth-child(3):hover::before,
-  .service-card:nth-child(3).open::before { opacity: 1; border: 2px solid var(--rainbow-4); box-shadow: 0 0 0 1px var(--rainbow-5); }
+  .service-card:nth-child(3).open::before { opacity: 1; box-shadow: inset 0 0 0 2px var(--rainbow-4); }
   .service-card:nth-child(4):hover::before,
-  .service-card:nth-child(4).open::before { opacity: 1; border: 2px solid var(--rainbow-5); box-shadow: 0 0 0 1px var(--rainbow-6); }
+  .service-card:nth-child(4).open::before { opacity: 1; box-shadow: inset 0 0 0 2px var(--rainbow-5); }
   .service-card:hover { background: transparent; }
   .service-card > .service-desc,
   .service-card > .service-list {
