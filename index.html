@@ -723,6 +723,7 @@
   .contact-form-textarea::placeholder { color: rgba(248,246,241,0.2); }
   .contact-form-select { cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='rgba(248,246,241,0.3)' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; padding-right: 2.5rem; }
   .contact-form-select option { background: #1a1a1a; color: var(--white); }
+  .contact-form-select optgroup { background: #111; color: rgba(248,246,241,0.35); font-size: 0.68rem; letter-spacing: 0.1em; font-style: normal; padding: 0.3rem 0; }
   .contact-form-textarea { resize: vertical; min-height: 120px; line-height: 1.7; }
   .contact-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
   .contact-form-check { display: flex; align-items: flex-start; gap: 0.75rem; margin-top: 0.5rem; cursor: pointer; }
@@ -853,6 +854,64 @@
     .diagnosis-steps { flex-direction: column; gap: 1.2rem; }
     .diagnosis-cta { padding: 2rem 1.5rem; }
     .contact-flow { flex-direction: column; align-items: center; gap: 0.3rem; }
+  }
+
+  .plan-select-wrap {
+    border: 0.5px solid rgba(255,255,255,0.12);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .plan-select-group-label {
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(248,246,241,0.3);
+    background: rgba(255,255,255,0.04);
+    padding: 0.5rem 1rem;
+    border-top: 0.5px solid rgba(255,255,255,0.07);
+  }
+  .plan-select-group-label:first-child { border-top: none; }
+  .plan-select-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.65rem 1rem;
+    cursor: pointer;
+    border-top: 0.5px solid rgba(255,255,255,0.05);
+    transition: background 0.2s;
+  }
+  .plan-select-item:hover { background: rgba(255,255,255,0.05); }
+  .plan-select-item input[type="radio"] {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+    accent-color: var(--rainbow-5);
+    cursor: pointer;
+  }
+  .plan-select-item span {
+    font-size: 0.82rem;
+    color: rgba(248,246,241,0.65);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: 1rem;
+  }
+  .plan-select-item span em {
+    font-style: normal;
+    font-size: 0.75rem;
+    color: rgba(248,246,241,0.35);
+    white-space: nowrap;
+  }
+  .plan-select-item:has(input:checked) {
+    background: rgba(33,150,243,0.08);
+    border-color: rgba(33,150,243,0.2);
+  }
+  .plan-select-item:has(input:checked) span {
+    color: rgba(248,246,241,0.9);
+  }
+  .plan-select-item:has(input:checked) span em {
+    color: var(--rainbow-5);
   }
 </style>
 </head>
@@ -1468,32 +1527,27 @@
           <div class="contact-form-row" style="margin-top:0;">
             <div>
               <label class="contact-form-label">ご希望のプラン<span class="req">必須</span></label>
-              <select class="contact-form-select" name="plan" required>
-                <option value="" disabled selected>選択してください</option>
-                <optgroup label="── 業種別パッケージ">
-                  <option>請求書自動発行パック（¥39,800〜）</option>
-                  <option>勤怠集計自動化パック（¥59,800〜）</option>
-                  <option>在庫管理自動化パック（¥49,800〜）</option>
-                  <option>問い合わせ自動振り分けパック（¥39,800〜）</option>
-                </optgroup>
-                <optgroup label="── 単発プラン">
-                  <option>Light（¥19,800〜）</option>
-                  <option>Starter（¥39,800〜）</option>
-                  <option>Business（¥69,800〜）</option>
-                  <option>Enterprise（¥150,000〜）</option>
-                </optgroup>
-                <optgroup label="── 月額プラン">
-                  <option>Monthly S（¥9,800/月）</option>
-                  <option>Monthly M（¥24,800/月）</option>
-                  <option>Monthly L（¥59,800/月）</option>
-                </optgroup>
-                <optgroup label="── オプション">
-                  <option>スポット保守（¥8,000/回）</option>
-                  <option>機能追加（¥15,000〜/回）</option>
-                  <option>コード解読・引き継ぎ（¥25,000〜/回）</option>
-                </optgroup>
-                <option>まだ決めていない・相談したい</option>
-              </select>
+              <div class="plan-select-wrap">
+                <div class="plan-select-group-label">業種別パッケージ</div>
+                <label class="plan-select-item"><input type="radio" name="plan" value="請求書自動発行パック（¥39,800〜）"><span>請求書自動発行パック <em>¥39,800〜</em></span></label>
+                <label class="plan-select-item"><input type="radio" name="plan" value="勤怠集計自動化パック（¥59,800〜）"><span>勤怠集計自動化パック <em>¥59,800〜</em></span></label>
+                <label class="plan-select-item"><input type="radio" name="plan" value="在庫管理自動化パック（¥49,800〜）"><span>在庫管理自動化パック <em>¥49,800〜</em></span></label>
+                <label class="plan-select-item"><input type="radio" name="plan" value="問い合わせ自動振り分けパック（¥39,800〜）"><span>問い合わせ自動振り分けパック <em>¥39,800〜</em></span></label>
+                <div class="plan-select-group-label">単発プラン</div>
+                <label class="plan-select-item"><input type="radio" name="plan" value="Light（¥19,800〜）"><span>Light <em>¥19,800〜</em></span></label>
+                <label class="plan-select-item"><input type="radio" name="plan" value="Starter（¥39,800〜）"><span>Starter <em>¥39,800〜</em></span></label>
+                <label class="plan-select-item"><input type="radio" name="plan" value="Business（¥69,800〜）"><span>Business <em>¥69,800〜</em></span></label>
+                <label class="plan-select-item"><input type="radio" name="plan" value="Enterprise（¥150,000〜）"><span>Enterprise <em>¥150,000〜</em></span></label>
+                <div class="plan-select-group-label">月額プラン</div>
+                <label class="plan-select-item"><input type="radio" name="plan" value="Monthly S（¥9,800/月）"><span>Monthly S <em>¥9,800/月</em></span></label>
+                <label class="plan-select-item"><input type="radio" name="plan" value="Monthly M（¥24,800/月）"><span>Monthly M <em>¥24,800/月</em></span></label>
+                <label class="plan-select-item"><input type="radio" name="plan" value="Monthly L（¥59,800/月）"><span>Monthly L <em>¥59,800/月</em></span></label>
+                <div class="plan-select-group-label">オプション</div>
+                <label class="plan-select-item"><input type="radio" name="plan" value="スポット保守（¥8,000/回）"><span>スポット保守 <em>¥8,000/回</em></span></label>
+                <label class="plan-select-item"><input type="radio" name="plan" value="機能追加（¥15,000〜/回）"><span>機能追加 <em>¥15,000〜/回</em></span></label>
+                <label class="plan-select-item"><input type="radio" name="plan" value="コード解読・引き継ぎ（¥25,000〜/回）"><span>コード解読・引き継ぎ <em>¥25,000〜/回</em></span></label>
+                <label class="plan-select-item"><input type="radio" name="plan" value="まだ決めていない・相談したい"><span>まだ決めていない・相談したい</span></label>
+              </div>
             </div>
             <div>
               <label class="contact-form-label">使用ツール<span class="req">必須</span></label>
@@ -1559,7 +1613,7 @@
    GAS Web App URLをデプロイ後に下記に設定してください
    GASのdoPost()でスプレッドシート記録＋自動返信メールを実行します
    ============================= */
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbw5h6ysp-uUNepjnzlOpUc3EoJoG3XzXUbxDZ7MEJwzctSi-oCM1qwVCMKGRr4SSxt7NA/exec';
+const GAS_URL = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec';
 
 async function submitForm(e) {
   e.preventDefault();
