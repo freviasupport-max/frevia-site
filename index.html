@@ -211,30 +211,65 @@
   }
   .about-image:hover img { transform: scale(1.03); }
 
+  .services-slider-wrap {
+    position: relative;
+    margin-top: 3rem;
+  }
   .services-grid {
     display: flex;
-    flex-wrap: wrap;
-    gap: 1px;
-    background: var(--black);
-    margin-top: 3rem;
+    gap: 0;
+    overflow: hidden;
     border: 0.5px solid rgba(255,255,255,0.06);
-    align-items: flex-start;
   }
   .service-card {
-    flex: 1 1 260px;
-    min-width: 260px;
-    max-width: 100%;
+    flex: 0 0 25%;
+    min-width: 0;
     box-sizing: border-box;
     background: var(--black);
-    padding: 3rem 2.5rem;
+    padding: 3rem 2.5rem 4.5rem;
     position: relative;
     overflow: hidden;
     cursor: pointer;
-    padding-bottom: 3.5rem;
     border-bottom: 1px solid rgba(255,215,0,0.35);
-    transition: background 0.4s, border-color 0.3s;
+    transition: background 0.4s, border-color 0.3s, transform 0.5s cubic-bezier(0.4,0,0.2,1);
+  }
+  .slider-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.5rem;
+  }
+  .slider-dots { display: flex; gap: 0.5rem; }
+  .slider-dot {
+    width: 20px; height: 2px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background 0.3s, width 0.3s;
+  }
+  .slider-dot.active {
+    width: 40px;
+    background: linear-gradient(90deg, var(--rainbow-1), var(--rainbow-5));
+  }
+  .slider-arrows { display: flex; gap: 0.8rem; }
+  .slider-arrow {
+    width: 40px; height: 40px;
+    border: 0.5px solid rgba(255,255,255,0.15);
+    background: none;
+    color: rgba(248,246,241,0.5);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+    transition: border-color 0.3s, color 0.3s, background 0.3s;
+    border-radius: 2px;
+  }
+  .slider-arrow:hover { border-color: rgba(255,255,255,0.4); color: var(--white); background: rgba(255,255,255,0.04); }
+  .slider-arrow:disabled { opacity: 0.2; cursor: default; }
+  @media (max-width: 1024px) {
+    .service-card { flex: 0 0 50%; }
   }
   .service-card.open { border-bottom: 1px solid rgba(255,215,0,0.9); }
+  .service-card::before { border-radius: 0; }
   .service-card::before {
     content: '';
     position: absolute;
@@ -275,12 +310,14 @@
   .service-card::after {
     content: '+';
     position: absolute;
-    bottom: 0.8rem;
+    bottom: 1.2rem;
     left: 50%;
     transform: translateX(-50%) rotate(0deg);
-    font-size: 1.8rem;
+    font-size: 1.6rem;
+    line-height: 1;
     color: rgba(255,215,0,0.7);
     transition: color 0.3s ease, transform 0.4s cubic-bezier(0.4,0,0.2,1);
+    z-index: 2;
   }
   .service-card.open::after { content: '×'; color: rgba(255,215,0,1); transform: translateX(-50%) rotate(90deg); }
   .service-image {
@@ -883,8 +920,8 @@
     section { padding: 5rem 1.5rem; }
     .about-grid { grid-template-columns: 1fr; gap: 3rem; }
     .about-image { display: none; }
-    .services-grid { display: flex; overflow-x: auto; gap: 1rem; scroll-snap-type: x mandatory; padding-bottom: 1rem; }
-    .service-card { min-width: 80%; scroll-snap-align: start; }
+    .services-grid { border: none; }
+    .service-card { flex: 0 0 85%; border: 0.5px solid rgba(255,255,255,0.06); }
     .plans-grid { display: flex; overflow-x: auto; gap: 1rem; scroll-snap-type: x mandatory; padding-bottom: 1rem; }
     .plan-card { min-width: 80%; scroll-snap-align: start; }
     .options-grid { display: flex; overflow-x: auto; gap: 1rem; scroll-snap-type: x mandatory; padding-bottom: 1rem; }
@@ -1002,7 +1039,8 @@
     <p class="section-label rainbow">サービス</p>
     <h2 class="section-title">4つの事業</h2>
     <div class="rainbow-divider"></div>
-    <div class="services-grid">
+    <div class="services-slider-wrap">
+    <div class="services-grid" id="services-grid">
 
       <div class="service-card">
         <img src="images/remake.jpg" alt="Remake" class="service-image">
@@ -1064,7 +1102,21 @@
         </ul>
       </div>
 
+    </div><!-- /services-grid -->
+
+    <div class="slider-nav">
+      <div class="slider-dots">
+        <div class="slider-dot active" onclick="goToSlide(0)"></div>
+        <div class="slider-dot" onclick="goToSlide(1)"></div>
+        <div class="slider-dot" onclick="goToSlide(2)"></div>
+        <div class="slider-dot" onclick="goToSlide(3)"></div>
+      </div>
+      <div class="slider-arrows">
+        <button class="slider-arrow" id="slide-prev" onclick="slideServices(-1)" disabled>&#8592;</button>
+        <button class="slider-arrow" id="slide-next" onclick="slideServices(1)">&#8594;</button>
+      </div>
     </div>
+    </div><!-- /services-slider-wrap -->
   </div>
 </section>
 
@@ -1746,6 +1798,61 @@ if (hamburger) {
     });
   });
 }
+</script>
+
+<script>
+(function() {
+  let currentSlide = 0;
+  const visibleCount = () => window.innerWidth <= 768 ? 1 : window.innerWidth <= 1024 ? 2 : 4;
+
+  function updateSlider() {
+    const grid   = document.getElementById('services-grid');
+    const cards  = grid ? grid.querySelectorAll('.service-card') : [];
+    const total  = cards.length;
+    const vis    = visibleCount();
+    const maxIdx = Math.max(0, total - vis);
+    if (currentSlide > maxIdx) currentSlide = maxIdx;
+
+    const pct = (100 / vis) * currentSlide;
+    cards.forEach(c => { c.style.transform = `translateX(-${pct * vis}%)`; });
+
+    const dots = document.querySelectorAll('.slider-dot');
+    dots.forEach((d, i) => d.classList.toggle('active', i === currentSlide));
+
+    const prev = document.getElementById('slide-prev');
+    const next = document.getElementById('slide-next');
+    if (prev) prev.disabled = currentSlide === 0;
+    if (next) next.disabled = currentSlide >= maxIdx;
+  }
+
+  window.slideServices = function(dir) {
+    const grid  = document.getElementById('services-grid');
+    const cards = grid ? grid.querySelectorAll('.service-card') : [];
+    const vis   = visibleCount();
+    const max   = Math.max(0, cards.length - vis);
+    currentSlide = Math.max(0, Math.min(currentSlide + dir, max));
+    updateSlider();
+  };
+
+  window.goToSlide = function(idx) {
+    currentSlide = idx;
+    updateSlider();
+  };
+
+  // Touch swipe
+  let touchStartX = 0;
+  document.addEventListener('DOMContentLoaded', function() {
+    const grid = document.getElementById('services-grid');
+    if (!grid) return;
+    grid.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+    grid.addEventListener('touchend', e => {
+      const diff = touchStartX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 50) slideServices(diff > 0 ? 1 : -1);
+    });
+    updateSlider();
+  });
+  window.addEventListener('resize', updateSlider);
+})();
 </script>
 
 <script>
