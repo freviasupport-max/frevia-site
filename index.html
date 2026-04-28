@@ -263,12 +263,21 @@
 
   /* SERVICES */
   .services-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
     gap: 1px;
-    background: rgba(255,255,255,0.05);
+    background: var(--black);
     margin-top: 3rem;
     border: 0.5px solid rgba(255,255,255,0.06);
+    align-items: flex-start;
+  }
+
+  .service-card {
+    flex: 1 1 260px;
+    min-width: 260px;
+    max-width: 100%;
+    box-sizing: border-box;
+    background: var(--black);
   }
 
   .service-card {
@@ -276,26 +285,68 @@
     padding: 3rem 2.5rem;
     position: relative;
     overflow: hidden;
-    transition: background 0.4s;
+    transition: background 0.4s, box-shadow 0.3s ease;
   }
 
+  /* ホバー時に虹色の枠線 */
   .service-card::before {
     content: '';
     position: absolute;
     top: 0; left: 0;
     width: 100%;
-    height: 2px;
+    height: 100%;
+    border-radius: 4px;
     opacity: 0;
-    transition: opacity 0.4s;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
   }
 
-  .service-card:nth-child(1)::before { background: linear-gradient(90deg, var(--rainbow-1), var(--rainbow-2)); }
-  .service-card:nth-child(2)::before { background: linear-gradient(90deg, var(--rainbow-3), var(--rainbow-4)); }
-  .service-card:nth-child(3)::before { background: linear-gradient(90deg, var(--rainbow-4), var(--rainbow-5)); }
-  .service-card:nth-child(4)::before { background: linear-gradient(90deg, var(--rainbow-5), var(--rainbow-6)); }
+  .service-card:nth-child(1):hover::before { 
+    opacity: 1; 
+    border: 2px solid var(--rainbow-1);
+    box-shadow: 0 0 0 1px var(--rainbow-2);
+  }
+  .service-card:nth-child(2):hover::before { 
+    opacity: 1; 
+    border: 2px solid var(--rainbow-3);
+    box-shadow: 0 0 0 1px var(--rainbow-4);
+  }
+  .service-card:nth-child(3):hover::before { 
+    opacity: 1; 
+    border: 2px solid var(--rainbow-4);
+    box-shadow: 0 0 0 1px var(--rainbow-5);
+  }
+  .service-card:nth-child(4):hover::before { 
+    opacity: 1; 
+    border: 2px solid var(--rainbow-5);
+    box-shadow: 0 0 0 1px var(--rainbow-6);
+  }
 
-  .service-card:hover { background: rgba(255,255,255,0.03); }
+
+  .service-card:hover { background: transparent; }
   .service-card:hover::before { opacity: 1; }
+
+  /* open状態の枠線を虹色で維持 */
+  .service-card.open:nth-child(1)::before {
+    opacity: 1;
+    border: 2px solid var(--rainbow-1);
+    box-shadow: 0 0 0 1px var(--rainbow-2);
+  }
+  .service-card.open:nth-child(2)::before {
+    opacity: 1;
+    border: 2px solid var(--rainbow-3);
+    box-shadow: 0 0 0 1px var(--rainbow-4);
+  }
+  .service-card.open:nth-child(3)::before {
+    opacity: 1;
+    border: 2px solid var(--rainbow-4);
+    box-shadow: 0 0 0 1px var(--rainbow-5);
+  }
+  .service-card.open:nth-child(4)::before {
+    opacity: 1;
+    border: 2px solid var(--rainbow-5);
+    box-shadow: 0 0 0 1px var(--rainbow-6);
+  }
 
   .service-image {
     width: 100%;
@@ -670,38 +721,49 @@ nav.hide {
   border-bottom: 1px solid rgba(255, 215, 0, 0.9);
 }
 
-/* ＋アイコン（カード下中央） */
+/* 開閉アニメーション（スムーズ） */
+
+/* すべて閉じる（初期状態） */
+.service-card > .service-desc,
+.service-card > .service-list {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-top: 0;
+  padding-top: 0;
+}
+
+/* 開いたカードの直下だけ開く */
+.service-card.open > .service-desc,
+.service-card.open > .service-list {
+  max-height: 500px;
+  opacity: 1;
+  transform: translateY(0);
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+}
+
+/* ＋アイコンのアニメーション */
 .service-card::after {
   content: '+';
   position: absolute;
   bottom: 0.8rem;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-50%) rotate(0deg);
   font-size: 1.8rem;
   color: rgba(255, 215, 0, 0.7);
-  transition: color 0.3s ease;
+  transition: color 0.3s ease, transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* 開いたら − に変わる */
+/* 開いたら × に変わる */
 .service-card.open::after {
-  content: '−';
+  content: '×';
   color: rgba(255, 215, 0, 1);
-}
-
-/* 開閉アニメーション */
-.service-desc,
-.service-list {
-  max-height: 0;
-  overflow: hidden;
-  opacity: 0;
-  transition: max-height 0.35s ease, opacity 0.25s ease;
-}
-
-/* 開いた状態 */
-.service-card.open .service-desc,
-.service-card.open .service-list {
-  max-height: 600px;
-  opacity: 1;
+  transform: translateX(-50%) rotate(90deg);
 }
  
 </style>
@@ -716,10 +778,10 @@ nav.hide {
     <span></span><span></span><span></span>
   </button>
   <ul class="nav-links" id="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#services">Services</a></li>
-    <li><a href="#pricing">Pricing</a></li>
-    <li><a href="#contact">Contact</a></li>
+    <li><a href="#about">私たちについて</a></li>
+    <li><a href="#services">サービス</a></li>
+    <li><a href="#pricing">料金</a></li>
+    <li><a href="#contact">お問い合わせ</a></li>
   </ul>
 </nav>
 
@@ -742,7 +804,7 @@ nav.hide {
   <div class="section-inner">
     <div class="about-grid">
       <div class="about-text">
-        <p class="section-label rainbow">About</p>
+        <p class="section-label rainbow">私たちについて</p>
         <h2 class="section-title">自由と創造を<br>かたちにする</h2>
         <div class="rainbow-divider"></div>
         <p>リメイク × ハンドメイド × セレクト買付 × IT の複合スタジオ。</p>
@@ -759,7 +821,7 @@ nav.hide {
 <!-- SERVICES -->
 <section style="background: rgba(255,255,255,0.015);">
   <div class="section-inner" id="services">
-    <p class="section-label rainbow">Services</p>
+    <p class="section-label rainbow">サービス</p>
     <h2 class="section-title">4つの事業</h2>
     <div class="rainbow-divider"></div>
     <div class="services-grid">
@@ -831,7 +893,7 @@ nav.hide {
 <!-- PRICING -->
 <section id="pricing">
   <div class="section-inner">
-    <p class="section-label rainbow">Pricing</p>
+    <p class="section-label rainbow">料金</p>
     <h2 class="section-title">料金プラン</h2>
     <div class="rainbow-divider"></div>
 
@@ -1015,7 +1077,7 @@ nav.hide {
 <section id="contact">
   <div class="section-inner">
     <div class="contact-inner">
-      <p class="section-label rainbow">Contact</p>
+      <p class="section-label rainbow">お問い合わせ</p>
       <h2 class="section-title">お問い合わせ</h2>
       <div class="rainbow-divider"></div>
       <p style="font-size:0.85rem;color:rgba(248,246,241,0.45);">ご相談・制作依頼・お見積りなどお気軽にお問い合わせください。</p>
@@ -1052,18 +1114,29 @@ window.addEventListener("scroll", () => {
 
 <script>
 document.querySelectorAll('.service-card').forEach(card => {
-  card.addEventListener('click', () => {
-
+  card.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isOpen = card.classList.contains('open');
+    
     // 他のカードを閉じる
     document.querySelectorAll('.service-card.open').forEach(openCard => {
-      if (openCard !== card) {
-        openCard.classList.remove('open');
-      }
+      openCard.classList.remove('open');
     });
 
-    // 自分を開閉
-    card.classList.toggle('open');
+    // 自分を開閉（閉じていたなら開く）
+    if (!isOpen) {
+      card.classList.add('open');
+    }
   });
+});
+
+// ドキュメントをクリックで全部閉じる
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.service-card')) {
+    document.querySelectorAll('.service-card.open').forEach(card => {
+      card.classList.remove('open');
+    });
+  }
 });
 </script>
 
