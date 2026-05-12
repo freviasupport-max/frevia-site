@@ -27,6 +27,17 @@
 
   html { scroll-behavior: smooth; }
 
+  .animate-on-scroll {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+    will-change: opacity, transform;
+  }
+  .animate-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
   body {
     background: var(--black);
     color: var(--white);
@@ -132,7 +143,64 @@
     background: rgba(10,10,10,0.72);
   }
 
-  .hero-inner { position: relative; z-index: 1; }
+  .hero-inner {
+    position: relative;
+    z-index: 1;
+  }
+  .hero-inner.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  .hero-inner.animate-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 1s ease 0.15s, transform 1s ease 0.15s;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 20%, rgba(232, 67, 58, 0.14), transparent 28%),
+                radial-gradient(circle at 30% 75%, rgba(33, 150, 243, 0.12), transparent 24%);
+    opacity: 0.8;
+    pointer-events: none;
+    animation: heroGlow 14s ease-in-out infinite alternate;
+  }
+
+  @keyframes heroGlow {
+    0% { transform: scale(1) translateY(0); opacity: 0.8; }
+    100% { transform: scale(1.03) translateY(-10px); opacity: 0.95; }
+  }
+
+  .scroll-indicator {
+    position: absolute;
+    left: 50%;
+    bottom: 2rem;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.55rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(248,246,241,0.7);
+    z-index: 2;
+  }
+  .scroll-indicator span {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border: 1px solid currentColor;
+    border-radius: 50%;
+    animation: scrollDot 1.4s infinite;
+  }
+  @keyframes scrollDot {
+    0% { transform: translateY(0); opacity: 0.35; }
+    50% { transform: translateY(10px); opacity: 1; }
+    100% { transform: translateY(0); opacity: 0.35; }
+  }
 
   .hero-logo { height: 80px; margin-bottom: 2rem; }
 
@@ -190,6 +258,22 @@
   /* SECTIONS */
   section { padding: 7rem 4rem; }
   .section-inner { max-width: 1200px; margin: 0 auto; }
+  .section-inner.animate-on-scroll,
+  .service-card.animate-on-scroll,
+  .plan-card.animate-on-scroll,
+  .option-card.animate-on-scroll,
+  .contact-inner.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  .section-inner.animate-on-scroll.visible,
+  .service-card.animate-on-scroll.visible,
+  .plan-card.animate-on-scroll.visible,
+  .option-card.animate-on-scroll.visible,
+  .contact-inner.animate-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
 
   .section-label {
     font-size: 0.68rem;
@@ -787,7 +871,7 @@ nav.hide {
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-inner">
+  <div class="hero-inner animate-on-scroll">
     <h1 class="hero-title">FREVIA<br><span class="rainbow-text">STUDIO</span></h1>
     <p class="hero-sub">Remake × Handmade × Select × IT</p>
     <div class="hero-tags">
@@ -796,12 +880,13 @@ nav.hide {
       <span class="hero-tag">セレクト買付</span>
       <span class="hero-tag">IT 自動化</span>
     </div>
+    <div class="scroll-indicator"><span></span>scroll</div>
   </div>
 </section>
 
 <!-- ABOUT -->
 <section id="about">
-  <div class="section-inner">
+  <div class="section-inner animate-on-scroll">
     <div class="about-grid">
       <div class="about-text">
         <p class="section-label rainbow">私たちについて</p>
@@ -820,13 +905,13 @@ nav.hide {
 
 <!-- SERVICES -->
 <section style="background: rgba(255,255,255,0.015);">
-  <div class="section-inner" id="services">
+  <div class="section-inner animate-on-scroll" id="services">
     <p class="section-label rainbow">サービス</p>
     <h2 class="section-title">4つの事業</h2>
     <div class="rainbow-divider"></div>
     <div class="services-grid">
 
-      <div class="service-card">
+      <div class="service-card animate-on-scroll">
         <img src="images/remake.jpg" alt="Remake" class="service-image">
         <p class="service-number">01</p>
         <h3 class="service-title">Remake</h3>
@@ -841,7 +926,7 @@ nav.hide {
         </ul>
       </div>
 
-      <div class="service-card">
+      <div class="service-card animate-on-scroll">
         <img src="images/handmade.jpg" alt="Handmade" class="service-image">
         <p class="service-number">02</p>
         <h3 class="service-title">Handmade</h3>
@@ -856,7 +941,7 @@ nav.hide {
         </ul>
       </div>
 
-      <div class="service-card">
+      <div class="service-card animate-on-scroll">
         <img src="images/select.jpg" alt="Select" class="service-image">
         <p class="service-number">03</p>
         <h3 class="service-title">Select</h3>
@@ -871,7 +956,7 @@ nav.hide {
         </ul>
       </div>
 
-      <div class="service-card">
+      <div class="service-card animate-on-scroll">
         <img src="images/it-flow.jpg" alt="IT Solutions" class="service-image">
         <p class="service-number">04</p>
         <h3 class="service-title">IT Solutions</h3>
@@ -892,7 +977,7 @@ nav.hide {
 
 <!-- PRICING -->
 <section id="pricing">
-  <div class="section-inner">
+  <div class="section-inner animate-on-scroll">
     <p class="section-label rainbow">料金</p>
     <h2 class="section-title">料金プラン</h2>
     <div class="rainbow-divider"></div>
@@ -926,7 +1011,7 @@ nav.hide {
         <p>「まずはお気軽にご相談ください。見積もりは無料です」</p>
       </div>
       <div class="plans-grid">
-        <div class="plan-card">
+        <div class="plan-card animate-on-scroll">
           <p class="plan-name">Light</p>
           <p class="plan-target">小規模・お試し向け</p>
           <p class="plan-price">¥8,000 <span>〜（税抜）</span></p>
@@ -938,7 +1023,7 @@ nav.hide {
             <li>修正1回まで対応</li>
           </ul>
         </div>
-        <div class="plan-card">
+        <div class="plan-card animate-on-scroll">
           <p class="plan-name">Starter</p>
           <p class="plan-target">個人事業主向け</p>
           <p class="plan-price">¥30,000 <span>〜（税抜）</span></p>
@@ -951,7 +1036,7 @@ nav.hide {
             <li>簡易マニュアル付き</li>
           </ul>
         </div>
-        <div class="plan-card featured">
+        <div class="plan-card featured animate-on-scroll">
           <p class="plan-popular">— おすすめ —</p>
           <p class="plan-name">Business</p>
           <p class="plan-target">中小企業・複数業務向け</p>
@@ -965,7 +1050,7 @@ nav.hide {
             <li>運用マニュアル付き</li>
           </ul>
         </div>
-        <div class="plan-card">
+        <div class="plan-card animate-on-scroll">
           <p class="plan-name">Enterprise</p>
           <p class="plan-target">本格システム構築向け</p>
           <p class="plan-price">¥100,000 <span>〜（税抜）</span></p>
@@ -985,7 +1070,7 @@ nav.hide {
     <div class="pricing-section">
       <p class="pricing-section-title">IT Solutions — 月額プラン（保守・継続開発）</p>
       <div class="plans-grid">
-        <div class="plan-card">
+        <div class="plan-card animate-on-scroll">
           <p class="plan-name">Monthly S</p>
           <p class="plan-target">軽微な保守・メンテナンス</p>
           <p class="plan-price">¥5,000 <span>/ 月（税抜）</span></p>
@@ -996,7 +1081,7 @@ nav.hide {
             <li>メール・チャットサポート</li>
           </ul>
         </div>
-        <div class="plan-card featured">
+        <div class="plan-card featured animate-on-scroll">
           <p class="plan-popular">— おすすめ —</p>
           <p class="plan-name">Monthly M</p>
           <p class="plan-target">継続開発・機能改善</p>
@@ -1010,7 +1095,7 @@ nav.hide {
           </ul>
           <p class="plan-note">※ 最低3ヶ月契約</p>
         </div>
-        <div class="plan-card">
+        <div class="plan-card animate-on-scroll">
           <p class="plan-name">Monthly L</p>
           <p class="plan-target">専属サポート・新規開発込み</p>
           <p class="plan-price">¥50,000 <span>/ 月（税抜）</span></p>
@@ -1031,7 +1116,7 @@ nav.hide {
       <p class="pricing-section-title">IT Solutions — オプション</p>
       <p style="font-size:0.75rem;color:rgba(248,246,241,0.3);margin-bottom:1.5rem;">※ オプションはすべてFREVIA受注案件限定です。他社製ツールは対象外となります。</p>
       <div class="options-grid">
-        <div class="option-card">
+        <div class="option-card animate-on-scroll">
           <span class="option-badge">オプション</span>
           <p class="option-name">スポット保守</p>
           <p class="option-target">納品済みツールの修正・バグ対応</p>
@@ -1042,7 +1127,7 @@ nav.hide {
             <li>FREVIA受注案件限定</li>
           </ul>
         </div>
-        <div class="option-card">
+        <div class="option-card animate-on-scroll">
           <span class="option-badge">オプション</span>
           <p class="option-name">機能追加</p>
           <p class="option-target">既存ツールへの機能追加</p>
@@ -1054,7 +1139,7 @@ nav.hide {
             <li>内容により別途お見積り</li>
           </ul>
         </div>
-        <div class="option-card">
+        <div class="option-card animate-on-scroll">
           <span class="option-badge">オプション</span>
           <p class="option-name">コード解読・引き継ぎ</p>
           <p class="option-target">前任者のツールを引き継ぎたい方</p>
@@ -1075,8 +1160,8 @@ nav.hide {
 
 <!-- CONTACT -->
 <section id="contact">
-  <div class="section-inner">
-    <div class="contact-inner">
+  <div class="section-inner animate-on-scroll">
+    <div class="contact-inner animate-on-scroll">
       <p class="section-label rainbow">お問い合わせ</p>
       <h2 class="section-title">お問い合わせ</h2>
       <div class="rainbow-divider"></div>
@@ -1156,6 +1241,22 @@ if (hamburger) {
         });
     });
 }
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.18 });
+
+  document.querySelectorAll('.animate-on-scroll').forEach((el) => {
+    observer.observe(el);
+  });
+});
 </script>
 
 </body>
